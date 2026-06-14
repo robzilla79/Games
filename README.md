@@ -22,3 +22,10 @@ A self-contained mobile-friendly browser wrestling RPG. Create a custom rookie, 
 4. Launch it like an app.
 
 Progress saves in browser storage.
+
+
+## Phase 2 visual pass
+- Added wrestler entrance overlays with pyros, ramp lights, and broadcast name cards.
+- Added selectable arena presentation styles.
+- Improved Canvas arena lighting, crowd, flashes, combo heat display, and in-ring sprite styling.
+- Upgraded championship belt room with generated belt art.
