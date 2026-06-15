@@ -1,780 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#140047" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Neon Slam" />
-
-  <title>Neon Slam Wrestling RPG — 8-Bit Retro Edition</title>
-  <style>
-:root {
-  --bg1: #140047;
-  --bg2: #031b5f;
-  --hot: #ff2bd6;
-  --sun: #ffe45e;
-  --cyan: #00f5ff;
-  --green: #62ff75;
-  --orange: #ff9a30;
-  --card: rgba(16, 14, 44, 0.86);
-  --card2: rgba(255,255,255,0.08);
-  --text: #f8fbff;
-  --muted: #b8c4ff;
-  --danger: #ff4d6d;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#22053d" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Crown Circuit" />
+<title>Crown Circuit: Queens of the Ring</title>
+<style>
+:root{
+  --bg:#18042f; --bg2:#091633; --panel:rgba(18,14,46,.82); --panel2:rgba(255,255,255,.09);
+  --text:#f8f7ff; --muted:#c5c8ea; --gold:#ffd46b; --pink:#ff4fd8; --cyan:#69e6ff; --mint:#67ffbd; --red:#ff6a88;
+  --shadow:0 20px 60px rgba(0,0,0,.42);
 }
-
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--text);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-  background: radial-gradient(circle at 10% 10%, #ff2bd655 0 12%, transparent 24%),
-              radial-gradient(circle at 80% 20%, #00f5ff55 0 11%, transparent 26%),
-              linear-gradient(140deg, var(--bg1), var(--bg2) 55%, #260047);
-  overflow-x: hidden;
-}
-.bg-bursts::before,
-.bg-bursts::after {
-  content: "";
-  position: fixed;
-  inset: auto auto -100px -100px;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: conic-gradient(from 20deg, var(--hot), var(--cyan), var(--sun), var(--hot));
-  filter: blur(40px);
-  opacity: .22;
-  pointer-events: none;
-}
-.bg-bursts::after {
-  inset: 35% -120px auto auto;
-  width: 340px;
-  height: 340px;
-}
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px clamp(16px, 4vw, 52px);
-}
-h1 {
-  margin: 0;
-  letter-spacing: .08em;
-  font-size: clamp(34px, 7vw, 74px);
-  line-height: .85;
-  text-shadow: 0 0 18px var(--hot), 5px 5px 0 #0008;
-}
-.topbar p { margin: 6px 0 0; color: var(--sun); font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
-.org-badge {
-  display: grid; place-items: center;
-  width: 82px; height: 82px;
-  border-radius: 22px;
-  color: #111;
-  font-weight: 1000;
-  font-size: 30px;
-  background: linear-gradient(135deg, var(--sun), var(--orange));
-  box-shadow: 0 0 0 5px #fff2, 0 0 30px var(--sun);
-  transform: rotate(5deg);
-}
-#app { max-width: 1220px; margin: 0 auto; padding: 0 16px 40px; }
-.card {
-  background: linear-gradient(160deg, var(--card), rgba(35, 24, 85, .88));
-  border: 1px solid #ffffff28;
-  border-radius: 26px;
-  box-shadow: 0 18px 50px #0008, inset 0 0 70px #ffffff08;
-  backdrop-filter: blur(10px);
-  padding: clamp(18px, 3vw, 30px);
-}
-.grid { display: grid; gap: 18px; }
-.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-@media (max-width: 840px) { .grid.two,.grid.three { grid-template-columns: 1fr; } }
-label { font-weight: 800; color: var(--sun); display:block; margin: 0 0 6px; }
-input, select, textarea {
-  width: 100%;
-  border: 1px solid #ffffff35;
-  border-radius: 16px;
-  padding: 13px 14px;
-  background: #08091fcc;
-  color: white;
-  outline: none;
-  font: inherit;
-}
-textarea { min-height: 90px; resize: vertical; }
-button {
-  border: 0;
-  cursor: pointer;
-  border-radius: 16px;
-  padding: 12px 16px;
-  color: #120019;
-  font-weight: 1000;
-  letter-spacing: .03em;
-  background: linear-gradient(135deg, var(--sun), var(--orange));
-  box-shadow: 0 8px 0 #0006, 0 0 24px #ffe45e55;
-  transition: transform .12s ease, filter .12s ease;
-}
-button:hover { transform: translateY(-2px); filter: saturate(1.2); }
-button:active { transform: translateY(4px); box-shadow: 0 4px 0 #0006; }
-button.secondary { color: white; background: linear-gradient(135deg, #322e8c, #8d2cff); }
-button.danger { color: white; background: linear-gradient(135deg, #ff2b63, #ff7a30); }
-button:disabled { opacity: .5; cursor:not-allowed; transform:none; }
-.hero {
-  display:grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 18px;
-  align-items: stretch;
-}
-@media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
-.wrestler-stage {
-  min-height: 430px;
-  display:grid;
-  place-items:center;
-  position: relative;
-  overflow: hidden;
-}
-.ring {
-  position:absolute;
-  bottom: 24px;
-  width: 88%; height: 150px;
-  border: 8px solid #fff;
-  border-top: 5px solid #fff;
-  transform: perspective(700px) rotateX(58deg);
-  background: repeating-linear-gradient(45deg, #1b2fff, #1b2fff 18px, #273cff 18px, #273cff 36px);
-  box-shadow: 0 18px 50px #000b, 0 0 26px var(--cyan);
-}
-.avatar {
-  position: relative;
-  width: 190px;
-  height: 300px;
-  z-index: 1;
-  filter: drop-shadow(0 20px 18px #000a);
-}
-.avatar .head { position:absolute; left:63px; top:13px; width:64px; height:72px; border-radius: 50% 50% 42% 42%; background: var(--skin,#d78752); border: 5px solid #1b1035; }
-.avatar .hair { position:absolute; left:58px; top:2px; width:74px; height:36px; border-radius: 50% 50% 20% 20%; background: var(--hair,#111); border: 5px solid #1b1035; }
-.avatar .torso { position:absolute; left:45px; top:88px; width:100px; height:112px; border-radius: 35px 35px 18px 18px; background: var(--gear,#ff2bd6); border: 6px solid #1b1035; }
-.avatar .belt { position:absolute; left:39px; top:159px; width:112px; height:22px; border-radius: 8px; background: var(--accent,#ffe45e); border: 4px solid #1b1035; }
-.avatar .arm { position:absolute; top:99px; width:40px; height:118px; border-radius: 24px; background: var(--skin,#d78752); border: 5px solid #1b1035; }
-.avatar .arm.left { left:12px; transform: rotate(18deg); }
-.avatar .arm.right { right:12px; transform: rotate(-18deg); }
-.avatar .leg { position:absolute; top:193px; width:45px; height:98px; border-radius: 17px; background: var(--gear,#ff2bd6); border: 5px solid #1b1035; }
-.avatar .leg.left { left:45px; } .avatar .leg.right { right:45px; }
-.avatar .boot { position:absolute; top:275px; width:55px; height:28px; border-radius: 14px 14px 8px 8px; background: var(--accent,#ffe45e); border: 5px solid #1b1035; }
-.avatar .boot.left { left:34px; } .avatar .boot.right { right:34px; }
-.avatar .eye { position:absolute; top:39px; width:9px; height:9px; border-radius:50%; background:#111; z-index:3; }
-.avatar .eye.left { left:81px; } .avatar .eye.right { right:81px; }
-.avatar .mouth { position:absolute; left:82px; top:61px; width:26px; height:7px; border-radius: 0 0 20px 20px; background:#45121d; z-index:3; }
-.kv { display:flex; flex-wrap:wrap; gap:10px; margin: 12px 0; }
-.pill { padding: 8px 11px; border-radius:999px; background:#ffffff12; border:1px solid #ffffff22; color:#dfe7ff; font-weight:800; }
-.stat { background: var(--card2); border-radius: 16px; padding: 12px; border: 1px solid #ffffff1e; }
-.stat b { display:flex; justify-content:space-between; margin-bottom:7px; }
-.bar { height:10px; border-radius: 999px; background: #0008; overflow:hidden; }
-.fill { height:100%; border-radius:999px; background: linear-gradient(90deg, var(--cyan), var(--green), var(--sun)); width:50%; }
-.nav { display:flex; gap:10px; flex-wrap:wrap; margin: 0 0 18px; }
-.nav button { padding: 10px 12px; font-size: 13px; }
-.panel-title { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
-.panel-title h2, .panel-title h3 { margin:0; }
-.notice { padding:14px; border-radius:18px; background:#ffffff12; border:1px dashed #ffffff45; color:#eaf0ff; }
-.rank-row, .belt-row, .story-row, .match-row {
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding: 12px 14px; border-radius:18px; background:#ffffff10; border:1px solid #ffffff1f; margin-bottom:10px;
-}
-.rank-row.current { background: linear-gradient(90deg, #ff2bd640, #00f5ff25); border-color: var(--sun); }
-.small { color: var(--muted); font-size: 13px; }
-.big { font-size: 28px; font-weight: 1000; }
-.log { max-height: 440px; overflow:auto; padding-right:4px; }
-.log-entry { padding: 10px 0; border-bottom: 1px solid #ffffff18; }
-.choice { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-.match-screen { text-align:center; }
-.versus { display:grid; grid-template-columns: 1fr auto 1fr; gap:16px; align-items:center; margin: 18px 0; }
-.vs { font-size:42px; color: var(--sun); font-weight:1000; text-shadow: 0 0 18px var(--hot); }
-.meter { height: 24px; border-radius: 999px; overflow:hidden; background:#0008; border:1px solid #ffffff2a; }
-.meter-inner { height:100%; background: linear-gradient(90deg, var(--hot), var(--sun)); width:50%; }
-.toast-wrap { position: fixed; right: 16px; bottom: 16px; z-index: 10; display:grid; gap:8px; }
-.toast { background:#08091fee; border:1px solid #ffffff30; border-left:5px solid var(--sun); color:white; padding:12px 14px; border-radius:14px; box-shadow:0 8px 30px #0009; max-width:360px; }
-.footer-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
-
-/* iPhone / touch support */
-html {
-  -webkit-text-size-adjust: 100%;
-  touch-action: manipulation;
-}
-body {
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-button, input, select, textarea {
-  font-size: 16px;
-}
-button {
-  min-height: 46px;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-input[type="color"] {
-  min-height: 50px;
-  padding: 6px;
-}
-.mobile-hint {
-  display: none;
-  margin: 0 auto 14px;
-  max-width: 1220px;
-  padding: 0 16px;
-}
-.mobile-hint .notice {
-  font-size: 13px;
-  padding: 10px 12px;
-}
-@media (hover: none) and (pointer: coarse) {
-  button:hover { transform: none; filter: none; }
-  button:active { transform: scale(.98); box-shadow: 0 4px 0 #0006; }
-  .mobile-hint { display: block; }
-}
-@media (max-width: 680px) {
-  .topbar {
-    padding: 16px 14px 10px;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  h1 { font-size: clamp(36px, 16vw, 56px); line-height: .86; }
-  .topbar p { font-size: 10px; letter-spacing: .12em; }
-  .org-badge {
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
-    font-size: 22px;
-    flex: 0 0 auto;
-  }
-  #app { padding: 0 10px 96px; }
-  .card { border-radius: 20px; padding: 14px; }
-  .wrestler-stage { min-height: 300px; }
-  .ring { width: 96%; height: 112px; bottom: 18px; border-width: 6px; }
-  .avatar {
-    width: 150px;
-    height: 238px;
-    transform: scale(.82);
-    transform-origin: center bottom;
-  }
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 8;
-    margin: 0 -10px 12px;
-    padding: 8px 10px;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    background: linear-gradient(180deg, rgba(20,0,71,.98), rgba(20,0,71,.72));
-    backdrop-filter: blur(10px);
-    -webkit-overflow-scrolling: touch;
-    border-bottom: 1px solid #ffffff1f;
-  }
-  .nav button {
-    flex: 0 0 auto;
-    min-width: 88px;
-    font-size: 12px;
-    padding: 10px 11px;
-  }
-  .panel-title {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .rank-row, .belt-row, .story-row, .match-row {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .rank-row button, .belt-row button, .story-row button, .match-row button {
-    width: 100%;
-  }
-  .versus {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-  .versus .avatar { margin: 0 auto; }
-  .vs { font-size: 28px; }
-  .choice {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-  .choice button, .footer-actions button, .grid.two button, .grid.three button {
-    width: 100%;
-  }
-  .toast-wrap {
-    left: 10px;
-    right: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom));
-  }
-  .toast { max-width: none; }
-}
-
-  
-/* === retro 8-bit console presentation pass === */
-:root {
-  --bg1: #111a49;
-  --bg2: #1d2a67;
-  --hot: #ff5a71;
-  --sun: #ffe17a;
-  --cyan: #73d8ff;
-  --green: #8cff77;
-  --orange: #ff9c42;
-  --card: rgba(13, 19, 47, 0.96);
-  --card2: rgba(255,255,255,0.06);
-  --text: #f7f4ea;
-  --muted: #c6d0f3;
-  --danger: #ff697b;
-}
-body {
-  font-family: "Courier New", Courier, monospace !important;
-  background: linear-gradient(180deg, #0b1233, #1a2459 54%, #2b2956) !important;
-  letter-spacing: .02em;
-  position: relative;
-}
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .08;
-  background: repeating-linear-gradient(180deg, rgba(255,255,255,.9) 0 1px, transparent 1px 4px);
-}
-.card, .notice, .row, .stat, .pill, button, input, select, textarea, .toast, .meter { border-radius: 6px !important; }
-.card {
-  border: 3px solid #9ab0ff55;
-  box-shadow: 8px 8px 0 #0008, inset 0 0 0 2px rgba(255,255,255,.06);
-  background: linear-gradient(180deg, #152051, #10163d) !important;
-}
-button {
-  text-transform: uppercase;
-  box-shadow: 4px 4px 0 #0008 !important;
-}
-button:active { transform: translate(3px,3px) !important; box-shadow: 1px 1px 0 #0008 !important; }
-.topbar h1 { letter-spacing: .12em; text-shadow: 4px 4px 0 #000 !important; }
-.topbar p { letter-spacing: .18em; }
-.org-badge { border-radius: 4px !important; transform: none !important; box-shadow: 4px 4px 0 #0008 !important; }
-.notice { border: 2px solid rgba(255,255,255,.25) !important; }
-.wrestler-stage {
-  min-height: 360px;
-  background: linear-gradient(180deg, rgba(92,112,220,.18), rgba(0,0,0,0));
-  border: 2px solid rgba(255,255,255,.08);
-}
-.ring {
-  border-radius: 0 !important;
-  border-width: 6px !important;
-  box-shadow: 6px 6px 0 #000a !important;
-  background: repeating-linear-gradient(45deg, #4056c9, #4056c9 16px, #3045aa 16px, #3045aa 32px) !important;
-}
-.avatar { width: 168px !important; height: 260px !important; filter: drop-shadow(6px 8px 0 #0008) !important; image-rendering: pixelated; }
-.avatar .head, .avatar .hair, .avatar .torso, .avatar .belt, .avatar .arm, .avatar .leg, .avatar .boot, .avatar .mouth { border-radius: 0 !important; }
-.avatar .head { left: 57px !important; top: 18px !important; width: 54px !important; height: 54px !important; border-width: 4px !important; }
-.avatar .hair { left: 53px !important; top: 8px !important; width: 62px !important; height: 20px !important; border-width: 4px !important; }
-.avatar .torso { left: 43px !important; top: 82px !important; width: 82px !important; height: 78px !important; border-width: 5px !important; }
-.avatar .belt { left: 38px !important; top: 129px !important; width: 92px !important; height: 12px !important; border-width: 3px !important; }
-.avatar .arm { top: 88px !important; width: 26px !important; height: 82px !important; border-width: 4px !important; }
-.avatar .arm.left { left: 18px !important; transform: none !important; }
-.avatar .arm.right { right: 18px !important; transform: none !important; }
-.avatar .leg { top: 158px !important; width: 28px !important; height: 74px !important; border-width: 4px !important; }
-.avatar .leg.left { left: 46px !important; }
-.avatar .leg.right { right: 46px !important; }
-.avatar .boot { top: 228px !important; width: 34px !important; height: 16px !important; border-width: 4px !important; }
-.avatar .boot.left { left: 39px !important; }
-.avatar .boot.right { right: 39px !important; }
-.avatar .eye { top: 38px !important; width: 6px !important; height: 6px !important; border-radius: 0 !important; }
-.avatar .eye.left { left: 72px !important; } .avatar .eye.right { right: 72px !important; }
-.avatar .mouth { left: 78px !important; top: 53px !important; width: 14px !important; height: 4px !important; }
-.match-screen { text-align: center; }
-.retro-ring-board {
-  margin: 16px 0 14px;
-  border: 3px solid rgba(255,255,255,.18);
-  background: #0a1027;
-  box-shadow: 8px 8px 0 #0008;
-}
-.retro-scorebar {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 8px 12px;
-  background: #141d49;
-  color: var(--sun);
-  font-weight: 900;
-  border-bottom: 2px solid rgba(255,255,255,.15);
-}
-.retro-ring-scene {
-  position: relative;
-  min-height: 270px;
-  overflow: hidden;
-  background: linear-gradient(180deg, #28326f 0 34%, #121938 34% 100%);
-}
-.retro-ring-scene::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(180deg, rgba(255,255,255,.06) 0 2px, transparent 2px 6px);
-  pointer-events: none;
-}
-.retro-crowd {
-  position: absolute;
-  left: 0; right: 0; top: 18px;
-  height: 48px;
-  background:
-    repeating-linear-gradient(90deg, #ffdb6f 0 6px, transparent 6px 16px, #73d8ff 16px 22px, transparent 22px 32px, #ff7b90 32px 38px, transparent 38px 48px),
-    linear-gradient(180deg, #1b2454, #0f1635);
-  opacity: .95;
-}
-.retro-stage-light {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0 10%, rgba(115,216,255,.12) 10% 11%, transparent 11% 25%, rgba(255,225,122,.12) 25% 26%, transparent 26% 40%, rgba(255,90,113,.12) 40% 41%, transparent 41% 100%);
-}
-.retro-mat {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 42px;
-  width: 82%;
-  height: 120px;
-  background: repeating-linear-gradient(90deg, #dde5ff 0 12px, #cdd8ff 12px 24px);
-  border: 4px solid #6bd7ff;
-  box-shadow: 0 0 0 4px #2b3b87, 0 8px 0 #1a2458;
-}
-.retro-rope { position: absolute; left: 11%; right: 11%; height: 4px; }
-.retro-rope.r1 { bottom: 145px; background: #ff5a71; }
-.retro-rope.r2 { bottom: 126px; background: #ffe17a; }
-.retro-rope.r3 { bottom: 107px; background: #73d8ff; }
-.retro-post { position: absolute; bottom: 42px; width: 8px; height: 122px; background: #63cbff; box-shadow: 0 0 0 3px #203273; }
-.retro-post.left { left: 11%; } .retro-post.right { right: 11%; }
-.sprite-slot {
-  position: absolute;
-  bottom: 34px;
-  width: 160px;
-  display: flex;
-  justify-content: center;
-}
-.sprite-slot.left { left: 14%; }
-.sprite-slot.right { right: 14%; }
-.sprite-slot .avatar { transform-origin: bottom center; }
-.sprite-slot.left .avatar { transform: scale(.52); }
-.sprite-slot.right .avatar { transform: scale(.52) scaleX(-1); }
-.versus.retro { grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: end; }
-.versus.retro > div h3 { margin-top: 6px; }
-.vs { text-shadow: 3px 3px 0 #000 !important; }
-.meter { border-radius: 6px !important; border-width: 2px !important; box-shadow: inset 0 0 0 2px rgba(255,255,255,.05); }
-.meter-inner { background: linear-gradient(90deg, #ff5a71, #ffe17a) !important; }
-@media (max-width: 760px) {
-  .retro-ring-scene { min-height: 220px; }
-  .sprite-slot { width: 110px; }
-  .sprite-slot.left { left: 8%; }
-  .sprite-slot.right { right: 8%; }
-  .sprite-slot.left .avatar, .sprite-slot.right .avatar { transform: scale(.38); }
-  .versus.retro { grid-template-columns: 1fr; }
-  .vs { display: none; }
-}
-
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--text);background:
+ radial-gradient(circle at 10% 12%,rgba(255,79,216,.22),transparent 18%),
+ radial-gradient(circle at 86% 8%,rgba(105,230,255,.2),transparent 18%),
+ radial-gradient(circle at 50% 120%,rgba(255,212,107,.12),transparent 30%),
+ linear-gradient(155deg,var(--bg) 0%,var(--bg2) 58%,#26083b 100%);
+ overflow-x:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 22%,transparent 78%,rgba(255,255,255,.025));opacity:.8}
+.header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px clamp(14px,4vw,48px)}
+.brand h1{margin:0;font-size:clamp(34px,6vw,72px);line-height:.84;letter-spacing:.05em;text-shadow:0 0 20px rgba(255,79,216,.4)}
+.brand p{margin:8px 0 0;color:var(--gold);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(10px,2vw,15px)}
+.crown-badge{display:grid;place-items:center;width:82px;height:82px;border-radius:24px;background:linear-gradient(135deg,var(--gold),#ff9b5e);color:#26083b;font-size:30px;font-weight:1000;box-shadow:0 0 0 6px rgba(255,255,255,.08),0 18px 34px rgba(255,155,94,.32)}
+#app{max-width:1320px;margin:0 auto;padding:0 16px 44px}
+.card{background:linear-gradient(180deg,rgba(28,21,63,.92),rgba(15,17,42,.92));border:1px solid rgba(255,255,255,.12);border-radius:28px;box-shadow:var(--shadow),inset 0 0 50px rgba(255,255,255,.03);padding:clamp(18px,2.5vw,30px);backdrop-filter:blur(10px)}
+.hero-grid,.grid{display:grid;gap:18px}.hero-grid{grid-template-columns:minmax(320px,1.25fr) minmax(320px,.95fr)}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:980px){.hero-grid,.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}}
+.panel-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}.panel-title h2,.panel-title h3{margin:0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11);font-size:12px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--gold)}
+label{display:block;margin:0 0 6px;color:var(--gold);font-weight:800;font-size:14px}
+input,select,textarea{width:100%;background:rgba(5,8,22,.7);color:var(--text);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px;font:inherit;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+input[type="range"]{padding:0;height:40px;background:transparent;box-shadow:none;border:0}
+input[type="color"]{padding:6px;min-height:50px}
+textarea{min-height:90px;resize:vertical}
+button{border:0;cursor:pointer;border-radius:18px;padding:12px 16px;font:inherit;font-weight:1000;letter-spacing:.03em;color:#22053d;background:linear-gradient(135deg,var(--gold),#ff9b5e);box-shadow:0 10px 24px rgba(255,155,94,.24);transition:transform .12s ease,filter .12s ease}
+button:hover{transform:translateY(-2px);filter:saturate(1.08)}button:active{transform:translateY(2px)}button.secondary{color:var(--text);background:rgba(255,255,255,.08);box-shadow:none;border:1px solid rgba(255,255,255,.12)}button.danger{background:linear-gradient(135deg,var(--red),#ff9b5e)}
+.notice{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted);line-height:1.45}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.kv{display:flex;flex-wrap:wrap;gap:10px}.footer-actions,.choice{display:flex;flex-wrap:wrap;gap:10px}
+.small{font-size:12px;color:var(--muted)}
+.stat{margin-top:14px}.stat b{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.bar{height:12px;border-radius:999px;background:rgba(0,0,0,.4);overflow:hidden;border:1px solid rgba(255,255,255,.08)}.fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--gold))}
+.row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-bottom:10px}
+.hero-stage{position:relative;overflow:hidden;min-height:620px;background:
+ radial-gradient(circle at 50% 0,rgba(255,255,255,.12),transparent 36%),
+ linear-gradient(180deg,rgba(255,255,255,.05),transparent 34%),
+ linear-gradient(180deg,#2a1659 0%,#14082e 40%,#080d23 100%);
+ border-radius:30px;border:1px solid rgba(255,255,255,.12)}
+.hero-stage::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 8%,rgba(105,230,255,.09) 8% 9%,transparent 9% 20%,rgba(255,79,216,.08) 20% 21%,transparent 21% 78%,rgba(255,212,107,.08) 78% 79%,transparent 79% 100%)}
+.stage-floor{position:absolute;left:7%;right:7%;bottom:28px;height:180px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.12);border-radius:26px;transform:perspective(840px) rotateX(62deg);box-shadow:0 26px 60px rgba(0,0,0,.42),0 0 28px rgba(105,230,255,.12)}
+.ramp{position:absolute;left:37%;right:37%;top:70px;bottom:160px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.04));box-shadow:0 0 0 2px rgba(255,255,255,.07),0 0 36px rgba(255,79,216,.13)}
+.spotlight{position:absolute;top:-40px;width:38%;height:460px;filter:blur(0.5px);opacity:.5;background:linear-gradient(180deg,rgba(255,255,255,.4),transparent 72%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%)}
+.spotlight.left{left:6%;transform:rotate(-10deg)}.spotlight.right{right:6%;transform:rotate(10deg)}
+.preview-stack{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:44px;pointer-events:none}
+.preview-card{position:absolute;left:28px;top:28px;width:min(300px,42vw);padding:16px;border-radius:22px;background:linear-gradient(160deg,rgba(9,8,28,.82),rgba(31,10,60,.72));border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow)}
+.preview-card h3{margin:6px 0 0;font-size:clamp(22px,3vw,34px)}.preview-card .alias{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:800}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab-btn.active{background:linear-gradient(135deg,var(--pink),#8b6cff);color:white}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.color-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.choice-chip{padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;text-align:center;font-weight:800}.choice-chip.active{background:linear-gradient(135deg,rgba(255,79,216,.26),rgba(105,230,255,.2));border-color:rgba(255,255,255,.25)}
+.match-screen{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.8fr);gap:18px}.arena-card{padding:12px}.arena-wrap{position:relative;height:min(74vh,760px);min-height:520px;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#2c1c5c 0%,#17102f 34%,#090d22 100%);border:1px solid rgba(255,255,255,.12)}
+@media(max-width:980px){.match-screen{grid-template-columns:1fr}.arena-wrap{height:540px;min-height:460px}}
+.arena-crowd{position:absolute;inset:24px 0 auto;height:130px;background:radial-gradient(circle at center,rgba(255,255,255,.08),transparent 48%)}
+.crowd-dots{position:absolute;inset:16px 0 auto;height:120px;opacity:.7}
+.crowd-dots i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--dot,#ffd46b);box-shadow:0 0 14px var(--dot,#ffd46b)}
+.light-beam{position:absolute;top:-16px;width:28%;height:66%;opacity:.42;background:linear-gradient(180deg,rgba(255,255,255,.52),rgba(255,255,255,.02) 70%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%)}
+.light-beam.left{left:10%;transform:rotate(-8deg)}.light-beam.right{right:10%;transform:rotate(8deg)}
+.titantron{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:min(520px,74%);padding:12px 20px;border-radius:20px;background:linear-gradient(135deg,rgba(255,79,216,.35),rgba(105,230,255,.2));border:1px solid rgba(255,255,255,.18);text-align:center;box-shadow:0 0 30px rgba(255,79,216,.18)}
+.titantron .main{font-size:clamp(24px,3vw,42px);font-weight:1000;letter-spacing:.05em}.titantron .sub{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.ring-stage{position:absolute;left:7%;right:7%;bottom:30px;height:330px}.ring-canvas-floor{position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border-radius:22px;transform:perspective(840px) rotateX(62deg)}
+.ring-apron{position:absolute;left:7%;right:7%;bottom:0;height:88px;background:linear-gradient(180deg,#2a2d8e,#101443);border-radius:0 0 24px 24px}
+.ring-mat{position:absolute;left:11%;right:11%;bottom:56px;height:180px;border-radius:20px;background:linear-gradient(180deg,#e9eaff,#c7d1ff);box-shadow:0 0 0 10px #5370ff,0 0 0 18px #202866,0 18px 34px rgba(0,0,0,.35);overflow:hidden}
+.ring-mat::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.22),transparent 24%,transparent 76%,rgba(255,255,255,.15))}
+.ring-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:1000;color:rgba(45,42,116,.18);letter-spacing:.16em;font-size:clamp(22px,3vw,42px)}
+.rope{position:absolute;left:13%;right:13%;height:8px;border-radius:999px;box-shadow:0 0 0 2px rgba(255,255,255,.1)}.rope.r1{bottom:218px;background:#ff6a88}.rope.r2{bottom:190px;background:#ffd46b}.rope.r3{bottom:162px;background:#69e6ff}
+.post{position:absolute;bottom:44px;width:16px;height:190px;background:linear-gradient(180deg,#8de6ff,#40a9ff);box-shadow:0 0 0 4px #25327b}.post.left{left:11%}.post.right{right:11%}
+.steps{position:absolute;left:4%;bottom:18px;width:64px;height:54px;border-radius:8px;background:linear-gradient(180deg,#c8c9dd,#6f7490);box-shadow:0 10px 18px rgba(0,0,0,.28)}
+.entrance-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(7,9,24,.22),rgba(6,8,18,.84));backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .4s ease}.entrance-overlay.show{opacity:1;pointer-events:auto}
+.entrance-screen{width:min(86%,1040px);height:min(78%,700px);position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(180deg,#25105d,#100827);border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow)}
+.entrance-bg{position:absolute;inset:0;background:radial-gradient(circle at center top,rgba(255,255,255,.18),transparent 24%),linear-gradient(180deg,rgba(255,255,255,.06),transparent 26%),linear-gradient(180deg,#24115a,#100827 55%,#0b0d20)}
+.pyro{position:absolute;bottom:110px;width:150px;height:260px;filter:blur(.2px);opacity:0;animation:pyro 1.8s ease-in-out infinite}.pyro.left{left:8%}.pyro.right{right:8%}.entrance-overlay.show .pyro{opacity:.9}
+.pyro::before,.pyro::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:8px;height:180px;background:linear-gradient(180deg,transparent,var(--pyro,#ff4fd8) 34%,#fff 60%,transparent);clip-path:polygon(50% 0,72% 16%,100% 100%,0 100%,28% 16%)}
+.pyro::after{height:220px;width:12px;opacity:.66;filter:blur(8px)}
+@keyframes pyro{0%,100%{transform:scaleY(.75) translateY(10px)}50%{transform:scaleY(1.08) translateY(-6px)}}
+.entrance-runway{position:absolute;left:39%;right:39%;top:88px;bottom:90px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.06));box-shadow:0 0 0 2px rgba(255,255,255,.08),0 0 30px rgba(255,79,216,.18)}
+.entrance-nameplate{position:absolute;left:28px;right:28px;bottom:24px;padding:16px 18px;border-radius:22px;background:linear-gradient(135deg,rgba(255,79,216,.24),rgba(105,230,255,.14));border:1px solid rgba(255,255,255,.16);display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.entrance-nameplate .name{font-size:clamp(30px,4vw,54px);font-weight:1000;line-height:.9}.entrance-nameplate .tag{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:800}.entrance-nameplate .quote{max-width:48%;color:var(--muted)}
+.commentary{max-height:220px;overflow:auto;padding-right:4px}.comment{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-bottom:8px}.comment b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.log{max-height:240px;overflow:auto}.log-entry{padding:9px 10px;border-radius:14px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08);margin-bottom:8px}
+.hud-grid{display:grid;grid-template-columns:1fr;gap:12px}.wbox{padding:12px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.match-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.action-banner{position:absolute;left:50%;top:94px;transform:translateX(-50%);padding:12px 18px;border-radius:999px;background:rgba(5,8,22,.7);border:1px solid rgba(255,255,255,.18);font-weight:1000;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+/* Wrestler render */
+.wrestler{--skin:#d58c6d;--hair:#22121c;--gear1:#ff4fd8;--gear2:#ffd46b;--eye:#4c2e2b;--lip:#c86a7d;--height:1;--shoulder:1;--waist:1;--hip:1;--poseIdle:0px;position:relative;width:240px;height:490px;transform-origin:bottom center;filter:drop-shadow(0 26px 24px rgba(0,0,0,.32));pointer-events:none}
+.wrestler.compact{width:170px;height:340px}.wrestler.mini{width:130px;height:250px}.wrestler .shadow{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:120px;height:18px;border-radius:50%;background:rgba(0,0,0,.32);filter:blur(6px)}
+.wrestler .body{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) scaleY(var(--height));width:190px;height:430px;animation:idlebob 2.4s ease-in-out infinite}
+.wrestler.walk .body{animation:walkbob .7s linear infinite}.wrestler.pose-taunt .body{animation:tauntbob .8s ease-in-out infinite}.wrestler.pose-aerial .body{animation:aerialjump .8s ease-in-out infinite}.wrestler.pose-win .body{animation:winpose 1s ease-in-out infinite alternate}
+@keyframes idlebob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes walkbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes tauntbob{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(-2deg)}}@keyframes aerialjump{0%,100%{transform:translateY(0)}50%{transform:translateY(-34px)}}@keyframes winpose{0%{transform:translateY(0)}100%{transform:translateY(-12px)}}
+.torso-back{position:absolute;left:50%;top:142px;transform:translateX(-50%);width:132px;height:148px;background:linear-gradient(180deg,rgba(255,255,255,.16),transparent 32%), linear-gradient(180deg,var(--gear1),var(--gear1));border-radius:46px 46px 40px 40px;border:5px solid #291233;box-shadow:inset 0 0 0 5px rgba(255,255,255,.08)}
+.waist-accent{position:absolute;left:50%;top:252px;transform:translateX(-50%);width:134px;height:26px;background:linear-gradient(90deg,var(--gear2),#fff0b8,var(--gear2));border-radius:16px;border:4px solid #291233}
+.neck{position:absolute;left:50%;top:120px;transform:translateX(-50%);width:34px;height:34px;background:var(--skin);border-radius:0 0 14px 14px;border:4px solid #291233;border-top:0}
+.head{position:absolute;left:50%;top:54px;transform:translateX(-50%);width:106px;height:124px;border-radius:46px 46px 42px 42px;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 28%), linear-gradient(180deg,var(--skin),var(--skin));border:5px solid #291233;overflow:hidden;box-shadow:inset 0 -10px 0 rgba(255,255,255,.08)}
+.ear{position:absolute;top:110px;width:16px;height:22px;background:var(--skin);border:4px solid #291233;border-radius:12px}.ear.left{left:47px}.ear.right{right:47px}
+.hair-back{position:absolute;left:50%;top:34px;transform:translateX(-50%);width:124px;height:164px;background:var(--hair);border-radius:52px 52px 60px 60px;border:5px solid #291233}.hair-front{position:absolute;left:50%;top:36px;transform:translateX(-50%);width:122px;height:60px;background:var(--hair);border-radius:52px 52px 22px 22px;border:5px solid #291233;border-bottom:0}.bangs{position:absolute;left:50%;top:60px;transform:translateX(-50%);width:100px;height:28px;background:var(--hair);clip-path:polygon(0 0,100% 0,88% 58%,70% 36%,52% 62%,34% 34%,16% 56%)}
+.eye{position:absolute;top:98px;width:20px;height:12px;border-radius:12px;background:#fff;border:3px solid #291233;border-top-width:4px;overflow:hidden}.eye.left{left:84px}.eye.right{right:84px}.iris{position:absolute;left:5px;top:1px;width:8px;height:8px;border-radius:50%;background:var(--eye)}.lash{position:absolute;top:-6px;left:-2px;right:-2px;height:8px;border-top:3px solid #291233;border-radius:999px}
+.brow{position:absolute;top:86px;width:24px;height:6px;border-top:4px solid #291233;border-radius:999px}.brow.left{left:82px;transform:rotate(-10deg)}.brow.right{right:82px;transform:rotate(10deg)}
+.nose{position:absolute;left:50%;top:112px;transform:translateX(-50%);width:16px;height:20px;border-right:4px solid rgba(41,18,51,.3);border-bottom:4px solid rgba(41,18,51,.22);border-radius:0 0 12px 12px}.mouth{position:absolute;left:50%;top:138px;transform:translateX(-50%);width:34px;height:12px;border-radius:0 0 16px 16px;background:var(--lip);box-shadow:0 -2px 0 rgba(255,255,255,.3) inset}
+.blush{position:absolute;top:132px;width:20px;height:10px;border-radius:999px;background:rgba(255,155,160,.24);filter:blur(2px)}.blush.left{left:74px}.blush.right{right:74px}
+.arm{position:absolute;top:156px;width:40px;height:144px;background:var(--skin);border:5px solid #291233;border-radius:22px;transform-origin:top center;box-shadow:inset 0 -8px 0 rgba(255,255,255,.08)}.arm.left{left:24px;transform:rotate(12deg)}.arm.right{right:24px;transform:rotate(-12deg)}.wrestler.pose-strike .arm.right{transform:rotate(-54deg) translate(10px,-10px)}.wrestler.pose-grapple .arm.left{transform:rotate(30deg) translate(8px,-8px)}.wrestler.pose-taunt .arm.left{transform:rotate(-28deg) translate(-4px,-24px)}.wrestler.pose-taunt .arm.right{transform:rotate(28deg) translate(4px,-24px)}.wrestler.pose-win .arm.left{transform:rotate(-38deg) translate(-10px,-26px)}.wrestler.pose-win .arm.right{transform:rotate(38deg) translate(10px,-26px)}
+.glove{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:36px;height:26px;border-radius:14px;background:var(--gear2);border:4px solid #291233}
+.leg{position:absolute;top:268px;width:50px;height:152px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 30%), linear-gradient(180deg,var(--gear1),var(--gear1));border:5px solid #291233;transform-origin:top center;box-shadow:inset 0 -8px 0 rgba(255,255,255,.08)}.leg.left{left:45px}.leg.right{right:45px}.wrestler.walk .leg.left{transform:rotate(10deg)}.wrestler.walk .leg.right{transform:rotate(-10deg)}.wrestler.pose-aerial .leg.left{transform:rotate(18deg)}.wrestler.pose-aerial .leg.right{transform:rotate(-18deg)}
+.boot{position:absolute;bottom:-2px;width:58px;height:48px;border-radius:16px 16px 14px 14px;background:linear-gradient(180deg,var(--gear2),#fff2bf);border:5px solid #291233}.boot.left{left:-4px}.boot.right{right:-4px}
+.skirt{position:absolute;left:50%;top:266px;transform:translateX(-50%);width:150px;height:40px;background:linear-gradient(180deg,var(--gear1),#41204b);clip-path:polygon(0 0,100% 0,92% 100%,8% 100%);border-left:5px solid #291233;border-right:5px solid #291233;border-bottom:5px solid #291233}.shorts{position:absolute;left:50%;top:266px;transform:translateX(-50%);width:126px;height:52px;background:linear-gradient(180deg,var(--gear1),#41204b);border-radius:18px;border:5px solid #291233}.pattern{position:absolute;left:50%;top:160px;transform:translateX(-50%);width:88px;height:54px;background:linear-gradient(180deg,rgba(255,255,255,.26),transparent 60%);clip-path:polygon(50% 0,100% 30%,76% 100%,24% 100%,0 30%)}
+.bodytype-curvy .torso-back{width:138px}.bodytype-power .torso-back{width:148px;height:156px}.bodytype-lean .torso-back{width:122px}.bodytype-power .arm{width:44px}.bodytype-lean .arm{width:34px}.bodytype-curvy .leg{width:54px}.bodytype-lean .leg{width:44px}
+.hair-ponytail .hair-back{height:176px;border-radius:52px 52px 80px 80px}.hair-bob .hair-back{height:132px}.hair-longwave .hair-back{height:184px}.hair-braids .hair-back{height:170px}.hair-braids .hair-back::before,.hair-braids .hair-back::after{content:"";position:absolute;bottom:0;width:18px;height:112px;background:var(--hair);border:4px solid #291233;border-radius:16px}.hair-braids .hair-back::before{left:8px}.hair-braids .hair-back::after{right:8px}
+.hair-ponytail .hair-back::after{content:"";position:absolute;left:50%;top:34px;transform:translateX(-50%);width:28px;height:130px;background:var(--hair);border:4px solid #291233;border-radius:18px}.hair-bob .bangs{top:56px}.hair-crown .hair-front{border-radius:60px 60px 18px 18px}.face-fierce .brow.left{transform:rotate(-18deg)}.face-fierce .brow.right{transform:rotate(18deg)}.face-soft .mouth{width:30px;height:10px}.makeup-glam .mouth{box-shadow:0 -3px 0 rgba(255,255,255,.4) inset,0 0 0 2px rgba(255,79,216,.18)}.makeup-glam .eye{box-shadow:0 0 0 2px rgba(255,79,216,.12)}.makeup-smoky .eye{box-shadow:0 0 0 8px rgba(29,20,54,.16)}.makeup-warpaint .blush{display:none}.makeup-warpaint .head::after{content:"";position:absolute;left:14px;right:14px;top:56px;height:16px;background:linear-gradient(90deg,var(--gear2),transparent 80%);opacity:.85;border-radius:999px;transform:rotate(-8deg)}
+.outfit-bodysuit .skirt{display:none}.outfit-bodysuit .shorts{display:none}.outfit-skirt .shorts{display:none}.outfit-shorts .skirt{display:none}
+.entrance-pose-salute .arm.left{transform:rotate(-62deg) translate(-8px,-20px)}.entrance-pose-salute .arm.right{transform:rotate(18deg)}.entrance-pose-diva .arm.left{transform:rotate(-30deg) translate(-4px,-14px)}.entrance-pose-diva .arm.right{transform:rotate(30deg) translate(4px,-14px)}.entrance-pose-hero .arm.left{transform:rotate(-20deg) translate(-4px,-10px)}.entrance-pose-hero .arm.right{transform:rotate(42deg) translate(6px,-22px)}
+.walk-cycle{animation:walkslide 5s linear infinite}@keyframes walkslide{0%{transform:translate(-210px,30px) scale(.88)}100%{transform:translate(120px,0) scale(1)}}
+.mini .shadow{width:82px;height:10px}.compact .shadow{width:100px}
+.mobile-hint{display:none;margin:0 auto 14px;max-width:1320px;padding:0 16px}.mobile-hint .notice{font-size:13px}
+@media(hover:none) and (pointer:coarse){button:hover{transform:none;filter:none}.mobile-hint{display:block}}
+@media(max-width:720px){.header{padding:16px 14px}.brand h1{font-size:clamp(34px,13vw,58px)}.preview-card{width:auto;right:18px;left:18px;top:18px}.hero-stage{min-height:560px}.preview-stack{padding-bottom:22px}.wrestler{width:200px;height:420px}.wrestler.compact{width:140px;height:290px}.entrance-nameplate{flex-direction:column;align-items:flex-start}.entrance-nameplate .quote{max-width:none}.arena-wrap{min-height:420px;height:70vh}.titantron{width:88%}.light-beam{width:34%}.ramp,.entrance-runway{left:33%;right:33%}.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-  <div class="bg-bursts"></div>
-  <header class="topbar">
-    <div>
-      <h1>NEON SLAM 8-BIT</h1>
-      <p>Retro Rookie Road to Immortality</p>
-    </div>
-    <div class="org-badge">GCE</div>
-  </header>
+<div class="header">
+  <div class="brand">
+    <h1>CROWN CIRCUIT</h1>
+    <p>Queens of the Ring • Women's League Career RPG</p>
+  </div>
+  <div class="crown-badge">♛</div>
+</div>
+<div class="mobile-hint"><div class="notice">iPhone ready: host this folder online, open it in Safari, then use Share → Add to Home Screen. This version focuses on a polished women's-only league with improved entrances, visuals, and animation.</div></div>
+<main id="app"></main>
+<script>
+const app=document.getElementById('app');
 
-  <div class="mobile-hint"><div class="notice">iPhone ready: play in Safari, then use Share → Add to Home Screen after hosting this folder online. This version now features a retro 8-bit wrestling presentation inspired by classic console wrestling games.</div></div>
-
-  <main id="app"></main>
-
-  <template id="toast-template">
-    <div class="toast"></div>
-  </template>
-
-  <script>
-const app = document.getElementById('app');
-
-const belts = [
-  { id:'rookie', name:'Rookie Rumble Cup', prestige: 15 },
-  { id:'tv', name:'Neon Television Title', prestige: 32 },
-  { id:'tag', name:'Hyper Tag Crown', prestige: 42 },
-  { id:'inter', name:'Interstellar Championship', prestige: 62 },
-  { id:'world', name:'Grand Collision World Championship', prestige: 90 },
-  { id:'legend', name:'Hall of Sparks Legacy Belt', prestige: 120 }
+const promotionName='Crown Circuit';
+const belts=[
+  {id:'spotlight',name:'Spotlight Crown',prestige:18},
+  {id:'allstar',name:'All-Star Tiara Championship',prestige:34},
+  {id:'velocity',name:'Velocity Queens Title',prestige:48},
+  {id:'legacy',name:'Legacy Empress Championship',prestige:72},
+  {id:'world',name:'Crown Circuit World Championship',prestige:92}
 ];
 
-const opponents = [
-  { name:'Turbo Vega', style:'High Flyer', power:18, charisma:14, tech:12, belt:'rookie' },
-  { name:'Brick Anthem', style:'Powerhouse', power:30, charisma:18, tech:12, belt:'tv' },
-  { name:'Madame Meteor', style:'Showboat', power:22, charisma:34, tech:21, belt:'tag' },
-  { name:'The Velvet Hammer', style:'Brawler', power:44, charisma:28, tech:25, belt:'inter' },
-  { name:'Cipher Steel', style:'Technician', power:37, charisma:33, tech:49, belt:'world' },
-  { name:'King Kinetix', style:'Living Legend', power:60, charisma:58, tech:56, belt:'legend' }
+const rivals=[
+  {name:'Sable Vixen',style:'Showboat',power:14,charisma:22,tech:12,rep:28,catchphrase:'Spotlight first, questions later.',look:{skin:'#d79a76',hair:'#23101b',gear1:'#ff4fd8',gear2:'#ffe1a8',eye:'#4c2e2b',lip:'#d36988',bodyType:'curvy',hairStyle:'longwave',face:'soft',makeup:'glam',outfit:'skirt',entrancePose:'diva',pyro:'#ff4fd8',theme:'Velvet Bloom'}} ,
+  {name:'Kara Steel',style:'Powerhouse',power:24,charisma:10,tech:12,rep:34,catchphrase:'I bend steel and break crowns.',look:{skin:'#9d6446',hair:'#201312',gear1:'#466bff',gear2:'#69e6ff',eye:'#362016',lip:'#8f4f5b',bodyType:'power',hairStyle:'ponytail',face:'fierce',makeup:'smoky',outfit:'shorts',entrancePose:'hero',pyro:'#69e6ff',theme:'Titan Heart'}} ,
+  {name:'Mina Mirage',style:'High Flyer',power:12,charisma:17,tech:18,rep:30,catchphrase:'Catch the flash if you can.',look:{skin:'#f2c09c',hair:'#47261d',gear1:'#9f59ff',gear2:'#ffcf5e',eye:'#4c332d',lip:'#bf7180',bodyType:'lean',hairStyle:'bob',face:'soft',makeup:'glam',outfit:'bodysuit',entrancePose:'salute',pyro:'#ffcf5e',theme:'Star Dash'}} ,
+  {name:'Bianca Vale',style:'Technician',power:13,charisma:13,tech:24,rep:38,catchphrase:'Every hold has a lesson.',look:{skin:'#6e4838',hair:'#0f0b14',gear1:'#1fce8a',gear2:'#9effe0',eye:'#241919',lip:'#95525d',bodyType:'lean',hairStyle:'braids',face:'fierce',makeup:'smoky',outfit:'shorts',entrancePose:'hero',pyro:'#67ffbd',theme:'Emerald Lock'}} ,
+  {name:'Nova Luxe',style:'Showboat',power:15,charisma:24,tech:14,rep:46,catchphrase:'The universe watches me shine.',look:{skin:'#c77963',hair:'#2c1228',gear1:'#ff5d94',gear2:'#ffd46b',eye:'#45222b',lip:'#d26f8f',bodyType:'curvy',hairStyle:'crown',face:'soft',makeup:'glam',outfit:'skirt',entrancePose:'diva',pyro:'#ffd46b',theme:'Royal Stardust'}} ,
+  {name:'Rhea Tempest',style:'Brawler',power:21,charisma:14,tech:15,rep:42,catchphrase:'Hear the storm before I strike.',look:{skin:'#8b5f4a',hair:'#1b1019',gear1:'#ff6a88',gear2:'#72dfff',eye:'#351f1d',lip:'#ac6270',bodyType:'power',hairStyle:'ponytail',face:'fierce',makeup:'warpaint',outfit:'bodysuit',entrancePose:'hero',pyro:'#ff6a88',theme:'Storm Siren'}}
 ];
 
-const storylines = [
-  { id:'tryout', title:'Open Tryout Chaos', minRep:0, reward:{rep:8, charisma:2}, text:'A producer gives you one televised minute to prove you belong.' },
-  { id:'rival', title:'Parking Lot Ambush', minRep:12, reward:{rep:13, power:2}, text:'A jealous rookie jumps you before the show. Do you fire back on camera?' },
-  { id:'mentor', title:'Legendary Mentor', minRep:26, reward:{rep:15, tech:3}, text:'A retired icon teaches you how to turn a near-loss into a career-making comeback.' },
-  { id:'faction', title:'Faction Invitation', minRep:42, reward:{rep:18, charisma:3}, text:'The neon-clad Eclipse Syndicate offers protection, but wants loyalty.' },
-  { id:'betrayal', title:'Main Event Betrayal', minRep:62, reward:{rep:24, power:2, tech:2}, text:'A friend costs you a title match. The crowd demands a grudge fight.' },
-  { id:'mania', title:'Stadium of Sparks', minRep:86, reward:{rep:34, charisma:4, power:2}, text:'Your road leads to the biggest stage in Grand Collision Entertainment.' }
+const stories=[
+  {id:'spotlight',title:'Spotlight Test',desc:'Win your TV debut and prove you belong in the league.',reward:'Reputation +8, Fans +6'},
+  {id:'rivalry',title:'Velvet Rivalry',desc:'Trade words and blows with a rising star to unlock better matches.',reward:'Morale +5, Money +30'},
+  {id:'contender',title:'Road to the Tiara',desc:'Beat a ranked rival to earn a title eliminator.',reward:'Reputation +12, Fans +10'}
 ];
 
-const moves = {
-  High_Flyer:['Shooting Neon Press','Ropewalk Rana','Meteor Dropkick'],
-  Powerhouse:['Avalanche Spinebuster','Titan Bomb','Concrete Lariat'],
-  Technician:['Quantum Lock','Counterpoint Suplex','Circuit Breaker Armbar'],
-  Brawler:['Barricade Bash','Streetlight Elbow','Chaos DDT'],
-  Showboat:['Spotlight Cutter','Encore Elbow','Red Carpet Rollup']
+const defaultLook={
+  bodyType:'curvy',hairStyle:'longwave',face:'soft',makeup:'glam',outfit:'skirt',entrancePose:'diva',
+  gear1:'#ff4fd8',gear2:'#ffd46b',skin:'#d58c6d',hair:'#25151d',eye:'#3d2430',lip:'#cc7185',pyro:'#ff4fd8',theme:'Velvet Surge',nickname:'The Crownfire',banner:'Bow down when the lights hit!',height:100
 };
 
-const defaultState = {
-  screen:'create',
-  week:1,
-  money:100,
-  wrestler:null,
-  completedStories:[],
-  ownedBelts:[],
-  log:[],
-  currentMatch:null
-};
-let state = loadState();
+const defaultState={screen:'create',week:1,money:120,arena:'Starlight Dome',ownedBelts:[],completedStories:[],log:[],commentary:[],wrestler:null,currentMatch:null};
+let state=loadState();
+if(!state || typeof state!=='object') state=structuredClone(defaultState);
+let matchInterval=0, entranceTimer=0;
 
-function saveState(){ localStorage.setItem('neonSlamSave', JSON.stringify(state)); }
-function loadState(){
-  try { return JSON.parse(localStorage.getItem('neonSlamSave')) || structuredClone(defaultState); }
-  catch { return structuredClone(defaultState); }
-}
-function reset(){ localStorage.removeItem('neonSlamSave'); state = structuredClone(defaultState); render(); }
-function toast(msg){
-  let wrap = document.querySelector('.toast-wrap');
-  if(!wrap){ wrap = document.createElement('div'); wrap.className='toast-wrap'; document.body.appendChild(wrap); }
-  const node = document.createElement('div'); node.className='toast'; node.textContent=msg; wrap.appendChild(node);
-  setTimeout(()=>node.remove(), 3600);
-}
-function addLog(msg){ state.log.unshift(`Week ${state.week}: ${msg}`); state.log = state.log.slice(0,80); }
-function statTotal(w=state.wrestler){ return w.power + w.charisma + w.tech + Math.floor(w.rep/4); }
-function beltName(id){ return belts.find(b=>b.id===id)?.name || id; }
-function styleKey(style){ return style.replace(' ','_'); }
+function saveState(){localStorage.setItem('crownCircuitSave',JSON.stringify(state))}
+function loadState(){try{return JSON.parse(localStorage.getItem('crownCircuitSave'))||structuredClone(defaultState)}catch(e){return structuredClone(defaultState)}}
+function reset(){localStorage.removeItem('crownCircuitSave');stopAll();state=structuredClone(defaultState);render()}
+function stopAll(){if(matchInterval) clearInterval(matchInterval); if(entranceTimer) clearInterval(entranceTimer); matchInterval=0; entranceTimer=0;}
+function addLog(t){state.log.unshift(`Week ${state.week}: ${t}`); state.log=state.log.slice(0,120); saveState();}
+function total(w=state.wrestler){return w.power+w.charisma+w.tech+Math.floor(w.rep/4)}
+function styleMoves(style){return {
+  'High Flyer':['Halo Kick','Meteor Drop','Starline Moonsault','Comet Crush'],
+  'Powerhouse':['Queenbreaker Slam','Royal Bomb','Titan Press','Crown Collapse'],
+  'Technician':['Silk Snare','Ivory Lock','Velvet Switch','Tiara Takedown'],
+  'Brawler':['Flash Riot','Thunder Palm','Backstage Blitz','Storm Crash'],
+  'Showboat':['Encore Kiss','Spotlight Twist','Red Carpet Drop','Finale Fever']
+}[style]||['Signature Strike','Grande Finale']}
 
-function avatarHTML(w, extraClass=''){
-  return `<div class="avatar ${extraClass}" style="--gear:${w.gear};--accent:${w.accent};--skin:${w.skin};--hair:${w.hair}">
-    <div class="hair"></div><div class="head"></div><div class="eye left"></div><div class="eye right"></div><div class="mouth"></div>
-    <div class="arm left"></div><div class="arm right"></div><div class="torso"></div><div class="belt"></div>
-    <div class="leg left"></div><div class="leg right"></div><div class="boot left"></div><div class="boot right"></div>
-  </div>`;
-}
+function choiceChip(key,val,group,current,label=val){return `<button class="choice-chip ${current===val?'active':''}" onclick="setChoice('${group}','${val}')">${label}</button>`}
+function setChoice(group,val){const el=document.querySelector(`[data-group="${group}"]`);if(el)el.value=val; previewLook()}
+function statBlock(name,val,max){return `<div class="stat"><b><span>${name}</span><span>${val}/${max}</span></b><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,val/max*100))}%"></div></div></div>`}
+function miniStat(name,val){return `<div class="row"><div><b>${name}</b><div class="small">Current rating</div></div><div class="pill">${val}</div></div>`}
 
-function render(){
-  saveState();
-  if(state.screen === 'create') return renderCreate();
-  if(state.screen === 'match') return renderMatch();
-  return renderGame();
-}
+function wrestlerFigure(w,cls=''){const look=w.look||w;const compact=cls.includes('compact')?'compact':cls.includes('mini')?'mini':'';return `<div class="wrestler ${cls} bodytype-${look.bodyType||'curvy'} hair-${look.hairStyle||'longwave'} face-${look.face||'soft'} makeup-${look.makeup||'glam'} outfit-${look.outfit||'skirt'} entrance-pose-${look.entrancePose||'diva'}" style="--skin:${look.skin};--hair:${look.hair};--gear1:${look.gear1};--gear2:${look.gear2};--eye:${look.eye};--lip:${look.lip};--height:${(look.height||100)/100};--shoulder:1;--waist:1;--hip:1">
+      <div class="shadow"></div>
+      <div class="body ${compact}">
+        <div class="hair-back"></div><div class="ear left"></div><div class="ear right"></div><div class="head"><div class="bangs"></div><div class="eye left"><div class="lash"></div><div class="iris"></div></div><div class="eye right"><div class="lash"></div><div class="iris"></div></div><div class="brow left"></div><div class="brow right"></div><div class="nose"></div><div class="mouth"></div><div class="blush left"></div><div class="blush right"></div></div><div class="hair-front"></div>
+        <div class="neck"></div>
+        <div class="torso-back"></div><div class="pattern"></div><div class="waist-accent"></div><div class="shorts"></div><div class="skirt"></div>
+        <div class="arm left"><div class="glove"></div></div><div class="arm right"><div class="glove"></div></div>
+        <div class="leg left"><div class="boot left"></div></div><div class="leg right"><div class="boot right"></div></div>
+      </div>
+    </div>`}
+
+function render(){stopAll(); if(!state.wrestler || state.screen==='create') return renderCreate(); if(state.screen==='match') return renderMatch(); renderGame(state.screen||'home')}
 
 function renderCreate(){
-  app.innerHTML = `<section class="hero">
-    <div class="card">
-      <div class="panel-title"><h2>Create Your Rookie</h2><button class="secondary" onclick="loadExisting()">Load Save</button></div>
-      <p class="notice">Join <b>Grand Collision Entertainment</b>, a fictional global wrestling empire full of fireworks, betrayals, rankings, factions, and championship gold — now presented with a retro 8-bit console wrestling vibe.</p>
-      <div class="grid two" style="margin-top:18px">
-        <div><label>Ring Name</label><input id="name" value="Roxy Riot" maxlength="24"></div>
-        <div><label>Hometown</label><input id="home" value="Brooklyn, NY" maxlength="28"></div>
-        <div><label>Wrestling Style</label><select id="style"><option>High Flyer</option><option>Powerhouse</option><option>Technician</option><option>Brawler</option><option>Showboat</option></select></div>
-        <div><label>Catchphrase</label><input id="catch" value="The lights go out when I show up!" maxlength="70"></div>
-        <div><label>Gear Color</label><input id="gear" type="color" value="#ff2bd6"></div>
-        <div><label>Accent Color</label><input id="accent" type="color" value="#ffe45e"></div>
-        <div><label>Skin Tone</label><input id="skin" type="color" value="#d78752"></div>
-        <div><label>Hair Color</label><input id="hair" type="color" value="#111111"></div>
+  const look=state.wrestler?.look||structuredClone(defaultLook);
+  app.innerHTML=`<section class="hero-grid">
+    <section class="card">
+      <div class="panel-title"><div><h2>Create Your Queen</h2><div class="small">A women's only wrestling league with deep presentation and customization.</div></div><div class="footer-actions"><button class="secondary" onclick="loadExisting()">Load Save</button><button class="danger" onclick="reset()">Clear Save</button></div></div>
+      <div class="notice"><b>${promotionName}</b> is an all-women sports entertainment league. Build an eye-catching rookie with detailed customization for body, hair, face, outfit, and entrance style.</div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="identity" onclick="switchTab('identity',this)">Identity</button>
+        <button class="tab-btn secondary" data-tab="body" onclick="switchTab('body',this)">Body</button>
+        <button class="tab-btn secondary" data-tab="face" onclick="switchTab('face',this)">Face & Hair</button>
+        <button class="tab-btn secondary" data-tab="outfit" onclick="switchTab('outfit',this)">Outfit</button>
+        <button class="tab-btn secondary" data-tab="entrance" onclick="switchTab('entrance',this)">Entrance</button>
       </div>
-      <div class="footer-actions"><button onclick="startCareer()">Sign Rookie Contract</button><button class="danger" onclick="reset()">Clear Save</button></div>
-    </div>
-    <div class="card wrestler-stage">
-      <div class="ring"></div>
-      ${avatarHTML({gear:'#ff2bd6',accent:'#ffe45e',skin:'#d78752',hair:'#111'})}
-    </div>
+
+      <div class="tab-panel active" id="tab-identity">
+        <div class="grid two">
+          <div><label>Ring Name</label><input id="name" value="Ava Allure" oninput="previewLook()"></div>
+          <div><label>Nickname</label><input id="nickname" value="${look.nickname}" oninput="previewLook()"></div>
+          <div><label>Hometown</label><input id="home" value="Las Vegas, NV" oninput="previewLook()"></div>
+          <div><label>Style</label><select id="style" onchange="previewLook()"><option>Showboat</option><option>High Flyer</option><option>Technician</option><option>Powerhouse</option><option>Brawler</option></select></div>
+          <div><label>Catchphrase</label><input id="catch" value="All eyes on the crown." oninput="previewLook()"></div>
+          <div><label>Entrance Theme Name</label><input id="theme" value="${look.theme}" oninput="previewLook()"></div>
+        </div>
+        <label style="margin-top:12px">Banner Line</label>
+        <textarea id="banner" oninput="previewLook()">${look.banner}</textarea>
+      </div>
+
+      <div class="tab-panel" id="tab-body">
+        <div class="grid two">
+          <div>
+            <label>Body Type</label>
+            <input type="hidden" id="bodyType" data-group="bodyType" value="${look.bodyType}">
+            <div class="choice-grid">${['curvy','lean','power'].map(v=>choiceChip('bodyType',v,'bodyType',look.bodyType,v[0].toUpperCase()+v.slice(1))).join('')}</div>
+          </div>
+          <div>
+            <label>Outfit Base</label>
+            <input type="hidden" id="outfit" data-group="outfit" value="${look.outfit}">
+            <div class="choice-grid">${['skirt','shorts','bodysuit'].map(v=>choiceChip('outfit',v,'outfit',look.outfit,v[0].toUpperCase()+v.slice(1))).join('')}</div>
+          </div>
+        </div>
+        <div class="grid two" style="margin-top:12px">
+          <div><label>Height Presence</label><input id="height" type="range" min="92" max="108" value="${look.height}" oninput="previewLook()"><div class="small">Controls visual height and ring presence.</div></div>
+          <div><label>Skin Tone</label><input id="skin" type="color" value="${look.skin}" oninput="previewLook()"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-face">
+        <div class="grid two">
+          <div>
+            <label>Hair Style</label>
+            <input type="hidden" id="hairStyle" data-group="hairStyle" value="${look.hairStyle}">
+            <div class="choice-grid">${[['longwave','Long Wave'],['ponytail','Ponytail'],['bob','Bob'],['braids','Braids'],['crown','Volume Crown']].map(([v,l])=>choiceChip('hairStyle',v,'hairStyle',look.hairStyle,l)).join('')}</div>
+          </div>
+          <div>
+            <label>Face Mood</label>
+            <input type="hidden" id="face" data-group="face" value="${look.face}">
+            <div class="choice-grid">${[['soft','Soft Glam'],['fierce','Fierce']].map(([v,l])=>choiceChip('face',v,'face',look.face,l)).join('')}</div>
+          </div>
+          <div><label>Hair Color</label><input id="hair" type="color" value="${look.hair}" oninput="previewLook()"></div>
+          <div><label>Eye Color</label><input id="eye" type="color" value="${look.eye}" oninput="previewLook()"></div>
+          <div><label>Lip Color</label><input id="lip" type="color" value="${look.lip}" oninput="previewLook()"></div>
+          <div>
+            <label>Makeup</label>
+            <input type="hidden" id="makeup" data-group="makeup" value="${look.makeup}">
+            <div class="choice-grid">${[['glam','Glam'],['smoky','Smoky'],['warpaint','War Paint']].map(([v,l])=>choiceChip('makeup',v,'makeup',look.makeup,l)).join('')}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-outfit">
+        <div class="grid two">
+          <div><label>Primary Outfit Color</label><input id="gear1" type="color" value="${look.gear1}" oninput="previewLook()"></div>
+          <div><label>Accent Color</label><input id="gear2" type="color" value="${look.gear2}" oninput="previewLook()"></div>
+          <div><label>Pyro / Lighting Color</label><input id="pyro" type="color" value="${look.pyro}" oninput="previewLook()"></div>
+          <div><label>Entrance Nameplate Alias</label><input id="alias" value="Main Event Muse" oninput="previewLook()"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-entrance">
+        <div class="grid two">
+          <div>
+            <label>Entrance Pose</label>
+            <input type="hidden" id="entrancePose" data-group="entrancePose" value="${look.entrancePose}">
+            <div class="choice-grid">${[['diva','Diva Flourish'],['salute','Heroic Salute'],['hero','Champion Raise']].map(([v,l])=>choiceChip('entrancePose',v,'entrancePose',look.entrancePose,l)).join('')}</div>
+          </div>
+          <div><label>Entrance Spotlight Color</label><input id="spot" type="color" value="${look.pyro}" oninput="previewLook()"></div>
+        </div>
+        <div class="notice" style="margin-top:12px">Entrances in Crown Circuit are part runway, part fight night spectacle — the preview shows your walk-out look, spotlight tone, pyro color, and pose style.</div>
+      </div>
+
+      <div class="footer-actions" style="margin-top:18px"><button onclick="startCareer()">Sign with ${promotionName}</button></div>
+    </section>
+
+    <section class="hero-stage">
+      <div class="spotlight left" id="previewLightL"></div><div class="spotlight right" id="previewLightR"></div>
+      <div class="ramp"></div><div class="stage-floor"></div>
+      <div class="preview-card"><div class="alias" id="previewAlias">${look.nickname}</div><h3 id="previewName">Ava Allure</h3><div class="small" id="previewMeta">Showboat • Las Vegas, NV</div><p id="previewBanner">${look.banner}</p><div class="kv"><span class="pill" id="previewTheme">${look.theme}</span><span class="pill">Women's League</span></div></div>
+      <div class="preview-stack" id="previewStack">${wrestlerFigure({look},'walk entrance-pose-'+look.entrancePose)}</div>
+    </section>
   </section>`;
-  ['gear','accent','skin','hair'].forEach(id=>document.getElementById(id).addEventListener('input', previewAvatar));
+  document.getElementById('style').value='Showboat';
+  previewLook();
 }
-function previewAvatar(){
-  document.querySelector('.wrestler-stage').innerHTML = `<div class="ring"></div>${avatarHTML({gear:gear.value,accent:accent.value,skin:skin.value,hair:hair.value})}`;
+
+function switchTab(tab,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.classList.add('secondary')});btn.classList.add('active');btn.classList.remove('secondary')}
+
+function currentLookFromInputs(){const get=id=>document.getElementById(id);const val=id=>get(id)?.value||'';return {
+  nickname:val('nickname')||defaultLook.nickname, theme:val('theme')||defaultLook.theme, banner:val('banner')||defaultLook.banner,
+  bodyType:val('bodyType')||defaultLook.bodyType, outfit:val('outfit')||defaultLook.outfit, height:+val('height')||100, skin:val('skin')||defaultLook.skin,
+  hairStyle:val('hairStyle')||defaultLook.hairStyle, face:val('face')||defaultLook.face, hair:val('hair')||defaultLook.hair, eye:val('eye')||defaultLook.eye,
+  lip:val('lip')||defaultLook.lip, makeup:val('makeup')||defaultLook.makeup, gear1:val('gear1')||defaultLook.gear1, gear2:val('gear2')||defaultLook.gear2,
+  pyro:val('pyro')||defaultLook.pyro, entrancePose:val('entrancePose')||defaultLook.entrancePose, alias:val('alias')||'Main Event Muse'
+}}
+
+function previewLook(){
+  const name=document.getElementById('name')?.value||'Ava Allure';
+  const style=document.getElementById('style')?.value||'Showboat';
+  const home=document.getElementById('home')?.value||'Las Vegas, NV';
+  const look=currentLookFromInputs();
+  const stack=document.getElementById('previewStack');
+  if(stack) stack.innerHTML=wrestlerFigure({look},`walk walk-cycle entrance-pose-${look.entrancePose}`);
+  const pName=document.getElementById('previewName'); if(pName) pName.textContent=name;
+  const pAlias=document.getElementById('previewAlias'); if(pAlias) pAlias.textContent=look.nickname;
+  const pMeta=document.getElementById('previewMeta'); if(pMeta) pMeta.textContent=`${style} • ${home}`;
+  const pBanner=document.getElementById('previewBanner'); if(pBanner) pBanner.textContent=look.banner;
+  const pTheme=document.getElementById('previewTheme'); if(pTheme) pTheme.textContent=look.theme;
+  const spotL=document.getElementById('previewLightL'), spotR=document.getElementById('previewLightR');
+  if(spotL){spotL.style.background=`linear-gradient(180deg, ${hexToRgba(document.getElementById('spot')?.value||look.pyro,.48)}, transparent 72%)`;spotR.style.background=spotL.style.background}
+  document.querySelectorAll('.choice-chip').forEach(ch=>{
+    const txt=ch.getAttribute('onclick');
+    if(!txt) return;
+    const m=txt.match(/setChoice\('([^']+)'\,'([^']+)'\)/); if(!m) return;
+    const [,group,val]=m; const current=document.getElementById(group)?.value; ch.classList.toggle('active',current===val);
+  });
 }
-function loadExisting(){
-  const saved = loadState();
-  if(saved?.wrestler){ state=saved; state.screen='home'; render(); }
-  else toast('No saved rookie yet. Create one and sign a contract.');
-}
+
+function hexToRgba(hex,a){const c=(hex||'#ffffff').replace('#','');const n=parseInt(c.length===3?c.split('').map(x=>x+x).join(''):c,16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`}
+
+function loadExisting(){const s=loadState();if(s.wrestler){state=s;render()}else alert('No save found yet.')}
+
 function startCareer(){
-  const style = document.getElementById('style').value;
-  let base = { power:12, charisma:12, tech:12 };
-  if(style==='High Flyer') base = {power:10,charisma:15,tech:15};
-  if(style==='Powerhouse') base = {power:20,charisma:10,tech:10};
-  if(style==='Technician') base = {power:10,charisma:10,tech:20};
-  if(style==='Brawler') base = {power:17,charisma:10,tech:13};
-  if(style==='Showboat') base = {power:10,charisma:22,tech:8};
-  state = structuredClone(defaultState);
+  const style=document.getElementById('style').value;
+  let base={power:12,charisma:12,tech:12};
+  if(style==='High Flyer') base={power:10,charisma:15,tech:17};
+  if(style==='Powerhouse') base={power:21,charisma:10,tech:10};
+  if(style==='Technician') base={power:10,charisma:11,tech:21};
+  if(style==='Brawler') base={power:18,charisma:11,tech:13};
+  if(style==='Showboat') base={power:11,charisma:21,tech:11};
+  const look=currentLookFromInputs();
+  state=structuredClone(defaultState);
   state.screen='home';
-  state.wrestler = {
-    name: document.getElementById('name').value.trim() || 'Mystery Rookie',
-    hometown: document.getElementById('home').value.trim() || 'Parts Unknown',
-    style, catchphrase: document.getElementById('catch').value.trim() || 'Believe the hype!',
-    gear: gear.value, accent: accent.value, skin: skin.value, hair: hair.value,
-    rep:0, stamina:100, morale:80, fans:25, ...base
+  state.wrestler={
+    name:document.getElementById('name').value.trim()||'Mystery Queen', hometown:document.getElementById('home').value.trim()||'Parts Unknown',
+    style, catchphrase:document.getElementById('catch').value.trim()||'Bow down when the lights hit.', look,
+    power:base.power,charisma:base.charisma,tech:base.tech,rep:0,stamina:100,morale:86,fans:18,alias:look.nickname, theme:look.theme
   };
-  addLog(`${state.wrestler.name} signed a developmental contract with Grand Collision Entertainment.`);
-  render();
+  addLog(`${state.wrestler.name} signed a rookie contract with ${promotionName}, an all-women showcase of elite wrestling entertainment.`);
+  saveState(); render();
 }
 
 function renderGame(tab='home'){
-  const w = state.wrestler;
-  app.innerHTML = `<div class="nav">
-    ${['home','training','matches','story','rankings','belts','journal'].map(t=>`<button class="${tab===t?'':'secondary'}" onclick="renderGame('${t}')">${t.toUpperCase()}</button>`).join('')}
-  </div>
-  <section class="grid two">
+  stopAll();
+  state.screen=tab; saveState(); const w=state.wrestler;
+  app.innerHTML=`<div class="nav">${['home','training','matches','story','rankings','belts','journal'].map(t=>`<button class="${tab===t?'':'secondary'}" onclick="renderGame('${t}')">${t.toUpperCase()}</button>`).join('')}</div>
+  <section class="hero-grid">
     <aside class="card">
-      <div class="panel-title"><h2>${w.name}</h2><span class="pill">Week ${state.week}</span></div>
-      <div class="wrestler-stage" style="min-height:310px"><div class="ring"></div>${avatarHTML(w)}</div>
-      <div class="kv"><span class="pill">${w.style}</span><span class="pill">${w.hometown}</span><span class="pill">$${state.money}</span><span class="pill">Fans ${w.fans}k</span></div>
-      <p class="notice">“${w.catchphrase}”</p>
-      ${statBlock('Reputation', w.rep, 130)}${statBlock('Stamina', w.stamina, 100)}${statBlock('Morale', w.morale, 100)}
+      <div class="panel-title"><div><h2>${w.name}</h2><div class="small">${w.alias} • ${w.style}</div></div><span class="pill">Week ${state.week}</span></div>
+      <div class="hero-stage" style="min-height:520px"><div class="spotlight left" style="background:linear-gradient(180deg,${hexToRgba(w.look.pyro,.44)},transparent 72%)"></div><div class="spotlight right" style="background:linear-gradient(180deg,${hexToRgba(w.look.pyro,.44)},transparent 72%)"></div><div class="ramp"></div><div class="stage-floor"></div><div class="preview-card"><div class="alias">${w.alias}</div><h3>${w.name}</h3><div class="small">${w.hometown}</div><p>${w.catchphrase}</p><div class="kv"><span class="pill">${w.theme}</span><span class="pill">Women's League</span></div></div><div class="preview-stack">${wrestlerFigure(w,'entrance-pose-'+w.look.entrancePose)}</div></div>
+      <div class="kv" style="margin-top:12px"><span class="pill">Fans ${w.fans}k</span><span class="pill">$${state.money}</span><span class="pill">Arena ${state.arena}</span></div>
+      ${statBlock('Reputation',w.rep,130)}${statBlock('Stamina',w.stamina,100)}${statBlock('Morale',w.morale,100)}
       <div class="grid three" style="margin-top:12px">${miniStat('Power',w.power)}${miniStat('Charisma',w.charisma)}${miniStat('Technique',w.tech)}</div>
     </aside>
     <section class="card" id="panel"></section>
   </section>`;
   renderPanel(tab);
 }
-function statBlock(name,val,max){ return `<div class="stat"><b><span>${name}</span><span>${val}/${max}</span></b><div class="bar"><div class="fill" style="width:${Math.min(100,val/max*100)}%"></div></div></div>`; }
-function miniStat(name,val){ return `<div class="stat"><b>${name}</b><div class="big">${val}</div></div>`; }
-function renderPanel(tab){
-  const panel = document.getElementById('panel');
-  const w = state.wrestler;
-  if(tab==='home') panel.innerHTML = `<div class="panel-title"><h2>Booking Office</h2><span class="pill">Overall ${statTotal()}</span></div>
-    <p class="notice">Choose how to spend each week: train, cut promos, accept story beats, or chase a title match. Win belts and climb the GCE rankings to unlock the legendary finale in a retro 8-bit wrestling presentation.</p>
-    <div class="grid two" style="margin-top:16px">
-      <button onclick="renderGame('training')">Hit the Training Center</button>
-      <button onclick="renderGame('matches')">Book a Match</button>
-      <button onclick="renderGame('story')">Progress Storyline</button>
-      <button onclick="restWeek()" class="secondary">Rest and Recover</button>
-    </div>
-    <h3>Next Goal</h3>${nextGoalHTML()}`;
-  if(tab==='training') panel.innerHTML = `<div class="panel-title"><h2>Training Center</h2><span class="pill">Costs stamina</span></div>
-    <div class="grid two">
-      ${trainingButton('Power Gym','power',12,12,'Throw heavier opponents and survive brawls.')}
-      ${trainingButton('Promo Class','charisma',10,10,'Win crowds, sell feuds, and earn faster reputation.')}
-      ${trainingButton('Chain Wrestling','tech',11,11,'Reverse finishers and outsmart champions.')}
-      ${trainingButton('Meet Fans','fans',8,5,'Grow your following and morale.')}
-    </div>`;
-  if(tab==='matches') panel.innerHTML = `<div class="panel-title"><h2>Match Card</h2><span class="pill">Pick your fight</span></div>${opponents.map(o=>matchRow(o)).join('')}`;
-  if(tab==='story') panel.innerHTML = `<div class="panel-title"><h2>Storylines</h2><span class="pill">Drama = Reputation</span></div>${storylines.map(s=>storyRow(s)).join('')}`;
-  if(tab==='rankings') panel.innerHTML = `<div class="panel-title"><h2>GCE Rankings</h2><span class="pill">Beat higher stars to rise</span></div>${rankingHTML()}`;
-  if(tab==='belts') panel.innerHTML = `<div class="panel-title"><h2>Championship Room</h2><span class="pill">${state.ownedBelts.length}/${belts.length} Belts</span></div>${belts.map(b=>beltRow(b)).join('')}`;
-  if(tab==='journal') panel.innerHTML = `<div class="panel-title"><h2>Career Journal</h2><button class="danger" onclick="reset()">Start Over</button></div><div class="log">${state.log.map(l=>`<div class="log-entry">${l}</div>`).join('') || '<p>No entries yet.</p>'}</div>`;
+
+function nextGoal(){const w=state.wrestler;if(w.rep<24)return 'Win your debut and build your first fanbase.'; if(w.rep<48)return 'Beat a ranked rival to get into the title conversation.'; if(w.rep<78)return 'Chase the Velocity Queens Title and headline a major show.'; return 'You are close to a World Championship match. Keep the momentum alive.'}
+function trainButton(name,stat,cost,plus,desc){return `<div class="row"><div><b>${name}</b><div class="small">${desc}</div></div><button onclick="train('${stat}',${cost},${plus},'${name}')">Train</button></div>`}
+function storyRow(s){const done=state.completedStories.includes(s.id);return `<div class="row"><div><b>${s.title}</b><div class="small">${s.desc}</div><div class="small">Reward: ${s.reward}</div></div><button class="${done?'secondary':''}" ${done?'disabled':''} onclick="playStory('${s.id}')">${done?'Completed':'Play Story'}</button></div>`}
+function beltCard(b){const own=state.ownedBelts.includes(b.id);return `<div class="card" style="padding:16px;background:linear-gradient(160deg,rgba(38,29,78,.96),rgba(16,17,44,.96))"><div class="panel-title"><div><h3>${b.name}</h3><div class="small">Prestige ${b.prestige}</div></div><span class="pill">${own?'Owned':'Locked'}</span></div><div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:100%;max-width:280px;height:96px;border-radius:18px;background:linear-gradient(180deg,#2f234e,#130e24);border:1px solid rgba(255,255,255,.12);position:relative;overflow:hidden"><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:132px;height:72px;border-radius:26px;background:linear-gradient(180deg,#ffe29d,#d1a33b);box-shadow:0 0 0 8px #4d396d,0 0 22px rgba(255,212,107,.22)"></div><div style="position:absolute;left:20px;top:28px;width:56px;height:36px;border-radius:18px;background:linear-gradient(180deg,#ffe29d,#d1a33b)"></div><div style="position:absolute;right:20px;top:28px;width:56px;height:36px;border-radius:18px;background:linear-gradient(180deg,#ffe29d,#d1a33b)"></div><div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:1000;color:#281437;letter-spacing:.08em">${b.name.split(' ')[0].toUpperCase()}</div></div></div></div>`}
+function matchRow(r){return `<div class="row"><div><b>${r.name}</b><div class="small">${r.style} • Overall ${r.power+r.charisma+r.tech}</div><div class="small">${r.catchphrase}</div></div><div class="footer-actions"><button class="secondary" onclick="previewRival('${r.name}')">Preview</button><button onclick="startMatch('${r.name}')">Book Match</button></div></div>`}
+function rankings(){const entries=[state.wrestler,...rivals].sort((a,b)=>(b.rep+(b.power+b.charisma+b.tech))-(a.rep+(a.power+a.charisma+a.tech))); return entries.map((w,i)=>`<div class="row"><div><b>#${i+1} ${w.name}</b><div class="small">${w.style} • Rep ${w.rep}</div></div><span class="pill">${w===state.wrestler?'YOU':'RANKED'}</span></div>`).join('')}
+
+function renderPanel(tab){const p=document.getElementById('panel'); const w=state.wrestler;
+  if(tab==='home') p.innerHTML=`<div class="panel-title"><div><h2>Booking Office</h2><div class="small">Women's league career management with polished presentation and autonomous matches.</div></div><span class="pill">Overall ${total()}</span></div><div class="notice">${promotionName} is all about star power and athletic spectacle. Train your queen, build a reputation, and watch animated entrances and matches as you rise through a women's only roster.</div><div class="grid two" style="margin-top:16px"><button onclick="renderGame('matches')">Book Showcase Match</button><button onclick="renderGame('training')">Train This Week</button><button class="secondary" onclick="renderGame('story')">Advance Storyline</button><button class="secondary" onclick="restWeek()">Rest and Recover</button></div><h3 style="margin-top:18px">Next Goal</h3><div class="notice">${nextGoal()}</div>`;
+  if(tab==='training') p.innerHTML=`<div class="panel-title"><h2>Performance Center</h2><span class="pill">Costs stamina</span></div><div class="grid two">${trainButton('Strength Suite','power',16,3,'Build slam power and ring control.')}${trainButton('Promo Stage','charisma',12,3,'Win the crowd and sharpen your persona.')}${trainButton('Grappling Lab','tech',16,3,'Improve counters and ring IQ.')}${trainButton('Recovery Lounge','stamina',0,22,'Restore stamina and morale without skill gain.')}</div>`;
+  if(tab==='matches') p.innerHTML=`<div class="panel-title"><h2>Women's Match Card</h2><span class="pill">Animated Entrances & Match AI</span></div><div class="notice">Select a rival from the Crown Circuit roster. Every match includes a theatrical entrance scene, live commentary, and autonomous wrestling actions.</div><div style="margin-top:14px">${rivals.map(matchRow).join('')}</div>`;
+  if(tab==='story') p.innerHTML=`<div class="panel-title"><h2>Storylines</h2><span class="pill">Drama & Rewards</span></div>${stories.map(storyRow).join('')}`;
+  if(tab==='rankings') p.innerHTML=`<div class="panel-title"><h2>League Rankings</h2><span class="pill">Top Queens</span></div>${rankings()}`;
+  if(tab==='belts') p.innerHTML=`<div class="panel-title"><h2>Championship Gallery</h2><span class="pill">${state.ownedBelts.length}/${belts.length} Owned</span></div><div class="grid two">${belts.map(beltCard).join('')}</div>`;
+  if(tab==='journal') p.innerHTML=`<div class="panel-title"><h2>Career Journal</h2><span class="pill">Latest</span></div><div class="log">${state.log.map(x=>`<div class="log-entry">${x}</div>`).join('')}</div>`;
 }
-function nextGoalHTML(){
-  const nextBelt = belts.find(b=>!state.ownedBelts.includes(b.id));
-  if(!nextBelt) return `<p class="notice">You own every belt. You are the neon immortal. Start over with a new style for a different career arc.</p>`;
-  return `<div class="belt-row"><div><b>${nextBelt.name}</b><div class="small">Required reputation: ${nextBelt.prestige}</div></div><button onclick="renderGame('matches')">Chase It</button></div>`;
-}
-function trainingButton(label,stat,cost,gain,desc){ return `<div class="stat"><h3>${label}</h3><p class="small">${desc}</p><button onclick="train('${stat}',${cost},${gain})">Train -${cost} stamina</button></div>`; }
-function train(stat,cost,gain){
-  const w=state.wrestler; if(w.stamina<cost) return toast('Too tired. Rest before training.');
-  w.stamina-=cost;
-  if(stat==='fans'){ w.fans+=gain; w.morale=Math.min(100,w.morale+6); addLog(`${w.name} met fans at a neon signing. Fanbase grew to ${w.fans}k.`); }
-  else { w[stat]+=Math.ceil(Math.random()*3); w.rep+=Math.ceil(gain/3); addLog(`${w.name} trained ${stat} and gained momentum.`); }
-  advanceWeek(); renderGame('training');
-}
-function restWeek(){ state.wrestler.stamina=Math.min(100,state.wrestler.stamina+30); state.wrestler.morale=Math.min(100,state.wrestler.morale+8); addLog(`${state.wrestler.name} recovered, studied tape, and recharged.`); advanceWeek(); renderGame('home'); }
-function advanceWeek(){ state.week++; state.money += 20 + Math.floor(state.wrestler.rep/5); }
-function matchRow(o){
-  const req = belts.find(b=>b.id===o.belt)?.prestige || 0;
-  const locked = state.wrestler.rep + 12 < req;
-  return `<div class="match-row"><div><b>${o.name}</b><div class="small">${o.style} • Target: ${beltName(o.belt)} • Threat ${o.power+o.charisma+o.tech}</div></div><button ${locked?'disabled':''} onclick='startMatch(${JSON.stringify(o)})'>${locked?'Build Rep':'Fight'}</button></div>`;
-}
-function startMatch(o){
-  state.currentMatch = { opponent:o, momentum:50, round:1, notes:[`${state.wrestler.name} enters under a storm of lights.`] };
-  state.screen='match'; render();
-}
-function renderMatch(){
-  const m=state.currentMatch, w=state.wrestler, o=m.opponent;
-  const foeLook = { gear:o.colors?.[0] || '#45d7ff', accent:o.colors?.[1] || '#ffdf4d', skin:o.colors?.[2] || '#b97048', hair:o.colors?.[3] || '#22110a' };
-  app.innerHTML = `<section class="card match-screen">
-    <h2>${w.name} vs ${o.name}</h2>
-    <div class="retro-ring-board">
-      <div class="retro-scorebar"><span>ROUND ${m.round}/5</span><span>MOMENTUM ${m.momentum}%</span></div>
-      <div class="retro-ring-scene">
-        <div class="retro-crowd"></div>
-        <div class="retro-stage-light"></div>
-        <div class="retro-post left"></div><div class="retro-post right"></div>
-        <div class="retro-rope r1"></div><div class="retro-rope r2"></div><div class="retro-rope r3"></div>
-        <div class="retro-mat"></div>
-        <div class="sprite-slot left">${avatarHTML(w, 'retro-player')}</div>
-        <div class="sprite-slot right">${avatarHTML(foeLook, 'retro-rival')}</div>
+
+function train(stat,cost,plus,name){const w=state.wrestler;if(stat!=='stamina' && w.stamina<cost) return alert('Too tired. Rest or use the Recovery Lounge.'); if(stat==='stamina'){w.stamina=Math.min(100,w.stamina+plus);w.morale=Math.min(100,w.morale+10); addLog(`${w.name} recovered in the ${name}.`)} else {w[stat]+=plus; w.stamina=Math.max(0,w.stamina-cost); w.rep=Math.min(130,w.rep+1); addLog(`${w.name} trained at the ${name} and improved ${stat}.`)} state.week++; saveState(); renderGame('training')}
+function restWeek(){const w=state.wrestler; w.stamina=Math.min(100,w.stamina+24); w.morale=Math.min(100,w.morale+12); state.week++; addLog(`${w.name} rested, studied tape, and returned refreshed.`); saveState(); renderGame('home')}
+function playStory(id){if(state.completedStories.includes(id)) return; const w=state.wrestler; const s=stories.find(x=>x.id===id); if(!s) return; state.completedStories.push(id); w.rep=Math.min(130,w.rep+8); w.fans+=6; w.morale=Math.min(100,w.morale+5); state.money+=30; state.week++; addLog(`${w.name} completed storyline: ${s.title}.`); saveState(); renderGame('story')}
+function previewRival(name){const r=rivals.find(x=>x.name===name); if(!r) return; alert(`${r.name}\n${r.style}\n${r.catchphrase}\nOverall ${r.power+r.charisma+r.tech}`)}
+
+function actorFromWrestler(src,isPlayer=false){const look=structuredClone(src.look||src); return {name:src.name,style:src.style,power:src.power,charisma:src.charisma,tech:src.tech,rep:src.rep||0,look,hp:100,stam:100,mom:isPlayer?34:30,x:isPlayer?31:69,pose:'idle',action:'Sizing up',down:0,tag:isPlayer?'YOU':'RIVAL'} }
+
+function startMatch(name){const r=rivals.find(x=>x.name===name); if(!r) return; state.currentMatch={phase:'entrance',banner:'Opening Showcase',player:actorFromWrestler(state.wrestler,true),foe:actorFromWrestler(r,false),opponentName:r.name,time:0,round:1,log:[`${state.wrestler.name} and ${r.name} are set for a women's division showcase.`],comments:[{by:'Iris Vale',text:`Tonight's showcase features ${state.wrestler.name} entering the spotlight against ${r.name}.`},{by:'Cass Monroe',text:`The entrances alone could steal the show, but both women came here to win.`}],result:null}; state.screen='match'; saveState(); renderMatch(); startEntranceSequence()}
+
+function renderMatch(){const m=state.currentMatch,p=m.player,f=m.foe;
+  app.innerHTML=`<section class="match-screen">
+    <section class="card arena-card">
+      <div class="arena-wrap">
+        <div class="arena-crowd"></div>
+        <div class="crowd-dots" id="crowdDots"></div>
+        <div class="light-beam left" style="background:linear-gradient(180deg,${hexToRgba(p.look.pyro,.34)},transparent 70%)"></div>
+        <div class="light-beam right" style="background:linear-gradient(180deg,${hexToRgba(f.look.pyro,.28)},transparent 70%)"></div>
+        <div class="titantron"><div class="sub">${promotionName} • Women's Main Showcase</div><div class="main">${p.name} vs ${f.name}</div></div>
+        <div class="action-banner" id="actionBanner">${m.banner}</div>
+        <div class="ring-stage"><div class="ring-canvas-floor"></div><div class="ring-apron"></div><div class="steps"></div><div class="post left"></div><div class="post right"></div><div class="ring-mat"><div class="ring-logo">CROWN CIRCUIT</div></div><div class="rope r1"></div><div class="rope r2"></div><div class="rope r3"></div>
+          <div id="fighterLeft" style="position:absolute;left:${p.x}%;bottom:64px;transform:translateX(-50%)">${wrestlerFigure({look:p.look},'compact')}</div>
+          <div id="fighterRight" style="position:absolute;left:${f.x}%;bottom:64px;transform:translateX(-50%) scaleX(-1)">${wrestlerFigure({look:f.look},'compact')}</div>
+        </div>
+        <div class="entrance-overlay" id="entranceOverlay">
+          <div class="entrance-screen">
+            <div class="entrance-bg"></div>
+            <div class="pyro left" id="pyroL" style="--pyro:${p.look.pyro}"></div><div class="pyro right" id="pyroR" style="--pyro:${p.look.pyro}"></div>
+            <div class="entrance-runway"></div>
+            <div style="position:absolute;left:50%;bottom:72px;transform:translateX(-50%)" id="entranceFigure">${wrestlerFigure({look:p.look},'compact walk walk-cycle entrance-pose-'+p.look.entrancePose)}</div>
+            <div class="entrance-nameplate"><div><div class="tag" id="entranceTag">Live Entrance</div><div class="name" id="entranceName">${p.name}</div></div><div class="quote" id="entranceQuote">${state.wrestler.catchphrase}</div></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="versus retro"><div><h3>${w.name}</h3><div class="small">${w.style}</div></div><div class="vs">VS</div><div><h3>${o.name}</h3><div class="small">${o.style}</div></div></div>
-    <div class="meter"><div class="meter-inner" style="width:${m.momentum}%"></div></div><p class="small">Momentum ${m.momentum}% • Play it like a classic console showdown.</p>
-    <div class="choice">
-      <button onclick="matchMove('power')">Power Move</button>
-      <button onclick="matchMove('charisma')">Crowd Taunt</button>
-      <button onclick="matchMove('tech')">Technical Counter</button>
-      <button class="secondary" onclick="matchMove('risk')">High Risk Finisher</button>
-    </div>
-    <div class="log" style="text-align:left;margin-top:18px">${m.notes.map(n=>`<div class="log-entry">${n}</div>`).join('')}</div>
+      <div class="match-controls"><button onclick="toggleMatch()">Pause / Resume</button><button class="secondary" onclick="skipMatch()">Skip to Finish</button><button class="secondary" onclick="renderGame('matches')">Leave Match</button></div>
+    </section>
+    <aside class="card">
+      <div class="panel-title"><h2>Broadcast Desk</h2><span class="pill">Live</span></div>
+      <div class="hud-grid">${hudBox(p)}${hudBox(f)}</div>
+      <div class="notice" style="margin:12px 0">The women's division presentation is front and center: televised entrances, live color commentary, and autonomous in-ring decisions shape every match.</div>
+      <div class="panel-title"><h3>Color Commentary</h3><span class="pill">Iris & Cass</span></div>
+      <div class="commentary" id="commentaryBox">${m.comments.map(c=>`<div class="comment"><b>${c.by}</b>${c.text}</div>`).join('')}</div>
+      <div class="panel-title" style="margin-top:12px"><h3>Match Log</h3><span class="pill">Round ${m.round}</span></div>
+      <div class="log" id="matchLog">${m.log.map(l=>`<div class="log-entry">${l}</div>`).join('')}</div>
+    </aside>
   </section>`;
+  populateCrowd(); refreshFighters();
 }
-function matchMove(type){
-  const m=state.currentMatch, w=state.wrestler, o=m.opponent;
-  const moveList = moves[styleKey(w.style)] || moves.Brawler;
-  let skill = type==='risk' ? Math.max(w.power,w.charisma,w.tech) : w[type];
-  let opp = type==='power'?o.power:type==='charisma'?o.charisma:type==='tech'?o.tech:Math.max(o.power,o.charisma,o.tech);
-  let roll = Math.floor(Math.random()*20)+1 + skill - Math.floor(opp/2);
-  let swing = type==='risk' ? (roll>18?24:-18) : (roll>13?14:-9);
-  m.momentum = Math.max(0, Math.min(100, m.momentum+swing));
-  const move = type==='risk' ? moveList[0] : moveList[Math.floor(Math.random()*moveList.length)];
-  m.notes.unshift(swing>0 ? `${w.name} lands ${move}! The crowd erupts like an old-school arena crowd.` : `${o.name} reads the move and swings the momentum back.`);
-  m.round++;
-  if(m.momentum>=88 || m.round>5 || m.momentum<=12) return finishMatch();
-  render();
+
+function hudBox(a){return `<div class="wbox"><div class="panel-title" style="margin-bottom:6px"><div><h3 style="margin:0">${a.name}</h3><div class="small">${a.style} • ${a.action}</div></div><span class="pill">${a.tag}</span></div>${statBlock('Health',a.hp,100)}${statBlock('Stamina',a.stam,100)}${statBlock('Momentum',a.mom,100)}</div>`}
+function populateCrowd(){const d=document.getElementById('crowdDots'); if(!d) return; let html=''; const colors=['#ffd46b','#ff6a88','#69e6ff','#67ffbd','#9b7cff']; for(let i=0;i<90;i++){html+=`<i style="left:${Math.random()*100}%;top:${Math.random()*100}%;--dot:${colors[i%colors.length]};opacity:${0.35+Math.random()*0.65}"></i>`} d.innerHTML=html}
+function pushLog(t){const m=state.currentMatch; m.log.unshift(t); m.log=m.log.slice(0,80); const box=document.getElementById('matchLog'); if(box) box.innerHTML=m.log.map(l=>`<div class="log-entry">${l}</div>`).join('')}
+function comment(by,text){const m=state.currentMatch; m.comments.unshift({by,text}); m.comments=m.comments.slice(0,40); const box=document.getElementById('commentaryBox'); if(box) box.innerHTML=m.comments.map(c=>`<div class="comment"><b>${c.by}</b>${c.text}</div>`).join('')}
+function setBanner(t){state.currentMatch.banner=t; const b=document.getElementById('actionBanner'); if(b) b.textContent=t}
+function refreshHUD(){const card=document.querySelector('.hud-grid'); if(card){const m=state.currentMatch; card.innerHTML=hudBox(m.player)+hudBox(m.foe)}}
+function refreshFighters(){const m=state.currentMatch; const left=document.querySelector('#fighterLeft .wrestler'), right=document.querySelector('#fighterRight .wrestler'); if(left){left.className=`wrestler compact bodytype-${m.player.look.bodyType} hair-${m.player.look.hairStyle} face-${m.player.look.face} makeup-${m.player.look.makeup} outfit-${m.player.look.outfit} ${poseClass(m.player.pose)}`; left.parentElement.style.left=m.player.x+'%'; left.style.setProperty('--skin',m.player.look.skin); left.style.setProperty('--hair',m.player.look.hair); left.style.setProperty('--gear1',m.player.look.gear1); left.style.setProperty('--gear2',m.player.look.gear2); left.style.setProperty('--eye',m.player.look.eye); left.style.setProperty('--lip',m.player.look.lip); left.style.setProperty('--height',(m.player.look.height||100)/100)} if(right){right.className=`wrestler compact bodytype-${m.foe.look.bodyType} hair-${m.foe.look.hairStyle} face-${m.foe.look.face} makeup-${m.foe.look.makeup} outfit-${m.foe.look.outfit} ${poseClass(m.foe.pose)}`; right.parentElement.style.left=m.foe.x+'%'; right.style.setProperty('--skin',m.foe.look.skin); right.style.setProperty('--hair',m.foe.look.hair); right.style.setProperty('--gear1',m.foe.look.gear1); right.style.setProperty('--gear2',m.foe.look.gear2); right.style.setProperty('--eye',m.foe.look.eye); right.style.setProperty('--lip',m.foe.look.lip); right.style.setProperty('--height',(m.foe.look.height||100)/100)} refreshHUD()}
+function poseClass(p){return {idle:'',walk:'walk',strike:'pose-strike',grapple:'pose-grapple',taunt:'pose-taunt',aerial:'pose-aerial',win:'pose-win',down:'pose-grapple'}[p]||''}
+
+function startEntranceSequence(){const overlay=document.getElementById('entranceOverlay'); if(!overlay) return; const m=state.currentMatch; const tag=document.getElementById('entranceTag'), name=document.getElementById('entranceName'), quote=document.getElementById('entranceQuote'), fig=document.getElementById('entranceFigure'), pyroL=document.getElementById('pyroL'),pyroR=document.getElementById('pyroR'); overlay.classList.add('show'); const order=[
+    {actor:m.player, by:'Iris Vale', quote:state.wrestler.catchphrase, intro:`Making her way to the ring, ${m.player.name}!`},
+    {actor:m.foe, by:'Cass Monroe', quote:rivals.find(r=>r.name===m.foe.name)?.catchphrase||'', intro:`And her opponent, ${m.foe.name}!`}
+  ]; let step=0; renderStep();
+  function renderStep(){const item=order[step]; if(!item){setTimeout(()=>{overlay.classList.remove('show'); state.currentMatch.phase='match'; state.currentMatch.banner='Bell Rings'; comment('Iris Vale',`The entrances are over and both women are ready to go.`); comment('Cass Monroe',`What a presentation. Now let's see who can back it up.`); startMatchLoop();},700); return;} tag.textContent='Live Entrance'; name.textContent=item.actor.name; quote.textContent=item.quote; fig.innerHTML=wrestlerFigure({look:item.actor.look},`compact walk walk-cycle entrance-pose-${item.actor.look.entrancePose}`); pyroL.style.setProperty('--pyro',item.actor.look.pyro); pyroR.style.setProperty('--pyro',item.actor.look.pyro); pushLog(item.intro); comment(item.by,item.intro); step++; entranceTimer=setTimeout(renderStep,2200)}
 }
-function finishMatch(){
-  const m=state.currentMatch, w=state.wrestler, o=m.opponent;
-  const chance = m.momentum + statTotal()/3 - (o.power+o.charisma+o.tech)/4 + Math.random()*30;
-  const win = chance > 55;
-  let text;
-  if(win){
-    const repGain = 10 + Math.floor((o.power+o.charisma+o.tech)/12);
-    w.rep = Math.min(130, w.rep + repGain); w.fans += 4 + Math.floor(repGain/2); w.morale=Math.min(100,w.morale+8);
-    text = `${w.name} defeated ${o.name} and gained ${repGain} reputation.`;
-    const belt = belts.find(b=>b.id===o.belt);
-    if(belt && w.rep>=belt.prestige && !state.ownedBelts.includes(belt.id)) { state.ownedBelts.push(belt.id); text += ` NEW CHAMPION: ${belt.name}!`; }
-  } else {
-    w.rep = Math.max(0, w.rep-2); w.morale=Math.max(0,w.morale-7); text = `${w.name} lost to ${o.name}, but learned from the spotlight.`;
-  }
-  w.stamina = Math.max(0, w.stamina - 18); addLog(text); advanceWeek(); state.currentMatch=null; state.screen='home'; toast(text); renderGame('home');
+
+function startMatchLoop(){stopAll(); matchInterval=setInterval(tickMatch,1200)}
+function toggleMatch(){if(!matchInterval){startMatchLoop();setBanner('Action Resumes');return} clearInterval(matchInterval); matchInterval=0; setBanner('Paused')}
+function skipMatch(){while(state.currentMatch && !state.currentMatch.result){tickMatch(true)}}
+function chooseAction(a,b){if(a.stam<16) return 'recover'; if(a.hp<28 && a.mom>56 && Math.random()<.22) return 'taunt'; if(b.hp<34 && a.mom>62) return Math.random()<.5?'finisher':'pin'; if(a.style==='High Flyer' && a.mom>54) return Math.random()<.5?'aerial':'strike'; if(a.style==='Technician' && b.stam<50) return Math.random()<.45?'grapple':'counter'; if(a.style==='Powerhouse') return Math.random()<.52?'grapple':'strike'; if(a.style==='Showboat' && a.mom<52) return Math.random()<.42?'taunt':'strike'; if(a.style==='Brawler') return Math.random()<.5?'strike':'grapple'; return ['strike','grapple','counter','taunt'][Math.floor(Math.random()*4)]}
+function tickMatch(force=false){const m=state.currentMatch;if(!m || m.result || m.phase!=='match') return; const a1=chooseAction(m.player,m.foe), a2=chooseAction(m.foe,m.player); resolveAction(m.player,m.foe,a1); if(m.result) return; if(Math.random()>.32) resolveAction(m.foe,m.player,a2); m.round++; if(m.round>14 && !m.result){const score=(m.player.hp+m.player.mom+total()/3)-(m.foe.hp+m.foe.mom+(m.foe.power+m.foe.charisma+m.foe.tech)/3); endMatch(score>=0?m.player:m.foe,'decision')} refreshFighters()}
+function resolveAction(a,b,act){if(state.currentMatch.result) return; const names=styleMoves(a.style); const sig=names[Math.floor(Math.random()*names.length)];
+  if(act==='recover'){a.stam=Math.min(100,a.stam+16); a.mom=Math.max(0,a.mom-4); a.pose='idle'; a.action='Recovering'; a.x+=(a===state.currentMatch.player?1:-1); setBanner('Recovery'); pushLog(`${a.name} slows things down and regains composure.`); comment('Cass Monroe',`${a.name} is buying herself precious breathing room.`); return}
+  if(act==='taunt'){a.mom=Math.min(100,a.mom+12); a.stam=Math.max(0,a.stam-4); a.pose='taunt'; a.action='Taunting'; setBanner('Crowd Reaction'); pushLog(`${a.name} plays to the crowd and soaks up the moment.`); comment('Iris Vale',`${a.name} knows exactly how to command an arena.`); return}
+  if(act==='counter'){const ok=Math.random()<(.45+a.tech/100); a.pose='grapple'; if(ok){const dmg=9+Math.round(a.tech/7); b.hp=Math.max(0,b.hp-dmg); b.stam=Math.max(0,b.stam-8); a.mom=Math.min(100,a.mom+10); b.mom=Math.max(0,b.mom-8); a.action='Counter'; b.pose='down'; setBanner('Counter!'); pushLog(`${a.name} reverses the exchange into a slick counter!`); comment('Iris Vale',`What ring awareness by ${a.name}!`)} else {a.stam=Math.max(0,a.stam-6); pushLog(`${a.name} reaches for a counter but misses the timing.`)} checkFinish(a,b); return}
+  if(act==='aerial'){const ok=Math.random()<(.52+a.charisma/100+a.mom/200); a.pose='aerial'; a.stam=Math.max(0,a.stam-16); if(ok){const dmg=15+Math.round(a.charisma/6); b.hp=Math.max(0,b.hp-dmg); b.stam=Math.max(0,b.stam-10); a.mom=Math.min(100,a.mom+14); b.pose='down'; a.action='Aerial Attack'; setBanner(sig); pushLog(`${a.name} launches ${sig} and lands flush!`); comment('Cass Monroe',`That was spectacular and dangerous in the best way.`)} else {a.hp=Math.max(0,a.hp-7); a.mom=Math.max(0,a.mom-8); pushLog(`${a.name} goes airborne but crashes hard on the landing.`); comment('Iris Vale',`High risk means high consequence.`)} checkFinish(a,b); return}
+  if(act==='finisher'){const ok=Math.random()<(.56+a.mom/100); a.pose='strike'; a.stam=Math.max(0,a.stam-20); a.action='Finisher'; if(ok){const dmg=22+Math.round((a.power+a.charisma+a.tech)/18); b.hp=Math.max(0,b.hp-dmg); b.mom=Math.max(0,b.mom-18); b.pose='down'; setBanner('Finisher!'); pushLog(`${a.name} unleashes ${sig}, her finishing blow!`); comment('Cass Monroe',`That might be the knockout moment right there.`); if(b.hp<26 || Math.random()<.3) return attemptPin(a,b,true)} else {pushLog(`${a.name} tries for ${sig}, but ${b.name} avoids the kill shot.`); comment('Iris Vale',`${b.name} just dodged disaster.`)} checkFinish(a,b); return}
+  if(act==='pin'){attemptPin(a,b,false); return}
+  // strike or grapple
+  const useGrapple=act==='grapple'; const base=useGrapple?(8+a.power/4+a.tech/6):(6+a.power/5+a.charisma/8); const acc=useGrapple?.66:.78; const ok=Math.random()<acc; a.pose=useGrapple?'grapple':'strike'; a.stam=Math.max(0,a.stam-(useGrapple?12:8)); a.action=useGrapple?'Grapple':'Striking'; a.x+=(a===state.currentMatch.player?1.6:-1.6); if(ok){const dmg=Math.round(base); b.hp=Math.max(0,b.hp-dmg); b.stam=Math.max(0,b.stam-(useGrapple?10:7)); a.mom=Math.min(100,a.mom+(useGrapple?8:6)); b.mom=Math.max(0,b.mom-5); b.pose='down'; setBanner(sig); pushLog(`${a.name} lands ${sig}!`); comment(useGrapple?'Cass Monroe':'Iris Vale', useGrapple?`${a.name} powered through with authority.`:`${a.name} is putting together a sharp sequence.`)} else {pushLog(`${a.name} reaches for a big move, but ${b.name} evades.`)} checkFinish(a,b)
 }
-function storyRow(s){
-  const done=state.completedStories.includes(s.id), locked=state.wrestler.rep<s.minRep;
-  return `<div class="story-row"><div><b>${s.title}</b><div class="small">${s.text} Required rep ${s.minRep}</div></div><button ${done||locked?'disabled':''} onclick="playStory('${s.id}')">${done?'Complete':locked?'Locked':'Play'}</button></div>`;
-}
-function playStory(id){
-  const s=storylines.find(x=>x.id===id), w=state.wrestler;
-  if(!s || w.rep<s.minRep || state.completedStories.includes(id)) return;
-  state.completedStories.push(id);
-  Object.entries(s.reward).forEach(([k,v])=> w[k]=(w[k]||0)+v);
-  w.morale=Math.min(100,w.morale+5); addLog(`Storyline complete: ${s.title}. ${w.name} became hotter than ever.`); advanceWeek(); renderGame('story');
-}
-function rankingHTML(){
-  const roster = opponents.map(o=>({name:o.name,total:o.power+o.charisma+o.tech})).concat([{name:state.wrestler.name,total:statTotal(), current:true}]).sort((a,b)=>b.total-a.total);
-  return roster.map((r,i)=>`<div class="rank-row ${r.current?'current':''}"><div><b>#${i+1} ${r.name}</b><div class="small">Score ${r.total}</div></div>${r.current?'<span class="pill">YOU</span>':''}</div>`).join('');
-}
-function beltRow(b){
-  const owned=state.ownedBelts.includes(b.id);
-  return `<div class="belt-row"><div><b>${owned?'🏆 ':' '}${b.name}</b><div class="small">Prestige requirement ${b.prestige}</div></div><span class="pill">${owned?'Won':'Vacant Target'}</span></div>`;
+function attemptPin(a,b,afterFinisher){a.action='Pinning'; a.pose='grapple'; setBanner('Pin Attempt'); pushLog(`${a.name} hooks the leg for a pin!`); comment('Iris Vale',`Cover! This could be the finish.`); const odds=42+(100-b.hp)*.34+a.mom*.16-b.mom*.1+(afterFinisher?16:0); if(Math.random()*100<odds){endMatch(a,'pinfall')} else {b.mom=Math.min(100,b.mom+12); pushLog(`${b.name} kicks out and keeps the match alive!`); comment('Cass Monroe',`${b.name} refuses to fade under the lights.`)} }
+function checkFinish(a,b){if(b.hp<=0) endMatch(a,'knockout'); else if(a.hp<=0) endMatch(b,'knockout')}
+function endMatch(winner,method){const m=state.currentMatch; if(m.result) return; m.result={winner:winner.name,method}; clearInterval(matchInterval); matchInterval=0; setBanner(`${winner.name} wins by ${method}!`); winner.pose='win'; const loser=winner===m.player?m.foe:m.player; loser.pose='down'; refreshFighters(); comment('Iris Vale',`${winner.name} stands tall after a polished performance in the women's division spotlight.`); comment('Cass Monroe',`That was entertaining from start to finish — exactly what Crown Circuit wants.`); pushLog(`${winner.name} wins by ${method}.`);
+  if(winner===m.player){const w=state.wrestler; const repGain=8+Math.floor((loser.power+loser.charisma+loser.tech)/16); w.rep=Math.min(130,w.rep+repGain); w.fans+=4+Math.floor(repGain/2); w.morale=Math.min(100,w.morale+8); state.money+=28+repGain; if(w.rep>18 && !state.ownedBelts.includes('spotlight')) state.ownedBelts.push('spotlight'); if(w.rep>48 && !state.ownedBelts.includes('allstar')) state.ownedBelts.push('allstar'); if(w.rep>78 && !state.ownedBelts.includes('velocity')) state.ownedBelts.push('velocity'); addLog(`${w.name} defeated ${loser.name} by ${method}, gaining ${repGain} reputation.`)}
+  else {const w=state.wrestler; w.morale=Math.max(40,w.morale-8); addLog(`${w.name} lost to ${winner.name} by ${method}, but remains a featured part of the women's division.`)}
+  state.week++; saveState();
+  setTimeout(()=>{alert(`${winner.name} wins by ${method}!`); renderGame('home')},800)
 }
 
 render();
-
-  </script>
+</script>
 </body>
 </html>

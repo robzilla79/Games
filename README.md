@@ -1,18 +1,34 @@
-# Neon Slam Wrestling RPG
+# Crown Circuit: Queens of the Ring
 
-A self-contained browser wrestling RPG. Create a custom rookie, sign with the fictional Grand Collision Entertainment promotion, train stats, play storylines, climb rankings, fight colorful rivals, and win championship belts. This build now uses a retro 8-bit console-inspired visual presentation.
+A self-contained browser wrestling RPG focused on a **women's-only wrestling league** with a polished presentation style.
 
-## Run
-Open `index.html` in a modern browser.
+## What's new in this overhaul
 
-## Features
-- Custom wrestler name, hometown, style, catchphrase, and colors
-- Retro 8-bit console-inspired wrestler sprites and arena UI
-- Career progression by week
-- Training, stamina, morale, fans, money, reputation
-- Match system with power, charisma, technique, and risky finishers
-- Storyline unlocks and rewards
-- Rankings and multiple championship belts
-- Local save via browser localStorage
+- Women's-only league theme and roster
+- Much more polished character presentation
+- Deeper player customization for:
+  - ring name / nickname
+  - body type and presence
+  - face mood and makeup
+  - hairstyle and hair color
+  - skin, eyes, lips, and outfit colors
+  - outfit base type
+  - entrance pose, theme name, banner line, and pyro color
+- Animated entrance presentation with:
+  - spotlights
+  - pyro effects
+  - runway-style entrance staging
+  - nameplate overlays
+- Improved animated in-ring presentation
+- Autonomous match logic with live commentary and match log
+- iPhone-friendly single-file build included
 
-- Retro-styled match board and presentation optimized for iPhone
+## Files
+
+- `index.html` — main build
+- `neon-slam-mobile-single-file.html` — single-file portable build
+- `icons/` — app icons
+
+## iPhone use
+
+Host the folder on any static host, open `index.html` in Safari, then use **Share → Add to Home Screen**.
