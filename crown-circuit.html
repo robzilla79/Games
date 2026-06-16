@@ -135,7 +135,19 @@
   </main>
 </div>
 <script>
-var SK = 'crown_circuit_v7';
+var SK = 'crown_circuit_v8';
+var BASE = 'https://raw.githubusercontent.com/robzilla79/Games/main/renders/';
+function r(id) {
+  return {
+    portrait:  BASE+id+'_portrait.png',
+    promo:     BASE+id+'_promo.png',
+    backstage: BASE+id+'_backstage.png',
+    signature: BASE+id+'_signature.png',
+    victory:   BASE+id+'_victory.png',
+    betrayal:  BASE+id+'_betrayal.png'
+  };
+}
+
 function byId(id) { return document.getElementById(id); }
 function uid(p) { return (p || 'id') + '_' + Math.random().toString(36).slice(2, 9); }
 function rand(a) { return a[Math.floor(Math.random() * a.length)]; }
@@ -150,19 +162,19 @@ var LOCS = ['Las Vegas','Chicago','Miami','Dallas','Nashville','Los Angeles','Ne
 var PPVS = ['Velvet Voltage','Golden Aftershock','Neon Reckoning','Crownfall'];
 
 var DEFAULT_ROSTER = [
-  {id:'ava_allure',name:'Ava Allure',nick:'The Crownfire',align:'Face',style:'Showboat champion',cp:'The spotlight does not find me. It follows me.',sig:'Royal Eclipse',pop:91,mom:84,mic:89,tech:82,pow:71,star:96,bio:'Regal champion energy with main-event confidence.',renders:{}},
-  {id:'sable_vixen',name:'Sable Vixen',nick:'Black Velvet',align:'Heel',style:'Gothic mastermind',cp:'Boo louder. I am almost impressed.',sig:'Midnight Verdict',pop:86,mom:78,mic:84,tech:76,pow:69,star:90,bio:'Cold, stylish, always ready to poison a celebration.',renders:{}},
-  {id:'tiffany_royale',name:'Tiffany Royale',nick:'Champagne Voltage',align:'Heel',style:'Celebrity diva',cp:'Luxury is not a gimmick. It is a warning.',sig:'Velvet Receipt',pop:83,mom:74,mic:90,tech:63,pow:58,star:93,bio:'Camera-aware chaos in expensive gear.',renders:{}},
-  {id:'nova_bliss',name:'Nova Bliss',nick:'Sky Riot',align:'Face',style:'Elite flyer',cp:'I came to fly over the whole division.',sig:'Starfall Spiral',pop:80,mom:77,mic:70,tech:79,pow:56,star:82,bio:'Bright, fast, fearless, easy to root for.',renders:{}},
-  {id:'rhea_rivet',name:'Rhea Rivet',nick:'Iron Rebel',align:'Tweener',style:'Punk striker',cp:'If it gets ugly, now it gets interesting.',sig:'Crash Anthem',pop:79,mom:72,mic:77,tech:73,pow:81,star:79,bio:'Defiant disruptor who turns tension into impact.',renders:{}},
-  {id:'marina_mirage',name:'Marina Mirage',nick:'The Silk Snare',align:'Face',style:'Elegant submission artist',cp:'Grace is still dangerous.',sig:'Mirage Lock',pop:76,mom:69,mic:74,tech:88,pow:52,star:78,bio:'Measured, polished, devastating once she has control.',renders:{}}
+  {id:'ava_allure',name:'Ava Allure',nick:'The Crownfire',align:'Face',style:'Showboat champion',cp:'The spotlight does not find me. It follows me.',sig:'Royal Eclipse',pop:91,mom:84,mic:89,tech:82,pow:71,star:96,bio:'Regal champion energy with main-event confidence.',renders:r('ava_allure')},
+  {id:'sable_vixen',name:'Sable Vixen',nick:'Black Velvet',align:'Heel',style:'Gothic mastermind',cp:'Boo louder. I am almost impressed.',sig:'Midnight Verdict',pop:86,mom:78,mic:84,tech:76,pow:69,star:90,bio:'Cold, stylish, always ready to poison a celebration.',renders:r('sable_vixen')},
+  {id:'tiffany_royale',name:'Tiffany Royale',nick:'Champagne Voltage',align:'Heel',style:'Celebrity diva',cp:'Luxury is not a gimmick. It is a warning.',sig:'Velvet Receipt',pop:83,mom:74,mic:90,tech:63,pow:58,star:93,bio:'Camera-aware chaos in expensive gear.',renders:r('tiffany_royale')},
+  {id:'nova_bliss',name:'Nova Bliss',nick:'Sky Riot',align:'Face',style:'Elite flyer',cp:'I came to fly over the whole division.',sig:'Starfall Spiral',pop:80,mom:77,mic:70,tech:79,pow:56,star:82,bio:'Bright, fast, fearless, easy to root for.',renders:r('nova_bliss')},
+  {id:'rhea_rivet',name:'Rhea Rivet',nick:'Iron Rebel',align:'Tweener',style:'Punk striker',cp:'If it gets ugly, now it gets interesting.',sig:'Crash Anthem',pop:79,mom:72,mic:77,tech:73,pow:81,star:79,bio:'Defiant disruptor who turns tension into impact.',renders:r('rhea_rivet')},
+  {id:'marina_mirage',name:'Marina Mirage',nick:'The Silk Snare',align:'Face',style:'Elegant submission artist',cp:'Grace is still dangerous.',sig:'Mirage Lock',pop:76,mom:69,mic:74,tech:88,pow:52,star:78,bio:'Measured, polished, devastating once she has control.',renders:r('marina_mirage')}
 ];
 
 function makeDefaultState() {
   var roster = [];
   for (var i = 0; i < DEFAULT_ROSTER.length; i++) {
     var w = DEFAULT_ROSTER[i];
-    roster.push({id:w.id,name:w.name,nick:w.nick,align:w.align,style:w.style,cp:w.cp,sig:w.sig,pop:w.pop,mom:w.mom,mic:w.mic,tech:w.tech,pow:w.pow,star:w.star,bio:w.bio,renders:{}});
+    roster.push({id:w.id,name:w.name,nick:w.nick,align:w.align,style:w.style,cp:w.cp,sig:w.sig,pop:w.pop,mom:w.mom,mic:w.mic,tech:w.tech,pow:w.pow,star:w.star,bio:w.bio,renders:w.renders});
   }
   return {
     week:1, ppvCD:3, ppvIdx:0, loc:'Las Vegas', champId:'ava_allure',
@@ -257,7 +269,7 @@ function buildWeekly() {
   var loser  = winner.id === mA.id ? mB : mA;
   var mEWin  = (ch.pop+ch.mom) >= (cont.pop+cont.mom) ? ch : cont;
   return [
-    makeSeg('opening','Opening broadcast',[ch.id,cont.id],'champion',
+    makeSeg('opening','Opening broadcast',[ch.id,cont.id],'portrait',
       ['AI GM: The card is live. The rivalries are hot. The crowd is ready.'],
       ['Iris: Welcome to Crown Circuit.','Cass: Where someone is about to have a bad night.'],{heat:2}),
     promoSeg(cont,'Featured promo'),
@@ -380,11 +392,12 @@ function renderKpis() {
 function renderDashboard() {
   var ch = champ(), r0 = G.rivalries[0];
   var rA = wById(r0.wrestlers[0]), rB = wById(r0.wrestlers[1]);
+  var champImg = ch ? '<div class="render" style="width:90px;aspect-ratio:3/4;float:right;margin-left:14px;border-radius:14px;overflow:hidden">'+renderSlot(ch,'portrait')+'</div>' : '';
   byId('screen-dashboard').innerHTML =
     '<div class="panel panelPad" style="margin-bottom:14px"><div class="sectionTitle">League Dashboard</div>' +
     '<div class="sectionSub">Run weekly episodes, cut stand-alone segments, or jump into a comic-style showcase.</div>' +
     '<div class="list">' +
-    '<div class="listRow"><b>Champion</b><div>'+esc(ch.name)+' &mdash; '+esc(ch.bio)+'</div></div>' +
+    '<div class="listRow">'+champImg+'<div><b>Champion</b><div style="margin-top:4px">'+esc(ch.name)+' &mdash; '+esc(ch.bio)+'</div></div></div>' +
     '<div class="listRow"><b>Main rivalry</b><div>'+esc(rA?rA.name:'?')+' vs '+esc(rB?rB.name:'?')+' &mdash; Heat '+r0.heat+'</div></div>' +
     '<div class="listRow"><b>Tip</b><div>Simulate a show then open Show Viewer and tap Auto to watch scenes play out.</div></div>' +
     '</div></div>';
@@ -419,7 +432,7 @@ function renderHistory() {
 
 function renderLab() {
   var slots = ['portrait','promo','backstage','signature','victory','betrayal'];
-  var html = '<div class="panel panelPad"><div class="sectionTitle">Render Lab</div><div class="sectionSub">Paste Flux-generated image URLs into each wrestler slot. Hit Save when done.</div><div class="list">';
+  var html = '<div class="panel panelPad"><div class="sectionTitle">Render Lab</div><div class="sectionSub">Renders are pre-loaded from the repo. Override any slot by pasting a new URL and saving.</div><div class="list">';
   for (var i = 0; i < G.roster.length; i++) {
     var w = G.roster[i];
     html += '<div class="listRow" style="flex-direction:column;align-items:flex-start"><b>'+esc(w.name)+'</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:8px">';
@@ -446,7 +459,7 @@ function sceneImage(s) {
   var slot = (w.renders && w.renders[s.slot]) ? s.slot : 'portrait';
   var src = (w.renders && w.renders[slot]) ? w.renders[slot] : '';
   if (src) return '<img src="' + esc(src) + '" alt="' + esc(w.name) + '" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">';
-  return '<div class="perfectPlaceholder">' + esc(s.title) + '<small>Add a ' + esc(slot) + ' render in Render Lab for this scene.</small></div>';
+  return '<div class="perfectPlaceholder">' + esc(s.title) + '<small>No render for ' + esc(slot) + ' slot.</small></div>';
 }
 
 function renderShow() {
@@ -460,7 +473,7 @@ function renderShow() {
   for (var n = 0; n < s.participants.length; n++) { var wn = wById(s.participants[n]); names.push(wn ? wn.name : s.participants[n]); }
   var w1 = wById(s.participants[0]);
   var w2 = s.participants[1] ? wById(s.participants[1]) : null;
-  var crowdText = show.type==='ppv' ? 'PPV atmosphere — big-show energy, lights up, everyone standing.' : s.type==='betrayal' ? 'Tense crowd — the room tightens before something explodes.' : 'Hot crowd — the arena is loud and fully engaged.';
+  var crowdText = show.type==='ppv' ? 'PPV atmosphere -- big-show energy, lights up, everyone standing.' : s.type==='betrayal' ? 'Tense crowd -- the room tightens before something explodes.' : 'Hot crowd -- the arena is loud and fully engaged.';
   var dlgHtml = '', cmtHtml = '';
   for (var d = 0; d < s.dlg.length; d++) dlgHtml += (d ? '<br><br>' : '') + esc(s.dlg[d]);
   for (var c = 0; c < s.cmt.length; c++) cmtHtml += (c ? '<br>' : '') + esc(s.cmt[c]);
@@ -481,7 +494,7 @@ function renderShow() {
     '<div class="sceneDeck"><div class="mCard"><div class="tiny">Dialogue</div><div class="dialogue">'+dlgHtml+'</div></div><div class="mCard"><div class="tiny">Commentary</div><div class="commentary">'+cmtHtml+'</div></div></div>' +
     '</div>' +
     '<div class="broadcastAside">' +
-    '<div class="broadcastPanel"><div class="progress"><b style="width:'+pct+'%"></b></div><div class="showMeta"><span class="badge">'+esc(show.type)+'</span><span class="badge">'+esc(names.join(' / '))+'</span></div><div class="broadcastHint">Add wrestler renders via Render Lab to fill scene frames. Comic Cutscene mode uses dramatic comic panels.</div></div>' +
+    '<div class="broadcastPanel"><div class="progress"><b style="width:'+pct+'%"></b></div><div class="showMeta"><span class="badge">'+esc(show.type)+'</span><span class="badge">'+esc(names.join(' / '))+'</span></div><div class="broadcastHint">Images load from the repo renders folder. Use Render Lab to override any slot.</div></div>' +
     '<div class="broadcastPanel"><div class="tiny">Talent in scene</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px">'+w1Html+w2Html+'</div></div>' +
     '<div class="broadcastPanel"><div class="tiny">Crowd</div><div class="commentary" style="margin-top:8px">'+esc(crowdText)+'</div></div>' +
     '<div class="broadcastPanel scrollable"><div class="tiny">Segment Log</div><div class="segmentListCompact">'+segListHtml+'</div></div>' +
