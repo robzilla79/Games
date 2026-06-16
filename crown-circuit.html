@@ -3,71 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crown Circuit</title>
+<title>Crown Circuit — Modern Retro Showrunner</title>
 <style>
-:root{--bg:#0b0a13;--line:#3e346d;--text:#f7f2ff;--muted:#b9afd9;--faint:#8e84b0;--pink:#ff4fd8;--gold:#ffcf5a;--cyan:#61f3ff;--violet:#8e63ff;--shadow:0 16px 48px rgba(0,0,0,.35)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at top,#21173d 0%,#0b0a13 55%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}img{max-width:100%;display:block}a{color:inherit}
-.app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+:root{--bg:#0b0a13;--line:#3e346d;--text:#f7f2ff;--muted:#b9afd9;--faint:#8e84b0;--pink:#ff4fd8;--gold:#ffcf5a;--cyan:#61f3ff;--violet:#8e63ff;--green:#7fff9e;--shadow:0 16px 48px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at top,#21173d 0%,#0b0a13 55%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}img{max-width:100%;display:block}a{color:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:280px 1fr}
 .sidebar{background:linear-gradient(180deg,rgba(19,16,37,.98),rgba(11,10,19,.98));border-right:1px solid var(--line);padding:22px;position:sticky;top:0;height:100vh;overflow:auto}
-.logo{font:800 24px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase}.logo span{display:block;color:var(--gold);font-size:13px;letter-spacing:.18em;margin-top:4px}
-.tagline{color:var(--muted);font-size:13px;margin:12px 0 16px}
-.sidebar button{width:100%;margin-top:8px;padding:11px 14px;border-radius:13px;border:1px solid rgba(255,255,255,.07);background:#1a1830;color:var(--text);font-weight:700;text-align:left}
-.nav{display:grid;gap:7px;margin-top:16px}.nav button.active{background:linear-gradient(180deg,#392b68,#21193d);border-color:#6c58b2}
-.sideCard{margin-top:14px;padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:14px;background:rgba(255,255,255,.02);font-size:13px;color:var(--muted)}
+.logo{font:800 22px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--text)}.logo span{display:block;color:var(--gold);font-size:12px;letter-spacing:.18em;margin-top:4px}
+.tagline{color:var(--muted);font-size:13px;margin:12px 0 16px;line-height:1.5}
+.sidebar .simBtn{width:100%;padding:12px 14px;border-radius:14px;border:none;background:linear-gradient(180deg,#ff58db,#d433b7);color:#fff;font-weight:800;text-align:center;box-shadow:0 6px 18px rgba(212,51,183,.3);margin-bottom:6px}
+.nav{display:grid;gap:8px;margin-top:16px}.nav button{background:#1a1830;border:1px solid rgba(255,255,255,.06);padding:12px 14px;border-radius:14px;color:var(--text);text-align:left;font-weight:700}.nav button.active{background:linear-gradient(180deg,#392b68,#21193d);border-color:#6c58b2;color:#fff}
+.sideCard{margin-top:16px;padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:14px;background:rgba(255,255,255,.02);font-size:13px;color:var(--muted)}
+.sideCard .tiny{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
 .wrap{padding:20px 24px 40px}
-.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
 .panel{background:linear-gradient(180deg,rgba(37,31,67,.94),rgba(22,19,39,.94));border:1px solid rgba(129,111,200,.22);border-radius:20px;box-shadow:var(--shadow)}
-.pp{padding:18px}.title{font:900 38px/1 Inter,sans-serif;letter-spacing:-.03em}.sub{color:var(--muted);margin-top:9px;font-size:14px;max-width:60ch}
-.heroCard{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center}
-.crest{aspect-ratio:1;border-radius:24px;background:radial-gradient(circle at top,#ffec9e 0%,#d59a12 42%,#60390b 100%);display:grid;place-items:center;color:#2d1a00;font:900 44px/1 Inter,sans-serif}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-.kpi{padding:13px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--muted)}
-.kpi b{display:block;font-size:22px;margin-top:7px;color:var(--text)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-.btn{background:linear-gradient(180deg,#ff58db,#d433b7);color:#fff;border:none;padding:11px 15px;border-radius:13px;font-weight:800;box-shadow:0 8px 20px rgba(212,51,183,.26)}
-.btn.sec{background:#201b38;border:1px solid rgba(255,255,255,.08);box-shadow:none}
-.secTitle{font:900 26px/1 Inter,sans-serif}.secSub{color:var(--muted);margin-top:7px;font-size:14px}
-.list{display:grid;gap:9px;margin-top:13px}.row{padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;gap:10px;align-items:center}
-.badge{display:inline-flex;padding:5px 9px;border-radius:999px;background:#1b1730;border:1px solid rgba(255,255,255,.06);font-size:11px;color:#e8dcff}
-.tiny{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}.muted{color:var(--muted)}
+.panelPad{padding:18px}
+.title{font:900 40px/1 Inter,sans-serif;letter-spacing:-.03em;background:linear-gradient(135deg,#fff 30%,var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{color:var(--muted);margin-top:10px;font-size:14px;max-width:58ch;line-height:1.55}
+.heroCard{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center}
+.crest{aspect-ratio:1;border-radius:22px;background:radial-gradient(circle at top,#ffec9e 0%,#d59a12 42%,#60390b 100%);display:grid;place-items:center;color:#2d1a00;font:900 42px/1 Inter,sans-serif;box-shadow:0 8px 24px rgba(213,154,18,.3)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.kpi{padding:14px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.kpi .kpiLabel{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.kpi .kpiVal{font-size:22px;font-weight:900;margin-top:8px;color:var(--text)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{background:linear-gradient(180deg,#ff58db,#d433b7);color:#fff;border:none;padding:11px 16px;border-radius:13px;font-weight:800;box-shadow:0 8px 20px rgba(212,51,183,.28)}
+.btn.secondary{background:#201b38;border:1px solid rgba(255,255,255,.08);box-shadow:none;color:var(--text)}
+.sectionTitle{font:900 28px/1 Inter,sans-serif;letter-spacing:-.02em}
+.sectionSub{color:var(--muted);margin-top:8px;font-size:14px}
+.list{display:grid;gap:10px;margin-top:14px}
+.listRow{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--text)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#1b1730;border:1px solid rgba(255,255,255,.06);font-size:12px;color:#e8dcff}
+.tiny{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
+.muted{color:var(--muted)}
+.progress{height:12px;border-radius:999px;background:#120f21;border:1px solid rgba(255,255,255,.06);overflow:hidden}
+.progress b{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--pink))}
 .screen{display:none}.screen.active{display:block}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.rCard{overflow:hidden}.render{background:#0f0d1b;border:1px solid rgba(255,255,255,.05);border-radius:16px;overflow:hidden;position:relative;aspect-ratio:3/4}
-.render img{width:100%;height:100%;object-fit:cover}
-.ph{display:grid;place-items:center;height:100%;padding:16px;text-align:center;background:radial-gradient(circle at top,#372757 0%,#120f20 70%);color:#eee4ff}
-.ph small{display:block;color:#cfc0ff;margin-top:5px;font-size:12px}
-.rtag{position:absolute;left:9px;top:9px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:5px 9px;border-radius:999px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;border:1px solid rgba(255,255,255,.08)}
-.cBody{padding:13px}.cName{font-size:20px;font-weight:900}.cMeta{color:var(--muted);font-size:13px;margin-top:5px}
-.bars{display:grid;gap:9px;margin-top:11px}.bar .lab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:3px}
-.meter{height:9px;border-radius:999px;background:#120f21;overflow:hidden;border:1px solid rgba(255,255,255,.05)}.meter b{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--violet))}
-.progress{height:11px;border-radius:999px;background:#120f21;border:1px solid rgba(255,255,255,.06);overflow:hidden}.progress b{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--pink))}
-.dlg,.cmt{padding:13px;border-radius:14px;background:#140f24;border:1px solid rgba(255,255,255,.06);margin-top:9px;color:#efe9ff;line-height:1.5;font-size:14px}
-.broadcastMode .sidebar,.broadcastMode .hero,.broadcastMode #topstrip,.broadcastMode #screen-dashboard,.broadcastMode #screen-roster,.broadcastMode #screen-history,.broadcastMode #screen-renderlab{display:none}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rosterCard{overflow:hidden;border-radius:20px}
+.render{background:#0f0d1b;border:1px solid rgba(255,255,255,.05);border-radius:18px;overflow:hidden;position:relative;aspect-ratio:3/4}
+.render img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.placeholder{display:grid;place-items:center;height:100%;padding:18px;text-align:center;background:radial-gradient(circle at top,#372757 0%,#120f20 70%);color:#eee4ff;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
+.placeholder small{display:block;color:#cfc0ff;font-weight:500;letter-spacing:normal;text-transform:none;margin-top:6px;font-size:12px;line-height:1.4}
+.tag{position:absolute;left:9px;top:9px;background:rgba(0,0,0,.52);backdrop-filter:blur(8px);padding:5px 10px;border-radius:999px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border:1px solid rgba(255,255,255,.09);color:var(--text)}
+.cardBody{padding:14px}
+.name{font-size:22px;font-weight:900;color:var(--text)}
+.meta{color:var(--muted);font-size:13px;margin-top:6px}
+.bars{display:grid;gap:10px;margin-top:12px}
+.bar .lab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.meter{height:10px;border-radius:999px;background:#120f21;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.meter b{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.commentary,.dialogue{padding:14px;border-radius:16px;background:#140f24;border:1px solid rgba(255,255,255,.06);margin-top:10px;color:#efe9ff;line-height:1.55;font-size:14px}
+.broadcastMode .sidebar,.broadcastMode #topstrip,.broadcastMode #screen-dashboard,.broadcastMode #screen-roster,.broadcastMode #screen-history,.broadcastMode #screen-renderlab{display:none!important}
 .broadcastMode .app{display:block}.broadcastMode .wrap{padding:0;min-height:100dvh}
-.bShell{display:grid;grid-template-rows:auto 1fr auto;min-height:100dvh;background:radial-gradient(circle at top,#241643 0%,#0b0a13 60%)}
-.bTop{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(10,10,18,.76);backdrop-filter:blur(10px);position:sticky;top:0;z-index:15}
-.bTitle{font-weight:900;font-size:17px}.bSub{font-size:12px;color:var(--muted)}
-.bBody{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.9fr);gap:13px;padding:13px;min-height:0}
-.sceneStage{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:11px;min-height:0}
-.sceneFrame{position:relative;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:#0f0d1b;min-height:0;box-shadow:var(--shadow)}
-.sceneMedia{width:100%;height:100%}.sceneMedia img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
-.sceneOverlay{position:absolute;inset:auto 0 0 0;padding:14px;background:linear-gradient(180deg,transparent,rgba(7,7,12,.88))}
-.sceneMetaLine{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:7px}
-.sceneDeck{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-.mCard{padding:11px;border-radius:16px;background:linear-gradient(180deg,rgba(37,31,67,.92),rgba(22,19,39,.92));border:1px solid rgba(129,111,200,.22)}.mCard .render{aspect-ratio:16/10;min-height:110px}
-.bAside{display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:11px;min-height:0}
-.bPanel{padding:13px;border-radius:18px;background:linear-gradient(180deg,rgba(37,31,67,.94),rgba(22,19,39,.94));border:1px solid rgba(129,111,200,.24)}.bPanel.scroll{overflow:auto}
-.sceneBig{font:900 clamp(24px,3.5vw,40px)/1 Inter,sans-serif;margin:5px 0 0}
-.segList{display:grid;gap:7px}.segList button{width:100%;text-align:left;padding:9px 11px;border-radius:13px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--text)}
-.segList button.active{background:linear-gradient(180deg,#49367e,#281f47)}
-.bHint{font-size:12px;color:var(--muted);margin-top:9px}
-.showMeta{display:flex;flex-wrap:wrap;gap:9px}
-.thumbCtrl{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:11px 13px;border-top:1px solid rgba(255,255,255,.08);background:rgba(10,10,18,.84);position:sticky;bottom:0;z-index:15}
-.thumbCtrl .btn{min-height:50px;padding:10px 8px;font-size:13px;font-weight:700}
-.pph{display:grid;place-items:center;width:100%;height:100%;padding:20px;text-align:center;color:#f7f2ff;font-weight:800;letter-spacing:.07em;text-transform:uppercase;background:radial-gradient(circle at top,#7254d1 0%,#2b214c 45%,#120f20 100%)}
-.pph small{display:block;color:#d8ccff;font-weight:500;letter-spacing:normal;text-transform:none;margin-top:7px;font-size:12px;line-height:1.4}
-@media(max-width:1080px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.hero,.cards,.bBody,.sceneDeck{grid-template-columns:1fr}.bBody{grid-template-rows:minmax(0,1fr) auto}.bAside{grid-template-rows:auto auto auto auto}.bPanel.scroll{max-height:26vh}.kpis{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.wrap{padding:14px}.title{font-size:30px}.heroCard{grid-template-columns:80px 1fr}.actions .btn{flex:1}.sceneFrame{min-height:42dvh;max-height:48dvh;border-radius:18px}.sceneBig{font-size:22px}.thumbCtrl .btn{min-height:48px;padding:9px 5px;font-size:12px}.desktopOnly{display:none!important}.bPanel.scroll{max-height:20dvh}}
+.broadcastShell{display:grid;grid-template-rows:auto 1fr auto;min-height:100dvh;background:radial-gradient(circle at top,#241643 0%,#0b0a13 60%)}
+.broadcastTop{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(10,10,18,.78);backdrop-filter:blur(12px);position:sticky;top:0;z-index:15}
+.broadcastTitle{font:900 18px/1 Inter,sans-serif;color:var(--text)}
+.broadcastSub{font-size:12px;color:var(--muted);margin-top:3px}
+.broadcastBody{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.9fr);gap:14px;padding:14px;min-height:0}
+.sceneStage{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:0}
+.sceneFrame{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(255,255,255,.09);background:#0f0d1b;min-height:300px;box-shadow:var(--shadow)}
+.sceneFrame img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block}
+.sceneOverlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(180deg,transparent,rgba(7,7,12,.9))}
+.sceneMetaLine{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.sceneBig{font:900 clamp(22px,3vw,38px)/1.1 Inter,sans-serif;color:#fff;margin-top:4px}
+.sceneDeck{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mCard{padding:12px;border-radius:18px;background:linear-gradient(180deg,rgba(37,31,67,.92),rgba(22,19,39,.92));border:1px solid rgba(129,111,200,.22)}
+.mCard .render{aspect-ratio:16/10;min-height:100px}
+.broadcastAside{display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:12px;min-height:0}
+.broadcastPanel{padding:14px;border-radius:20px;background:linear-gradient(180deg,rgba(37,31,67,.94),rgba(22,19,39,.94));border:1px solid rgba(129,111,200,.24)}
+.broadcastPanel.scrollable{overflow-y:auto}
+.broadcastHint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+.showMeta{display:flex;flex-wrap:wrap;gap:9px;margin-top:10px}
+.segmentListCompact{display:grid;gap:8px;margin-top:10px}
+.segmentListCompact button{width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--text);font-size:13px}
+.segmentListCompact button.active{background:linear-gradient(180deg,#49367e,#281f47);border-color:#6a4db5}
+.thumbControls{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.08);background:rgba(10,10,18,.86);position:sticky;bottom:0;z-index:15}
+.thumbControls .btn{min-height:52px;padding:10px 8px;font-size:13px;font-weight:800;border-radius:14px}
+.perfectPlaceholder{display:grid;place-items:center;width:100%;height:100%;min-height:280px;padding:22px;text-align:center;color:#f7f2ff;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:radial-gradient(circle at top,#7254d1 0%,#2b214c 45%,#120f20 100%)}
+.perfectPlaceholder small{display:block;color:#d8ccff;font-weight:500;letter-spacing:normal;text-transform:none;margin-top:8px;font-size:12px;line-height:1.45}
+@media(max-width:1080px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.hero,.grid3,.grid2,.broadcastBody,.sceneDeck,.cards{grid-template-columns:1fr}.broadcastBody{grid-template-rows:minmax(0,1fr) auto}.broadcastAside{grid-template-rows:auto auto auto auto}.broadcastPanel.scrollable{max-height:28vh}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.wrap{padding:14px}.title{font-size:30px}.heroCard{grid-template-columns:82px 1fr}.actions{width:100%}.actions .btn{flex:1}.sceneFrame{min-height:44dvh;max-height:52dvh;border-radius:18px}.sceneBig{font-size:20px}.thumbControls .btn{min-height:48px;padding:9px 5px;font-size:12px}.desktopOnly{display:none!important}.broadcastPanel.scrollable{max-height:22dvh}}
 </style>
 </head>
 <body>
@@ -75,33 +94,36 @@
   <aside class="sidebar">
     <div class="logo">Crown Circuit<span>Modern Retro Showrunner</span></div>
     <div class="tagline">Book the division, cut the promos, and watch the neon-glam wrestling show unfold.</div>
-    <button id="sidebarSim">Simulate Next Show</button>
+    <button class="simBtn" id="sidebarSim">Simulate Next Show</button>
     <div class="nav" id="nav"></div>
-    <div class="sideCard">Use <b>Comic Cutscene Show</b> on the dashboard for the most dramatic watch mode.</div>
+    <div class="sideCard">
+      <div class="tiny">Tip</div>
+      Use <b>Comic Cutscene Show</b> on the dashboard for the most dramatic watch mode.
+    </div>
   </aside>
   <main class="wrap">
     <section class="hero" id="topstrip">
-      <div class="panel pp">
+      <div class="panel panelPad">
         <div class="heroCard">
           <div class="crest">CC</div>
           <div>
             <div class="title">Crown Circuit</div>
-            <div class="sub">Wrestling show simulator. Roster cards, promos, backstage scenes, comic cutscenes, mobile broadcast viewer, and a render lab for your character art.</div>
+            <div class="subtitle">A self-contained wrestling show simulator with roster cards, promos, interviews, backstage scenes, comic-style cutscenes, and a broadcast viewer.</div>
           </div>
         </div>
         <div class="kpis" id="kpis"></div>
         <div class="actions">
           <button class="btn" id="dashSim">Simulate Next Show</button>
-          <button class="btn sec" id="comicBtn">Comic Cutscene Show</button>
-          <button class="btn sec" id="promoBtn">Promo Spot</button>
-          <button class="btn sec" id="backstageBtn">Backstage Scene</button>
-          <button class="btn sec" id="interviewBtn">Interview</button>
-          <button class="btn sec" id="resetBtn">Reset League</button>
+          <button class="btn secondary" id="comicBtn">Comic Cutscene Show</button>
+          <button class="btn secondary" id="promoBtn">Promo Spot</button>
+          <button class="btn secondary" id="backstageBtn">Backstage Scene</button>
+          <button class="btn secondary" id="interviewBtn">Interview</button>
+          <button class="btn secondary" id="resetLeague">Reset League</button>
         </div>
       </div>
-      <div class="panel pp">
-        <div class="secTitle">Top Feed</div>
-        <div class="secSub">Latest league notes.</div>
+      <div class="panel panelPad">
+        <div class="sectionTitle">Top Feed</div>
+        <div class="sectionSub">Latest league notes and episode summaries.</div>
         <div class="list" id="topFeed"></div>
       </div>
     </section>
@@ -113,57 +135,432 @@
   </main>
 </div>
 <script>
-const SK='cc_v6';
-const byId=id=>document.getElementById(id);
-const uid=p=>(p||'id')+'_'+Math.random().toString(36).slice(2,9);
-const rand=a=>a[Math.floor(Math.random()*a.length)];
-const clamp=(n,l,h)=>Math.max(l,Math.min(h,n));
-const esc=s=>String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c]));
-const LOCS=['Las Vegas','Chicago','Miami','Dallas','Nashville','Los Angeles','New York','Atlanta'];
-const PPVS=['Velvet Voltage','Golden Aftershock','Neon Reckoning','Crownfall'];
-const DEFAULT_ROSTER=[
-{id:'ava_allure',name:'Ava Allure',nick:'The Crownfire',align:'Face',style:'Showboat champion',cp:'The spotlight does not find me. It follows me.',sig:'Royal Eclipse',pop:91,mom:84,mic:89,tech:82,pow:71,star:96,ego:72,loy:64,amb:95,chaos:38,bio:'Regal champion energy with main-event confidence.',renders:{}},
-{id:'sable_vixen',name:'Sable Vixen',nick:'Black Velvet',align:'Heel',style:'Gothic mastermind',cp:'Boo louder. I am almost impressed.',sig:'Midnight Verdict',pop:86,mom:78,mic:84,tech:76,pow:69,star:90,ego:88,loy:22,amb:87,chaos:51,bio:'Cold, stylish, always ready to poison a celebration.',renders:{}},
-{id:'tiffany_royale',name:'Tiffany Royale',nick:'Champagne Voltage',align:'Heel',style:'Celebrity diva',cp:'Luxury is not a gimmick. It is a warning.',sig:'Velvet Receipt',pop:83,mom:74,mic:90,tech:63,pow:58,star:93,ego:94,loy:30,amb:90,chaos:44,bio:'Camera-aware chaos in expensive gear.',renders:{}},
-{id:'nova_bliss',name:'Nova Bliss',nick:'Sky Riot',align:'Face',style:'Elite flyer',cp:'I came to fly over the whole division.',sig:'Starfall Spiral',pop:80,mom:77,mic:70,tech:79,pow:56,star:82,ego:42,loy:78,amb:82,chaos:46,bio:'Bright, fast, fearless, easy to root for.',renders:{}},
-{id:'rhea_rivet',name:'Rhea Rivet',nick:'Iron Rebel',align:'Tweener',style:'Punk striker',cp:'If it gets ugly, now it gets interesting.',sig:'Crash Anthem',pop:79,mom:72,mic:77,tech:73,pow:81,star:79,ego:63,loy:50,amb:81,chaos:67,bio:'Defiant disruptor who turns tension into impact.',renders:{}},
-{id:'marina_mirage',name:'Marina Mirage',nick:'The Silk Snare',align:'Face',style:'Elegant submission artist',cp:'Grace is still dangerous.',sig:'Mirage Lock',pop:76,mom:69,mic:74,tech:88,pow:52,star:78,ego:48,loy:84,amb:76,chaos:29,bio:'Measured, polished, devastating once she has control.',renders:{}}
+var SK = 'crown_circuit_v7';
+function byId(id) { return document.getElementById(id); }
+function uid(p) { return (p || 'id') + '_' + Math.random().toString(36).slice(2, 9); }
+function rand(a) { return a[Math.floor(Math.random() * a.length)]; }
+function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+function esc(s) {
+  return String(s || '').replace(/[&<>'"]/g, function(c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];
+  });
+}
+
+var LOCS = ['Las Vegas','Chicago','Miami','Dallas','Nashville','Los Angeles','New York','Atlanta'];
+var PPVS = ['Velvet Voltage','Golden Aftershock','Neon Reckoning','Crownfall'];
+
+var DEFAULT_ROSTER = [
+  {id:'ava_allure',name:'Ava Allure',nick:'The Crownfire',align:'Face',style:'Showboat champion',cp:'The spotlight does not find me. It follows me.',sig:'Royal Eclipse',pop:91,mom:84,mic:89,tech:82,pow:71,star:96,bio:'Regal champion energy with main-event confidence.',renders:{}},
+  {id:'sable_vixen',name:'Sable Vixen',nick:'Black Velvet',align:'Heel',style:'Gothic mastermind',cp:'Boo louder. I am almost impressed.',sig:'Midnight Verdict',pop:86,mom:78,mic:84,tech:76,pow:69,star:90,bio:'Cold, stylish, always ready to poison a celebration.',renders:{}},
+  {id:'tiffany_royale',name:'Tiffany Royale',nick:'Champagne Voltage',align:'Heel',style:'Celebrity diva',cp:'Luxury is not a gimmick. It is a warning.',sig:'Velvet Receipt',pop:83,mom:74,mic:90,tech:63,pow:58,star:93,bio:'Camera-aware chaos in expensive gear.',renders:{}},
+  {id:'nova_bliss',name:'Nova Bliss',nick:'Sky Riot',align:'Face',style:'Elite flyer',cp:'I came to fly over the whole division.',sig:'Starfall Spiral',pop:80,mom:77,mic:70,tech:79,pow:56,star:82,bio:'Bright, fast, fearless, easy to root for.',renders:{}},
+  {id:'rhea_rivet',name:'Rhea Rivet',nick:'Iron Rebel',align:'Tweener',style:'Punk striker',cp:'If it gets ugly, now it gets interesting.',sig:'Crash Anthem',pop:79,mom:72,mic:77,tech:73,pow:81,star:79,bio:'Defiant disruptor who turns tension into impact.',renders:{}},
+  {id:'marina_mirage',name:'Marina Mirage',nick:'The Silk Snare',align:'Face',style:'Elegant submission artist',cp:'Grace is still dangerous.',sig:'Mirage Lock',pop:76,mom:69,mic:74,tech:88,pow:52,star:78,bio:'Measured, polished, devastating once she has control.',renders:{}}
 ];
-function defaultState(){return{week:1,ppvCD:3,ppvIdx:0,loc:'Las Vegas',champId:'ava_allure',roster:DEFAULT_ROSTER.map(w=>Object.assign({},w,{renders:{}})),rivalries:[{id:uid('riv'),wrestlers:['ava_allure','sable_vixen'],heat:72},{id:uid('riv'),wrestlers:['rhea_rivet','tiffany_royale'],heat:61}],shows:[],feed:['League initialized. Neon lights on, division loaded, camera live.'],rankings:['ava_allure','sable_vixen','tiffany_royale','nova_bliss','rhea_rivet','marina_mirage']}}
-function loadState(){try{var raw=localStorage.getItem(SK);if(raw)return JSON.parse(raw)}catch(e){}return defaultState()}
-var G=loadState(),curScreen='dashboard',curShowIdx=0,curScene=0,autoTimer=null;
-var save=function(){localStorage.setItem(SK,JSON.stringify(G))};
-var wById=function(id){return G.roster.find(function(w){return w.id===id})};
-var champ=function(){return wById(G.champId)};
-var pool=function(){return G.roster.slice().sort(function(a,b){return(b.mom+b.pop+b.star)-(a.mom+a.pop+a.star)})};
-var currentShow=function(){return G.shows[curShowIdx]};
-var promoTarget=function(w){var r=G.rivalries.find(function(x){return x.wrestlers.includes(w.id)});if(r){var opp=r.wrestlers.find(function(id){return id!==w.id});if(opp)return opp}return G.rankings.find(function(id){return id!==w.id})||w.id};
-function renderSlot(w,slot){var src=w&&w.renders&&w.renders[slot]?w.renders[slot]:'';return src?'<img src="'+esc(src)+'" alt="'+esc(w.name)+'">':'<div class="ph">'+esc(w?w.name:'?')+'<small>'+esc(slot)+'</small></div>'}
-function seg(type,title,pids,slot,dlg,cmt,fx){return{id:uid('s'),type:type,title:title,participants:pids,slot:slot,dlg:dlg,cmt:cmt,fx:fx||{}}}
-function promoLines(w,mode){var rival=wById(promoTarget(w));var rn=rival?rival.name:'the whole division';var heel=w.align==='Heel';var opener=mode==='back'?w.name+' keeps her voice low.':w.name+' steps to the mic and owns the frame.';var line2=heel?w.name+': I do not need the crowd to agree. I need them to remember.':w.name+': I came here to earn every second of this spotlight.';return[opener,line2,w.name+': '+w.sig+' is what happens when timing meets confidence.',w.name+': '+rn+' keeps talking, but I am the one who changes this card.']}
-function promoSeg(w,label){return seg('promo',(label||'Promo')+': '+w.name,[w.id],'promo',promoLines(w,'promo'),['Iris: That is exactly the kind of promo that changes a roster mood.','Cass: Or starts a fight. Which is better television.'],{heat:5,mom:3,riv:3})}
-function backSeg(w){return seg('backstage','Backstage interview: '+w.name,[w.id],'backstage',promoLines(w,'back'),['Maya: '+w.name+' came in calm but there is nothing casual about this energy.','Iris: Backstage is where you hear what people really mean.'],{heat:4,mom:2,riv:2})}
-function confrontSeg(a,b){return seg('stare-down','Confrontation: '+a.name+' vs '+b.name,[a.id,b.id],'portrait',[a.name+' and '+b.name+' step nose to nose under the lights.',a.name+': I did not come here to be overlooked.',b.name+': Then stop standing in my way.'],['Iris: Nobody is blinking first.','Cass: This is how a match becomes a feud.'],{heat:6,mom:1,riv:6})}
-function crowdSeg(text){return seg('crowd',text||'Crowd reaction',[G.roster[0].id],'portrait',['The crowd surges as the arena lights sweep the building.'],['Iris: Listen to that noise.','Cass: The building is alive right now.'],{heat:1})}
-function buildWeekly(){var p=pool(),ch=champ(),cont=p.find(function(w){return w.id!==ch.id})||p[1]||ch,riv=wById(promoTarget(cont))||ch,mA=p.find(function(w){return w.id!==ch.id&&w.id!==cont.id})||p[2]||cont,mB=p.find(function(w){return w.id!==ch.id&&w.id!==cont.id&&w.id!==mA.id})||p[3]||ch,winner=(mA.pop+mA.mom)>=(mB.pop+mB.mom)?mA:mB,loser=winner.id===mA.id?mB:mA,mEWin=(ch.pop+ch.mom)>=(cont.pop+cont.mom)?ch:cont;return[seg('opening','Opening broadcast',[ch.id,cont.id],'champion',['AI GM: The card is live. The rivalries are hot. The crowd is ready.'],['Iris: Welcome to Crown Circuit.','Cass: Where someone is about to have a bad night.'],{heat:2}),promoSeg(cont,'Featured promo'),backSeg(mA),confrontSeg(mA,mB),seg('match','Singles match: '+mA.name+' vs '+mB.name,[mA.id,mB.id],'signature',[mA.name+' and '+mB.name+' open hot.',loser.name+' takes early punishment but keeps fighting.'],['Iris: Fast start.','Cass: Somebody is going to get hurt.'],{heat:3}),seg('near-fall','Near fall drama',[mA.id,mB.id],'signature',[loser.name+' almost steals it.'],['Iris: That was almost everything.'],{heat:3}),seg('victory',winner.name+' wins',[winner.id],'victory',[winner.name+' finishes it with '+winner.sig+'.'],['Cass: Statement made.'],{heat:3,mom:4}),crowdSeg('Hot crowd reaction'),promoSeg(ch,'Champion promo'),seg('main-event','Main Event: '+ch.name+' vs '+cont.name,[ch.id,cont.id],'signature',['The main event delivers everything the crowd came for.',mEWin.name+' finds a way to walk out ahead.'],['Iris: This is the level.','Cass: This is why Crown Circuit exists.'],{heat:5,mom:5}),seg('post-match','Closing chaos',[riv.id,cont.id],'betrayal',[riv.name+' rushes the ring and ambushes '+cont.name+'.',cont.name+' was not expecting that.'],['Iris: That is a statement.','Cass: That is a problem in boots.'],{heat:8,mom:4,riv:8})]}
-function comicCut(type,aId,bId){var a=wById(aId),b=bId?wById(bId):null;var titles={promo:'Promo Panel',back:'Backstage Panel',action:'Impact Panel',victory:'Winner Panel',betrayal:'Betrayal Panel',crowd:'Crowd Reaction'};var dlgs={promo:[a.name+': '+a.cp,a.name+' grips the mic like a weapon.','The crowd is already reacting.'],back:[a.name+' corners the camera in a dim hallway.',b?b.name+' lingers at the edge of the frame.':a.name+' speaks alone.'],action:[a.name+' launches into the frame with a signature burst.',b?b.name+' is already reeling.':'The whole panel is built around the hit.'],victory:[a.name+' raises her arm under the arena lights.','The win has finality.'],betrayal:[a.name+' hits first when nobody expects it.',b?b.name+' gets blindsided.':'The moment turns poisonous fast.'],crowd:['The crowd is on its feet screaming through the lights.','This arena is fully alive.']};var cmts={promo:['Iris: That is how you command attention.','Cass: Or start a war. Which is even better.'],back:['Maya: Backstage, that was not casual at all.','Iris: Nothing about this roster stays quiet for long.'],action:['Iris: What a strike!','Cass: That was pure television violence.'],victory:['Iris: She did exactly what she came here to do.','Cass: And she made it look effortless.'],betrayal:['Iris: Oh no, not like this!','Cass: That is a deliberate, nasty moment.'],crowd:['Cass: Listen to this building.','Iris: This is the kind of crowd that makes a show feel huge.']};var slots={promo:'promo',back:'backstage',action:'signature',victory:'victory',betrayal:'betrayal',crowd:'portrait'};var pids=bId?[aId,bId]:[aId];return seg(type,titles[type]||type,pids,slots[type]||'portrait',dlgs[type]||dlgs.promo,cmts[type]||cmts.promo,{heat:5,mom:2,riv:3})}
-function comicShow(title,aId,bId){var a=wById(aId),b=wById(bId);return{week:G.week,title:title,loc:G.loc,type:'weekly',segs:[comicCut('promo',aId),comicCut('back',aId,bId),comicCut('action',aId,bId),comicCut('crowd',aId),comicCut('victory',aId,bId),comicCut('betrayal',bId,aId)],rating:84,mainEvent:a.name+' vs '+b.name,hook:'The final panel leaves a bruised cliffhanger.',summary:'Promos, backstage tension, and comic-book impact.'}}
-function simulateShow(){var isPPV=G.ppvCD===0,title=isPPV?PPVS[G.ppvIdx%PPVS.length]:'Crown Circuit Episode '+G.week,segs=buildWeekly(),p=pool(),cont=p.find(function(w){return w.id!==G.champId})||p[1]||champ(),show={week:G.week,title:title,loc:rand(LOCS),type:isPPV?'ppv':'weekly',segs:segs,rating:Math.min(100,78+Math.round(Math.random()*8)),mainEvent:champ().name+' vs '+(cont?cont.name:'Contender'),hook:'The next week just got more dangerous.',summary:champ().name+' vs '+(cont?cont.name:'Contender')+' headlined a show with promos, interviews, and a closing angle.'};G.loc=show.loc;G.shows.push(show);curShowIdx=G.shows.length-1;curScene=0;G.week++;G.ppvCD=isPPV?3:G.ppvCD-1;if(isPPV)G.ppvIdx++;G.feed.unshift(show.title+': '+show.summary);G.feed=G.feed.slice(0,8);G.rankings=pool().map(function(w){return w.id});save()}
-function showScreen(id){curScreen=id;var isBcast=id==='show';document.body.classList.toggle('broadcastMode',isBcast);document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('active',s.id==='screen-'+id)});document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('active',b.dataset.screen===id)});if(id==='dashboard')renderDashboard();if(id==='roster')renderRoster();if(id==='show')renderShow();if(id==='history')renderHistory();if(id==='renderlab')renderLab()}
-function renderAll(){buildNav();renderFeed();renderKpis();showScreen(curScreen)}
-function buildNav(){var items=[['dashboard','Dashboard'],['roster','Roster'],['show','Show Viewer'],['history','History'],['renderlab','Render Lab']];byId('nav').innerHTML=items.map(function(v){return'<button data-screen="'+v[0]+'" class="'+(v[0]===curScreen?'active':'')+'">'+v[1]+'</button>'}).join('');byId('nav').querySelectorAll('button').forEach(function(b){b.onclick=function(){showScreen(b.dataset.screen)}})}
-function renderFeed(){byId('topFeed').innerHTML=G.feed.map(function(x){return'<div class="row"><div>'+esc(x)+'</div></div>'}).join('')}
-function renderKpis(){var ch=champ(),vals=[['Week',G.week],['Champion',ch?ch.name:'--'],['Rivalries',G.rivalries.length],['Roster',G.roster.length]];byId('kpis').innerHTML=vals.map(function(v){return'<div class="kpi"><div class="tiny">'+v[0]+'</div><b>'+esc(String(v[1]))+'</b></div>'}).join('')}
-function renderDashboard(){var ch=champ(),r0=G.rivalries[0],rA=wById(r0.wrestlers[0]),rB=wById(r0.wrestlers[1]);byId('screen-dashboard').innerHTML='<div class="panel pp"><div class="secTitle">League Dashboard</div><div class="secSub">Run weekly episodes, cut stand-alone segments, or jump into a comic-style showcase.</div><div class="list" style="margin-top:14px"><div class="row"><b>Champion</b><div>'+esc(ch.name)+' - '+esc(ch.bio)+'</div></div><div class="row"><b>Main rivalry</b><div>'+esc(rA?rA.name:'?')+' vs '+esc(rB?rB.name:'?')+' | Heat '+r0.heat+'</div></div><div class="row"><b>Viewer tip</b><div>Open a show then tap Auto to watch it play scene by scene. Add wrestler images via Render Lab.</div></div></div></div>'}
-function renderRoster(){byId('screen-roster').innerHTML='<div class="panel pp"><div class="secTitle">Roster</div><div class="secSub">Original division lineup.</div><div class="cards" style="margin-top:14px">'+G.roster.map(function(w){return'<div class="panel rCard"><div class="render">'+renderSlot(w,'portrait')+'<div class="rtag">'+esc(w.align)+'</div></div><div class="cBody"><div class="cName">'+esc(w.name)+'</div><div class="cMeta">'+esc(w.nick)+' - '+esc(w.style)+'</div><div class="bars">'+[['Popularity',w.pop],['Momentum',w.mom],['Star Power',w.star]].map(function(b){return'<div class="bar"><div class="lab"><span>'+b[0]+'</span><span>'+b[1]+'</span></div><div class="meter"><b style="width:'+b[1]+'%"></b></div></div>'}).join('')+'</div></div></div>'}).join('')+'</div></div>'}
-function renderHistory(){var rows=G.shows.length?G.shows.map(function(s,i){return'<button class="row" data-show="'+i+'" style="width:100%;text-align:left;cursor:pointer"><div><b>'+esc(s.title)+'</b><div class="muted">'+esc(s.summary||'No summary')+'</div></div><span class="badge">Wk '+s.week+'</span></button>'}).join(''):'<div class="row">No shows yet. Simulate one from the dashboard.</div>';byId('screen-history').innerHTML='<div class="panel pp"><div class="secTitle">Show History</div><div class="secSub">Every episode aired.</div><div class="list">'+rows+'</div></div>';byId('screen-history').querySelectorAll('[data-show]').forEach(function(b){b.onclick=function(){curShowIdx=Number(b.dataset.show);curScene=0;showScreen('show')}})}
-function renderLab(){var slots=['portrait','promo','backstage','signature','victory','betrayal'];byId('screen-renderlab').innerHTML='<div class="panel pp"><div class="secTitle">Render Lab</div><div class="secSub">Paste image URLs into each wrestler slot. Hit Save when done.</div><div class="list" style="margin-top:14px">'+G.roster.map(function(w){return'<div class="row" style="flex-direction:column;align-items:flex-start"><b>'+esc(w.name)+'</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:8px">'+slots.map(function(sl){return'<div><div class="tiny">'+sl+'</div><input type="text" placeholder="Image URL" value="'+esc(w.renders[sl]||'')+'" data-wid="'+w.id+'" data-slot="'+sl+'" style="width:100%;margin-top:4px;padding:8px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:#120f21;color:#fff;font-size:12px"></div>'}).join('')+'</div></div>'}).join('')+'<button class="btn" id="saveRenders" style="margin-top:14px">Save All Renders</button></div></div>';byId('saveRenders').onclick=function(){byId('screen-renderlab').querySelectorAll('input[data-wid]').forEach(function(inp){var w=wById(inp.dataset.wid);if(w)w.renders[inp.dataset.slot]=inp.value.trim()});save();renderRoster();alert('Renders saved!')}}
-function sceneImage(s){var w=wById(s.participants[0]);if(!w)return'<div class="pph">Broadcast scene<small>Awaiting talent render.</small></div>';var slot=w.renders&&w.renders[s.slot]?s.slot:'portrait';var src=w.renders&&w.renders[slot]?w.renders[slot]:'';return src?'<div class="sceneMedia"><img src="'+esc(src)+'" alt="'+esc(w.name)+'"></div>':'<div class="pph">'+esc(s.title)+'<small>Add a '+esc(slot)+' render in Render Lab for this scene.</small></div>'}
-function renderShow(){var show=currentShow(),el=byId('screen-show');document.body.classList.toggle('broadcastMode',curScreen==='show');if(!show){el.innerHTML='<div class="panel pp"><div class="secTitle">Show Viewer</div><div class="secSub">No show yet. Simulate one from the dashboard.</div></div>';return}curScene=clamp(curScene,0,show.segs.length-1);var s=show.segs[curScene],pct=((curScene+1)/show.segs.length)*100,names=(s.participants||[]).map(function(id){var w=wById(id);return w?w.name:id}).join(' / '),w1=wById(s.participants[0]),w2=s.participants[1]?wById(s.participants[1]):null,crowdText=show.type==='ppv'?'PPV atmosphere - big-show energy, lights up, everyone standing.':s.type==='betrayal'?'Tense crowd - the room tightens before something explodes.':'Hot crowd - the arena is loud and fully engaged.';el.innerHTML='<div class="bShell"><div class="bTop"><div><div class="bTitle">'+esc(show.title)+'</div><div class="bSub">'+esc(show.loc)+' - Scene '+(curScene+1)+'/'+show.segs.length+' - Rating '+show.rating+'</div></div><div class="actions"><button class="btn sec desktopOnly" id="exitShow">Back</button><button class="btn sec desktopOnly" id="exportRecap">Export Recap</button></div></div><div class="bBody"><div class="sceneStage"><div class="sceneFrame">'+sceneImage(s)+'<div class="sceneOverlay"><div class="sceneMetaLine"><span class="badge">'+esc(s.type)+'</span><span class="tiny" style="color:var(--faint)">Crown Circuit Broadcast</span></div><div class="sceneBig">'+esc(s.title)+'</div></div></div><div class="sceneDeck"><div class="mCard"><div class="tiny">Dialogue</div><div class="dlg">'+s.dlg.map(function(x){return esc(x)}).join('<br><br>')+'</div></div><div class="mCard"><div class="tiny">Commentary</div><div class="cmt">'+s.cmt.map(function(x){return esc(x)}).join('<br>')+'</div></div></div></div><div class="bAside"><div class="bPanel"><div class="progress"><b style="width:'+pct+'%"></b></div><div class="showMeta" style="margin-top:9px"><span class="badge">'+esc(show.type)+'</span><span class="badge">'+esc(names)+'</span></div><div class="bHint">Image-first broadcast mode. Add wrestler renders via Render Lab to fill in the scene frames.</div></div><div class="bPanel"><div class="tiny">Talent in scene</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:9px">'+(w1?'<div><div class="render" style="aspect-ratio:3/4">'+renderSlot(w1,'portrait')+'</div><div class="tiny muted" style="margin-top:7px">'+esc(w1.name)+'</div></div>':'')+(w2?'<div><div class="render" style="aspect-ratio:3/4">'+renderSlot(w2,'portrait')+'</div><div class="tiny muted" style="margin-top:7px">'+esc(w2.name)+'</div></div>':'')+'</div></div><div class="bPanel"><div class="tiny">Crowd</div><div class="dlg">'+esc(crowdText)+'</div></div><div class="bPanel scroll"><div class="tiny">Segment Log</div><div class="segList" style="margin-top:9px">'+show.segs.map(function(sg,i){return'<button data-scene="'+i+'" class="'+(i===curScene?'active':'')+'"><strong>'+(i+1)+'. '+esc(sg.title)+'</strong><div class="tiny muted">'+esc((sg.participants||[]).map(function(id){var w=wById(id);return w?w.name:id}).join(', '))+'</div></button>'}).join('')+'</div></div></div></div><div class="thumbCtrl"><button class="btn sec" id="prevScene">Prev</button><button class="btn" id="nextScene">Next</button><button class="btn sec" id="autoBtn">'+(autoTimer?'Pause':'Auto')+'</button><button class="btn sec" id="endBtn">End</button></div></div>';byId('exitShow').onclick=function(){document.body.classList.remove('broadcastMode');showScreen('dashboard')};byId('exportRecap').onclick=function(){var txt=show.segs.map(function(sg,i){return[(i+1)+'. '+sg.title].concat(sg.dlg).concat(sg.cmt).join('\n')}).join('\n\n');var blob=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='recap.txt';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},500)};byId('prevScene').onclick=function(){curScene=clamp(curScene-1,0,show.segs.length-1);stopAuto();renderShow()};byId('nextScene').onclick=function(){curScene=clamp(curScene+1,0,show.segs.length-1);if(curScene>=show.segs.length-1)stopAuto();renderShow()};byId('autoBtn').onclick=function(){if(autoTimer)stopAuto();else startAuto(show.segs.length)};byId('endBtn').onclick=function(){curScene=show.segs.length-1;stopAuto();renderShow()};el.querySelectorAll('[data-scene]').forEach(function(b){b.onclick=function(){curScene=Number(b.dataset.scene);stopAuto();renderShow()}})}
-function startAuto(total){stopAuto();autoTimer=setInterval(function(){if(curScene>=total-1){stopAuto();return}curScene+=1;renderShow()},2200)}
-function stopAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null}}
-function wire(){var sim=function(){simulateShow();showScreen('show');renderAll()};byId('sidebarSim').onclick=sim;byId('dashSim').onclick=sim;byId('comicBtn').onclick=function(){var a=G.roster[0]&&G.roster[0].id,b=G.roster[1]&&G.roster[1].id,show=comicShow('Comic Cutscene: '+wById(a).name+' vs '+wById(b).name,a,b);G.shows.push(show);G.week++;curShowIdx=G.shows.length-1;curScene=0;G.feed.unshift(show.title+': '+show.summary);G.feed=G.feed.slice(0,8);save();renderAll();showScreen('show')};byId('promoBtn').onclick=function(){var w=pool()[1]||champ(),show={week:G.week,title:'Promo Spotlight: '+w.name,loc:G.loc,type:'weekly',segs:[promoSeg(w),crowdSeg('Promo crowd reaction')],rating:81,mainEvent:w.name+' promo',hook:'A promo just started a fight.',summary:w.name+' cut a promo that changed the conversation.'};G.shows.push(show);G.week++;curShowIdx=G.shows.length-1;curScene=0;G.feed.unshift(show.title+': '+show.summary);G.feed=G.feed.slice(0,8);save();renderAll();showScreen('show')};byId('backstageBtn').onclick=function(){var w=champ(),other=G.roster.find(function(x){return x.id!==w.id})||w,show={week:G.week,title:'Backstage Heat: '+w.name,loc:G.loc,type:'weekly',segs:[backSeg(w),confrontSeg(w,other),crowdSeg('Hallway fallout')],rating:79,mainEvent:'Backstage segment',hook:'The hallway is not calm anymore.',summary:'Backstage tension between '+w.name+' and '+other.name+'.'};G.shows.push(show);G.week++;curShowIdx=G.shows.length-1;curScene=0;G.feed.unshift(show.title+': '+show.summary);G.feed=G.feed.slice(0,8);save();renderAll();showScreen('show')};byId('interviewBtn').onclick=function(){var w=champ(),show={week:G.week,title:'Interview Spotlight: '+w.name,loc:G.loc,type:'weekly',segs:[backSeg(w),promoSeg(w,'Interview promo'),crowdSeg('Interview crowd reaction')],rating:80,mainEvent:'Interview spotlight',hook:'The mic dropped but the story did not.',summary:w.name+' owned an interview segment.'};G.shows.push(show);G.week++;curShowIdx=G.shows.length-1;curScene=0;G.feed.unshift(show.title+': '+show.summary);G.feed=G.feed.slice(0,8);save();renderAll();showScreen('show')};byId('resetBtn').onclick=function(){if(confirm('Reset the entire league?')){localStorage.removeItem(SK);G=defaultState();curShowIdx=0;curScene=0;renderAll()}}}
-function init(){renderAll();wire()}init();
+
+function makeDefaultState() {
+  var roster = [];
+  for (var i = 0; i < DEFAULT_ROSTER.length; i++) {
+    var w = DEFAULT_ROSTER[i];
+    roster.push({id:w.id,name:w.name,nick:w.nick,align:w.align,style:w.style,cp:w.cp,sig:w.sig,pop:w.pop,mom:w.mom,mic:w.mic,tech:w.tech,pow:w.pow,star:w.star,bio:w.bio,renders:{}});
+  }
+  return {
+    week:1, ppvCD:3, ppvIdx:0, loc:'Las Vegas', champId:'ava_allure',
+    roster:roster,
+    rivalries:[{id:uid('riv'),wrestlers:['ava_allure','sable_vixen'],heat:72},{id:uid('riv'),wrestlers:['rhea_rivet','tiffany_royale'],heat:61}],
+    shows:[], feed:['League initialized. Neon lights on, division loaded, camera live.'],
+    rankings:['ava_allure','sable_vixen','tiffany_royale','nova_bliss','rhea_rivet','marina_mirage']
+  };
+}
+
+function loadState() {
+  try { var raw = localStorage.getItem(SK); if (raw) return JSON.parse(raw); } catch(e) {}
+  return makeDefaultState();
+}
+
+var G = loadState();
+var curScreen = 'dashboard';
+var curShowIdx = 0;
+var curScene = 0;
+var autoTimer = null;
+
+function save() { localStorage.setItem(SK, JSON.stringify(G)); }
+function wById(id) { for (var i = 0; i < G.roster.length; i++) { if (G.roster[i].id === id) return G.roster[i]; } return null; }
+function champ() { return wById(G.champId); }
+function pool() {
+  var r = G.roster.slice();
+  r.sort(function(a,b) { return (b.mom+b.pop+b.star) - (a.mom+a.pop+a.star); });
+  return r;
+}
+function currentShow() { return G.shows[curShowIdx]; }
+function promoTarget(w) {
+  for (var i = 0; i < G.rivalries.length; i++) {
+    var rv = G.rivalries[i];
+    if (rv.wrestlers.indexOf(w.id) > -1) {
+      for (var j = 0; j < rv.wrestlers.length; j++) { if (rv.wrestlers[j] !== w.id) return rv.wrestlers[j]; }
+    }
+  }
+  for (var k = 0; k < G.rankings.length; k++) { if (G.rankings[k] !== w.id) return G.rankings[k]; }
+  return w.id;
+}
+
+function renderSlot(w, slot) {
+  var src = (w && w.renders && w.renders[slot]) ? w.renders[slot] : '';
+  if (src) return '<img src="' + esc(src) + '" alt="' + esc(w.name) + '">';
+  return '<div class="placeholder">' + esc(w ? w.name : '?') + '<small>' + esc(slot) + '</small></div>';
+}
+
+function makeSeg(type, title, pids, slot, dlg, cmt, fx) {
+  return {id:uid('s'), type:type, title:title, participants:pids, slot:slot, dlg:dlg, cmt:cmt, fx:fx||{}};
+}
+
+function promoLines(w, mode) {
+  var rival = wById(promoTarget(w));
+  var rn = rival ? rival.name : 'the whole division';
+  var heel = w.align === 'Heel';
+  var opener = mode === 'back' ? w.name + ' keeps her voice low.' : w.name + ' steps to the mic and owns the frame.';
+  var line2 = heel ? w.name + ': I do not need the crowd to agree. I need them to remember.' : w.name + ': I came here to earn every second of this spotlight.';
+  return [opener, line2, w.name + ': ' + w.sig + ' is what happens when timing meets confidence.', w.name + ': ' + rn + ' keeps talking, but I am the one who changes this card.'];
+}
+
+function promoSeg(w, label) {
+  return makeSeg('promo', (label||'Promo') + ': ' + w.name, [w.id], 'promo', promoLines(w,'promo'),
+    ['Iris: That is exactly the kind of promo that changes a roster mood.','Cass: Or starts a fight. Which is better television.'], {heat:5,mom:3,riv:3});
+}
+function backSeg(w) {
+  return makeSeg('backstage', 'Backstage interview: ' + w.name, [w.id], 'backstage', promoLines(w,'back'),
+    ['Maya: ' + w.name + ' came in calm but there is nothing casual about this energy.','Iris: Backstage is where you hear what people really mean.'], {heat:4,mom:2,riv:2});
+}
+function confrontSeg(a, b) {
+  return makeSeg('stare-down', 'Confrontation: ' + a.name + ' vs ' + b.name, [a.id,b.id], 'portrait',
+    [a.name + ' and ' + b.name + ' step nose to nose under the lights.', a.name + ': I did not come here to be overlooked.', b.name + ': Then stop standing in my way.'],
+    ['Iris: Nobody is blinking first.','Cass: This is how a match becomes a feud.'], {heat:6,mom:1,riv:6});
+}
+function crowdSeg(text) {
+  return makeSeg('crowd', text || 'Crowd reaction', [G.roster[0].id], 'portrait',
+    ['The crowd surges as the arena lights sweep the building.'],
+    ['Iris: Listen to that noise.','Cass: The building is alive right now.'], {heat:1});
+}
+
+function buildWeekly() {
+  var p = pool(), ch = champ();
+  var cont = null;
+  for (var i = 0; i < p.length; i++) { if (p[i].id !== ch.id) { cont = p[i]; break; } }
+  if (!cont) cont = p[1] || ch;
+  var riv = wById(promoTarget(cont)) || ch;
+  var mA = null, mB = null;
+  for (var j = 0; j < p.length; j++) { if (p[j].id !== ch.id && p[j].id !== cont.id) { mA = p[j]; break; } }
+  if (!mA) mA = p[2] || cont;
+  for (var k = 0; k < p.length; k++) { if (p[k].id !== ch.id && p[k].id !== cont.id && p[k].id !== mA.id) { mB = p[k]; break; } }
+  if (!mB) mB = p[3] || ch;
+  var winner = (mA.pop+mA.mom) >= (mB.pop+mB.mom) ? mA : mB;
+  var loser  = winner.id === mA.id ? mB : mA;
+  var mEWin  = (ch.pop+ch.mom) >= (cont.pop+cont.mom) ? ch : cont;
+  return [
+    makeSeg('opening','Opening broadcast',[ch.id,cont.id],'champion',
+      ['AI GM: The card is live. The rivalries are hot. The crowd is ready.'],
+      ['Iris: Welcome to Crown Circuit.','Cass: Where someone is about to have a bad night.'],{heat:2}),
+    promoSeg(cont,'Featured promo'),
+    backSeg(mA),
+    confrontSeg(mA, mB),
+    makeSeg('match','Singles match: '+mA.name+' vs '+mB.name,[mA.id,mB.id],'signature',
+      [mA.name+' and '+mB.name+' open hot.', loser.name+' takes early punishment but keeps fighting.'],
+      ['Iris: Fast start.','Cass: Somebody is going to get hurt.'],{heat:3}),
+    makeSeg('near-fall','Near fall drama',[mA.id,mB.id],'signature',
+      [loser.name+' almost steals it.'],['Iris: That was almost everything.'],{heat:3}),
+    makeSeg('victory',winner.name+' wins',[winner.id],'victory',
+      [winner.name+' finishes it with '+winner.sig+'.'],['Cass: Statement made.'],{heat:3,mom:4}),
+    crowdSeg('Hot crowd reaction'),
+    promoSeg(ch,'Champion promo'),
+    makeSeg('main-event','Main Event: '+ch.name+' vs '+cont.name,[ch.id,cont.id],'signature',
+      ['The main event delivers everything the crowd came for.', mEWin.name+' finds a way to walk out ahead.'],
+      ['Iris: This is the level.','Cass: This is why Crown Circuit exists.'],{heat:5,mom:5}),
+    makeSeg('post-match','Closing chaos',[riv.id,cont.id],'betrayal',
+      [riv.name+' rushes the ring and ambushes '+cont.name+'.', 'The crowd is on its feet for the wrong reason.'],
+      ['Iris: That is a statement.','Cass: That is a problem in boots.'],{heat:8,mom:4,riv:8})
+  ];
+}
+
+function comicCut(type, aId, bId) {
+  var a = wById(aId), b = bId ? wById(bId) : null;
+  var titles = {promo:'Promo Panel',back:'Backstage Panel',action:'Impact Panel',victory:'Winner Panel',betrayal:'Betrayal Panel',crowd:'Crowd Reaction'};
+  var dlgMap = {
+    promo:[a.name+': '+a.cp, a.name+' grips the mic like a weapon.','The crowd is already reacting.'],
+    back:[a.name+' corners the camera in a dim hallway.', b ? b.name+' lingers at the edge of the frame.' : a.name+' speaks alone.'],
+    action:[a.name+' launches into the frame with a signature burst.', b ? b.name+' is already reeling.' : 'The whole panel is built around the hit.'],
+    victory:[a.name+' raises her arm under the arena lights.','The win has finality.'],
+    betrayal:[a.name+' hits first when nobody expects it.', b ? b.name+' gets blindsided.' : 'The moment turns poisonous fast.'],
+    crowd:['The crowd is on its feet screaming through the lights.','This arena is fully alive.']
+  };
+  var cmtMap = {
+    promo:['Iris: That is how you command attention.','Cass: Or start a war. Which is even better.'],
+    back:['Maya: Backstage, that was not casual at all.','Iris: Nothing about this roster stays quiet.'],
+    action:['Iris: What a strike!','Cass: That was pure television violence.'],
+    victory:['Iris: She did exactly what she came here to do.','Cass: And she made it look effortless.'],
+    betrayal:['Iris: Oh no, not like this!','Cass: That is a deliberate, nasty moment.'],
+    crowd:['Cass: Listen to this building.','Iris: This is the kind of crowd that makes a show feel huge.']
+  };
+  var slotMap = {promo:'promo',back:'backstage',action:'signature',victory:'victory',betrayal:'betrayal',crowd:'portrait'};
+  var pids = bId ? [aId,bId] : [aId];
+  return makeSeg(type, titles[type]||type, pids, slotMap[type]||'portrait', dlgMap[type]||dlgMap.promo, cmtMap[type]||cmtMap.promo, {heat:5,mom:2,riv:3});
+}
+
+function comicShow(title, aId, bId) {
+  var a = wById(aId), b = wById(bId);
+  return {week:G.week, title:title, loc:G.loc, type:'weekly',
+    segs:[comicCut('promo',aId),comicCut('back',aId,bId),comicCut('action',aId,bId),comicCut('crowd',aId),comicCut('victory',aId,bId),comicCut('betrayal',bId,aId)],
+    rating:84, mainEvent:a.name+' vs '+b.name, hook:'The final panel leaves a bruised cliffhanger.',
+    summary:'Promos, backstage tension, and comic-book impact.'};
+}
+
+function simulateShow() {
+  var isPPV = G.ppvCD === 0;
+  var title = isPPV ? PPVS[G.ppvIdx % PPVS.length] : 'Crown Circuit Episode ' + G.week;
+  var segs = buildWeekly();
+  var p = pool(), cont = null;
+  for (var i = 0; i < p.length; i++) { if (p[i].id !== G.champId) { cont = p[i]; break; } }
+  if (!cont) cont = champ();
+  var show = {week:G.week, title:title, loc:rand(LOCS), type:isPPV?'ppv':'weekly', segs:segs,
+    rating:Math.min(100, 78+Math.round(Math.random()*8)),
+    mainEvent:champ().name+' vs '+cont.name,
+    hook:'The next week just got more dangerous.',
+    summary:champ().name+' vs '+cont.name+' headlined a show with promos, interviews, and a closing angle.'};
+  G.loc = show.loc; G.shows.push(show); curShowIdx = G.shows.length-1; curScene = 0;
+  G.week++; G.ppvCD = isPPV ? 3 : G.ppvCD-1; if (isPPV) G.ppvIdx++;
+  G.feed.unshift(show.title + ': ' + show.summary); G.feed = G.feed.slice(0,8);
+  var newRank = pool(); G.rankings = [];
+  for (var j = 0; j < newRank.length; j++) G.rankings.push(newRank[j].id);
+  save();
+}
+
+function showScreen(id) {
+  curScreen = id;
+  var isBcast = id === 'show';
+  document.body.classList.toggle('broadcastMode', isBcast);
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.toggle('active', screens[i].id === 'screen-'+id);
+  var navBtns = document.querySelectorAll('#nav button');
+  for (var j = 0; j < navBtns.length; j++) navBtns[j].classList.toggle('active', navBtns[j].getAttribute('data-screen') === id);
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'roster')    renderRoster();
+  if (id === 'show')      renderShow();
+  if (id === 'history')   renderHistory();
+  if (id === 'renderlab') renderLab();
+}
+
+function renderAll() { buildNav(); renderFeed(); renderKpis(); showScreen(curScreen); }
+
+function buildNav() {
+  var items = [['dashboard','Dashboard'],['roster','Roster'],['show','Show Viewer'],['history','History'],['renderlab','Render Lab']];
+  var html = '';
+  for (var i = 0; i < items.length; i++) {
+    html += '<button data-screen="'+items[i][0]+'" class="'+(items[i][0]===curScreen?'active':'')+'">'+items[i][1]+'</button>';
+  }
+  byId('nav').innerHTML = html;
+  var btns = byId('nav').querySelectorAll('button');
+  for (var j = 0; j < btns.length; j++) {
+    (function(btn){ btn.onclick = function(){ showScreen(btn.getAttribute('data-screen')); }; })(btns[j]);
+  }
+}
+
+function renderFeed() {
+  var html = '';
+  for (var i = 0; i < G.feed.length; i++) html += '<div class="listRow"><div>' + esc(G.feed[i]) + '</div></div>';
+  byId('topFeed').innerHTML = html;
+}
+
+function renderKpis() {
+  var ch = champ();
+  var vals = [['Week',G.week],['Champion',ch?ch.name:'--'],['Rivalries',G.rivalries.length],['Roster',G.roster.length]];
+  var html = '';
+  for (var i = 0; i < vals.length; i++) html += '<div class="kpi"><div class="kpiLabel">'+vals[i][0]+'</div><div class="kpiVal">'+esc(String(vals[i][1]))+'</div></div>';
+  byId('kpis').innerHTML = html;
+}
+
+function renderDashboard() {
+  var ch = champ(), r0 = G.rivalries[0];
+  var rA = wById(r0.wrestlers[0]), rB = wById(r0.wrestlers[1]);
+  byId('screen-dashboard').innerHTML =
+    '<div class="panel panelPad" style="margin-bottom:14px"><div class="sectionTitle">League Dashboard</div>' +
+    '<div class="sectionSub">Run weekly episodes, cut stand-alone segments, or jump into a comic-style showcase.</div>' +
+    '<div class="list">' +
+    '<div class="listRow"><b>Champion</b><div>'+esc(ch.name)+' &mdash; '+esc(ch.bio)+'</div></div>' +
+    '<div class="listRow"><b>Main rivalry</b><div>'+esc(rA?rA.name:'?')+' vs '+esc(rB?rB.name:'?')+' &mdash; Heat '+r0.heat+'</div></div>' +
+    '<div class="listRow"><b>Tip</b><div>Simulate a show then open Show Viewer and tap Auto to watch scenes play out.</div></div>' +
+    '</div></div>';
+}
+
+function renderRoster() {
+  var html = '<div class="panel panelPad"><div class="sectionTitle">Roster</div><div class="sectionSub">Original division lineup with promo-ready stat cards.</div><div class="cards" style="margin-top:16px">';
+  for (var i = 0; i < G.roster.length; i++) {
+    var w = G.roster[i];
+    var bars = [['Popularity',w.pop],['Momentum',w.mom],['Star Power',w.star]];
+    var bHtml = '';
+    for (var b = 0; b < bars.length; b++) bHtml += '<div class="bar"><div class="lab"><span>'+bars[b][0]+'</span><span>'+bars[b][1]+'</span></div><div class="meter"><b style="width:'+bars[b][1]+'%"></b></div></div>';
+    html += '<div class="panel rosterCard"><div class="render">'+renderSlot(w,'portrait')+'<div class="tag">'+esc(w.align)+'</div></div><div class="cardBody"><div class="name">'+esc(w.name)+'</div><div class="meta">'+esc(w.nick)+' &middot; '+esc(w.style)+'</div><div class="bars">'+bHtml+'</div></div></div>';
+  }
+  html += '</div></div>';
+  byId('screen-roster').innerHTML = html;
+}
+
+function renderHistory() {
+  var rows = '';
+  if (G.shows.length) {
+    for (var i = 0; i < G.shows.length; i++) {
+      rows += '<button class="listRow" data-show="'+i+'" style="width:100%;text-align:left;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:14px;padding:12px 14px;color:var(--text);cursor:pointer"><div><b>'+esc(G.shows[i].title)+'</b><div class="muted" style="margin-top:4px">'+esc(G.shows[i].summary||'No summary')+'</div></div><span class="badge">Wk '+G.shows[i].week+'</span></button>';
+    }
+  } else { rows = '<div class="listRow">No shows yet. Simulate one from the dashboard.</div>'; }
+  byId('screen-history').innerHTML = '<div class="panel panelPad"><div class="sectionTitle">Show History</div><div class="sectionSub">Every episode that has aired.</div><div class="list">'+rows+'</div></div>';
+  var btns = byId('screen-history').querySelectorAll('[data-show]');
+  for (var j = 0; j < btns.length; j++) {
+    (function(btn){ btn.onclick = function(){ curShowIdx = parseInt(btn.getAttribute('data-show'),10); curScene = 0; showScreen('show'); }; })(btns[j]);
+  }
+}
+
+function renderLab() {
+  var slots = ['portrait','promo','backstage','signature','victory','betrayal'];
+  var html = '<div class="panel panelPad"><div class="sectionTitle">Render Lab</div><div class="sectionSub">Paste Flux-generated image URLs into each wrestler slot. Hit Save when done.</div><div class="list">';
+  for (var i = 0; i < G.roster.length; i++) {
+    var w = G.roster[i];
+    html += '<div class="listRow" style="flex-direction:column;align-items:flex-start"><b>'+esc(w.name)+'</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:8px">';
+    for (var s = 0; s < slots.length; s++) {
+      html += '<div><div class="tiny">'+slots[s]+'</div><input type="text" placeholder="Image URL" value="'+esc((w.renders&&w.renders[slots[s]])||'')+'" data-wid="'+w.id+'" data-slot="'+slots[s]+'" style="width:100%;margin-top:4px;padding:8px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:#120f21;color:#fff;font-size:12px"></div>';
+    }
+    html += '</div></div>';
+  }
+  html += '<button class="btn" id="saveRenders" style="margin-top:14px">Save All Renders</button></div></div>';
+  byId('screen-renderlab').innerHTML = html;
+  byId('saveRenders').onclick = function() {
+    var inputs = byId('screen-renderlab').querySelectorAll('input[data-wid]');
+    for (var i = 0; i < inputs.length; i++) {
+      var inp = inputs[i], w = wById(inp.getAttribute('data-wid'));
+      if (w) w.renders[inp.getAttribute('data-slot')] = inp.value.trim();
+    }
+    save(); renderRoster(); alert('Renders saved!');
+  };
+}
+
+function sceneImage(s) {
+  var w = wById(s.participants[0]);
+  if (!w) return '<div class="perfectPlaceholder">Broadcast scene<small>Awaiting talent render.</small></div>';
+  var slot = (w.renders && w.renders[s.slot]) ? s.slot : 'portrait';
+  var src = (w.renders && w.renders[slot]) ? w.renders[slot] : '';
+  if (src) return '<img src="' + esc(src) + '" alt="' + esc(w.name) + '" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">';
+  return '<div class="perfectPlaceholder">' + esc(s.title) + '<small>Add a ' + esc(slot) + ' render in Render Lab for this scene.</small></div>';
+}
+
+function renderShow() {
+  var show = currentShow(), el = byId('screen-show');
+  document.body.classList.toggle('broadcastMode', curScreen === 'show');
+  if (!show) { el.innerHTML = '<div class="panel panelPad"><div class="sectionTitle">Show Viewer</div><div class="sectionSub">No show yet. Simulate one from the dashboard.</div></div>'; return; }
+  curScene = clamp(curScene, 0, show.segs.length-1);
+  var s = show.segs[curScene];
+  var pct = ((curScene+1) / show.segs.length) * 100;
+  var names = [];
+  for (var n = 0; n < s.participants.length; n++) { var wn = wById(s.participants[n]); names.push(wn ? wn.name : s.participants[n]); }
+  var w1 = wById(s.participants[0]);
+  var w2 = s.participants[1] ? wById(s.participants[1]) : null;
+  var crowdText = show.type==='ppv' ? 'PPV atmosphere — big-show energy, lights up, everyone standing.' : s.type==='betrayal' ? 'Tense crowd — the room tightens before something explodes.' : 'Hot crowd — the arena is loud and fully engaged.';
+  var dlgHtml = '', cmtHtml = '';
+  for (var d = 0; d < s.dlg.length; d++) dlgHtml += (d ? '<br><br>' : '') + esc(s.dlg[d]);
+  for (var c = 0; c < s.cmt.length; c++) cmtHtml += (c ? '<br>' : '') + esc(s.cmt[c]);
+  var w1Html = w1 ? '<div><div class="render" style="aspect-ratio:3/4">'+renderSlot(w1,'portrait')+'</div><div class="tiny muted" style="margin-top:7px">'+esc(w1.name)+'</div></div>' : '';
+  var w2Html = w2 ? '<div><div class="render" style="aspect-ratio:3/4">'+renderSlot(w2,'portrait')+'</div><div class="tiny muted" style="margin-top:7px">'+esc(w2.name)+'</div></div>' : '';
+  var segListHtml = '';
+  for (var sg = 0; sg < show.segs.length; sg++) {
+    var sgw = []; for (var sp = 0; sp < show.segs[sg].participants.length; sp++) { var sw = wById(show.segs[sg].participants[sp]); sgw.push(sw?sw.name:show.segs[sg].participants[sp]); }
+    segListHtml += '<button data-scene="'+sg+'" class="'+(sg===curScene?'active':'')+'"><strong>'+(sg+1)+'. '+esc(show.segs[sg].title)+'</strong><div class="tiny muted">'+esc(sgw.join(', '))+'</div></button>';
+  }
+  el.innerHTML =
+    '<div class="broadcastShell">' +
+    '<div class="broadcastTop"><div><div class="broadcastTitle">'+esc(show.title)+'</div><div class="broadcastSub">'+esc(show.loc)+' &middot; Scene '+(curScene+1)+'/'+show.segs.length+' &middot; Rating '+show.rating+'</div></div>' +
+    '<div class="actions"><button class="btn secondary desktopOnly" id="exitBroadcast">Back</button><button class="btn secondary desktopOnly" id="exportRecap">Export Recap</button></div></div>' +
+    '<div class="broadcastBody">' +
+    '<div class="sceneStage">' +
+    '<div class="sceneFrame">'+sceneImage(s)+'<div class="sceneOverlay"><div class="sceneMetaLine"><span class="badge">'+esc(s.type)+'</span><span class="tiny" style="color:var(--faint)">Crown Circuit Broadcast</span></div><div class="sceneBig">'+esc(s.title)+'</div></div></div>' +
+    '<div class="sceneDeck"><div class="mCard"><div class="tiny">Dialogue</div><div class="dialogue">'+dlgHtml+'</div></div><div class="mCard"><div class="tiny">Commentary</div><div class="commentary">'+cmtHtml+'</div></div></div>' +
+    '</div>' +
+    '<div class="broadcastAside">' +
+    '<div class="broadcastPanel"><div class="progress"><b style="width:'+pct+'%"></b></div><div class="showMeta"><span class="badge">'+esc(show.type)+'</span><span class="badge">'+esc(names.join(' / '))+'</span></div><div class="broadcastHint">Add wrestler renders via Render Lab to fill scene frames. Comic Cutscene mode uses dramatic comic panels.</div></div>' +
+    '<div class="broadcastPanel"><div class="tiny">Talent in scene</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px">'+w1Html+w2Html+'</div></div>' +
+    '<div class="broadcastPanel"><div class="tiny">Crowd</div><div class="commentary" style="margin-top:8px">'+esc(crowdText)+'</div></div>' +
+    '<div class="broadcastPanel scrollable"><div class="tiny">Segment Log</div><div class="segmentListCompact">'+segListHtml+'</div></div>' +
+    '</div></div>' +
+    '<div class="thumbControls"><button class="btn secondary" id="prevScene">Prev</button><button class="btn" id="nextScene">Next</button><button class="btn secondary" id="autoPlayBtn">'+(autoTimer?'Pause':'Auto')+'</button><button class="btn secondary" id="skipResult">End</button></div>' +
+    '</div>';
+  byId('exitBroadcast').onclick = function(){ document.body.classList.remove('broadcastMode'); showScreen('dashboard'); };
+  byId('exportRecap').onclick = function() {
+    var txt = '';
+    for (var i = 0; i < show.segs.length; i++) {
+      txt += (i+1)+'. '+show.segs[i].title+'\n';
+      for (var d = 0; d < show.segs[i].dlg.length; d++) txt += show.segs[i].dlg[d]+'\n';
+      for (var c = 0; c < show.segs[i].cmt.length; c++) txt += show.segs[i].cmt[c]+'\n';
+      txt += '\n';
+    }
+    var blob = new Blob([txt], {type:'text/plain'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'recap.txt'; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 500);
+  };
+  byId('prevScene').onclick = function(){ curScene = clamp(curScene-1,0,show.segs.length-1); stopAuto(); renderShow(); };
+  byId('nextScene').onclick = function(){ curScene = clamp(curScene+1,0,show.segs.length-1); if(curScene>=show.segs.length-1) stopAuto(); renderShow(); };
+  byId('autoPlayBtn').onclick = function(){ if(autoTimer) stopAuto(); else startAuto(show.segs.length); };
+  byId('skipResult').onclick = function(){ curScene = show.segs.length-1; stopAuto(); renderShow(); };
+  var sceneBtns = el.querySelectorAll('[data-scene]');
+  for (var i = 0; i < sceneBtns.length; i++) {
+    (function(btn){ btn.onclick = function(){ curScene = parseInt(btn.getAttribute('data-scene'),10); stopAuto(); renderShow(); }; })(sceneBtns[i]);
+  }
+}
+
+function startAuto(total) {
+  stopAuto();
+  autoTimer = setInterval(function(){
+    if (curScene >= total-1) { stopAuto(); return; }
+    curScene += 1; renderShow();
+  }, 2200);
+}
+function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+
+function wireButtons() {
+  var sim = function(){ simulateShow(); showScreen('show'); renderAll(); };
+  byId('sidebarSim').onclick = sim;
+  byId('dashSim').onclick = sim;
+  byId('comicBtn').onclick = function(){
+    var aId = G.roster[0].id, bId = G.roster[1].id;
+    var show = comicShow('Comic Cutscene: '+wById(aId).name+' vs '+wById(bId).name, aId, bId);
+    G.shows.push(show); G.week++; curShowIdx = G.shows.length-1; curScene = 0;
+    G.feed.unshift(show.title+': '+show.summary); G.feed = G.feed.slice(0,8);
+    save(); renderAll(); showScreen('show');
+  };
+  byId('promoBtn').onclick = function(){
+    var p = pool(); var w = (p[1] && p[1].id !== G.champId) ? p[1] : p[0];
+    var show = {week:G.week,title:'Promo Spotlight: '+w.name,loc:G.loc,type:'weekly',segs:[promoSeg(w),crowdSeg('Promo crowd reaction')],rating:81,mainEvent:w.name+' promo',hook:'A promo just started a fight.',summary:w.name+' cut a promo that changed the conversation.'};
+    G.shows.push(show); G.week++; curShowIdx = G.shows.length-1; curScene = 0;
+    G.feed.unshift(show.title+': '+show.summary); G.feed = G.feed.slice(0,8);
+    save(); renderAll(); showScreen('show');
+  };
+  byId('backstageBtn').onclick = function(){
+    var w = champ(), other = null;
+    for (var i = 0; i < G.roster.length; i++) { if (G.roster[i].id !== w.id) { other = G.roster[i]; break; } }
+    if (!other) other = w;
+    var show = {week:G.week,title:'Backstage Heat: '+w.name,loc:G.loc,type:'weekly',segs:[backSeg(w),confrontSeg(w,other),crowdSeg('Hallway fallout')],rating:79,mainEvent:'Backstage segment',hook:'The hallway is not calm anymore.',summary:'Backstage tension between '+w.name+' and '+other.name+'.'};
+    G.shows.push(show); G.week++; curShowIdx = G.shows.length-1; curScene = 0;
+    G.feed.unshift(show.title+': '+show.summary); G.feed = G.feed.slice(0,8);
+    save(); renderAll(); showScreen('show');
+  };
+  byId('interviewBtn').onclick = function(){
+    var w = champ();
+    var show = {week:G.week,title:'Interview Spotlight: '+w.name,loc:G.loc,type:'weekly',segs:[backSeg(w),promoSeg(w,'Interview promo'),crowdSeg('Interview crowd reaction')],rating:80,mainEvent:'Interview spotlight',hook:'The mic dropped but the story did not.',summary:w.name+' owned an interview segment.'};
+    G.shows.push(show); G.week++; curShowIdx = G.shows.length-1; curScene = 0;
+    G.feed.unshift(show.title+': '+show.summary); G.feed = G.feed.slice(0,8);
+    save(); renderAll(); showScreen('show');
+  };
+  byId('resetLeague').onclick = function(){
+    if (confirm('Reset the entire league?')) { localStorage.removeItem(SK); G = makeDefaultState(); curShowIdx = 0; curScene = 0; renderAll(); }
+  };
+}
+
+function init() { renderAll(); wireButtons(); }
+init();
 </script>
 </body>
 </html>
