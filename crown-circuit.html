@@ -65,8 +65,8 @@
 .broadcastSub{font-size:12px;color:var(--muted);margin-top:3px}
 .broadcastBody{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.9fr);gap:14px;padding:14px;min-height:0}
 .sceneStage{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:0}
-.sceneFrame{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(255,255,255,.09);background:#0f0d1b;min-height:300px;box-shadow:var(--shadow)}
-.sceneFrame img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block}
+.sceneFrame{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(255,255,255,.09);background:#0f0d1b;min-height:220px;max-height:420px;aspect-ratio:3/4;box-shadow:var(--shadow)}
+.sceneFrame img{width:100%;height:100%;object-fit:contain;object-position:center top;display:block;image-rendering:-webkit-optimize-contrast;image-rendering:auto}
 .sceneOverlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(180deg,transparent,rgba(7,7,12,.9))}
 .sceneMetaLine{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:8px}
 .sceneBig{font:900 clamp(22px,3vw,38px)/1.1 Inter,sans-serif;color:#fff;margin-top:4px}
@@ -86,7 +86,7 @@
 .perfectPlaceholder{display:grid;place-items:center;width:100%;height:100%;min-height:280px;padding:22px;text-align:center;color:#f7f2ff;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:radial-gradient(circle at top,#7254d1 0%,#2b214c 45%,#120f20 100%)}
 .perfectPlaceholder small{display:block;color:#d8ccff;font-weight:500;letter-spacing:normal;text-transform:none;margin-top:8px;font-size:12px;line-height:1.45}
 @media(max-width:1080px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.hero,.grid3,.grid2,.broadcastBody,.sceneDeck,.cards{grid-template-columns:1fr}.broadcastBody{grid-template-rows:minmax(0,1fr) auto}.broadcastAside{grid-template-rows:auto auto auto auto}.broadcastPanel.scrollable{max-height:28vh}.kpis{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.wrap{padding:14px}.title{font-size:30px}.heroCard{grid-template-columns:82px 1fr}.actions{width:100%}.actions .btn{flex:1}.sceneFrame{min-height:44dvh;max-height:52dvh;border-radius:18px}.sceneBig{font-size:20px}.thumbControls .btn{min-height:48px;padding:9px 5px;font-size:12px}.desktopOnly{display:none!important}.broadcastPanel.scrollable{max-height:22dvh}}
+@media(max-width:640px){.wrap{padding:14px}.title{font-size:30px}.heroCard{grid-template-columns:82px 1fr}.actions{width:100%}.actions .btn{flex:1}.sceneFrame{min-height:180px;max-height:320px;aspect-ratio:3/4;border-radius:18px}.sceneBig{font-size:20px}.thumbControls .btn{min-height:48px;padding:9px 5px;font-size:12px}.desktopOnly{display:none!important}.broadcastPanel.scrollable{max-height:22dvh}}
 </style>
 </head>
 <body>
@@ -458,7 +458,7 @@ function sceneImage(s) {
   if (!w) return '<div class="perfectPlaceholder">Broadcast scene<small>Awaiting talent render.</small></div>';
   var slot = (w.renders && w.renders[s.slot]) ? s.slot : 'portrait';
   var src = (w.renders && w.renders[slot]) ? w.renders[slot] : '';
-  if (src) return '<img src="' + esc(src) + '" alt="' + esc(w.name) + '" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">';
+  if (src) return '<img src="' + esc(src) + '" alt="' + esc(w.name) + '" style="width:100%;height:100%;object-fit:contain;object-position:center top;display:block;image-rendering:auto">';
   return '<div class="perfectPlaceholder">' + esc(s.title) + '<small>No render for ' + esc(slot) + ' slot.</small></div>';
 }
 
