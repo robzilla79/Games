@@ -1,0 +1,68 @@
+{
+  "textureforge_v2_profiles": {
+    "comfyui": {
+      "base_url": "http://127.0.0.1:8188",
+      "api_route": "/prompt",
+      "models_to_inventory": {
+        "checkpoints": "ComfyUI/models/checkpoints",
+        "loras": "ComfyUI/models/loras",
+        "vae": "ComfyUI/models/vae",
+        "controlnet": "ComfyUI/models/controlnet",
+        "ipadapter": "ComfyUI/models/ipadapter",
+        "upscale_models": "ComfyUI/models/upscale_models"
+      },
+      "profiles": {
+        "realistic_face_reference": {
+          "workflow": "textureforge_v2_sdxl_img2img_api.json",
+          "checkpoint": "__USER_REALISTIC_SDXL_CHECKPOINT__",
+          "steps": 26,
+          "cfg": 5.5,
+          "sampler": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 0.38,
+          "notes": "Use for face/likeness and skin-tone-sensitive reference work."
+        },
+        "skin_body_regions": {
+          "workflow": "textureforge_v2_sdxl_img2img_api.json",
+          "checkpoint": "__USER_REALISTIC_SDXL_CHECKPOINT__",
+          "steps": 26,
+          "cfg": 5.0,
+          "sampler": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 0.42,
+          "notes": "Use for body shading decals while preserving skin tone and reference style."
+        },
+        "gear_panels": {
+          "workflow": "textureforge_v2_sdxl_txt2img_region_api.json",
+          "checkpoint": "__USER_REALISTIC_OR_DESIGN_SDXL_CHECKPOINT__",
+          "steps": 30,
+          "cfg": 6.0,
+          "sampler": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 1.0,
+          "notes": "Use for original clothing/gear panels, trim, fabric, boots, and accessories."
+        }
+      }
+    },
+    "ollama": {
+      "base_url": "http://127.0.0.1:11434",
+      "chat_route": "/api/chat",
+      "preferred_text_model": "__USER_FAST_INSTRUCTION_MODEL__",
+      "preferred_vision_model": "__USER_VISION_MODEL_IF_INSTALLED__",
+      "temperature": 0.35,
+      "stream": false,
+      "jobs": {
+        "reference_notes_to_json": "Use the system prompt and schema in textureforge-2k/ollama/.",
+        "prompt_rewrite": "Rewrite prompts for the selected ComfyUI checkpoint profile.",
+        "manifest_qa": "Check missing files, duplicate filenames, and unmatched region IDs."
+      }
+    }
+  },
+  "next_inventory_needed_from_rob": [
+    "ComfyUI checkpoint filenames",
+    "ComfyUI LoRA filenames relevant to skin, realism, fabric, or gear",
+    "Installed IP-Adapter, ControlNet, PuLID, InstantID, or background-removal custom nodes",
+    "Upscaler model filenames",
+    "Output of `ollama list`"
+  ]
+}
