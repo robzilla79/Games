@@ -20,6 +20,10 @@ A standalone browser texture decal workflow for building repeatable 2K-style tex
 
 - `textureforge-2k/index.html` — standalone app build
 - `textureforge-2k/README_TEXTUREFORGE_2K.txt` — usage notes
+- `textureforge-2k/V2_LOCAL_GENERATION.md` — V2 local ComfyUI/Ollama generation plan
+- `textureforge-2k/config/textureforge_v2_local_profiles.json` — local model profile placeholders
+- `textureforge-2k/comfyui/workflows/` — ComfyUI API workflow templates
+- `textureforge-2k/ollama/` — Ollama schema and system prompt
 
 ### Current TextureForge features
 
@@ -30,6 +34,15 @@ A standalone browser texture decal workflow for building repeatable 2K-style tex
 - Mirrored and split output variants
 - Validation for completeness, dimensions, alpha, and size warnings
 - Manifest, README, prompt, PNG, contact sheet, and zip export
+
+### V2 direction
+
+TextureForge V2 is being designed as a local-first reference-to-texture pipeline:
+
+- ChatGPT/manual handoff for highest-quality reference interpretation
+- ComfyUI workflow export/API automation for local image generation
+- Ollama structured prompt assistant for local text and QA tasks
+- TextureForge import, processing, validation, and packaging as the control room
 
 ## iPhone use
 
