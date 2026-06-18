@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TextureForge V2 Reference Analysis",
+  "type": "object",
+  "required": ["project", "reference_quality", "subject_cues", "texture_plan", "prompts", "negative_prompt", "warnings"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["mode", "target_game", "style_goal"],
+      "properties": {
+        "mode": {"type": "string", "enum": ["face", "skin_body", "gear", "full_character"]},
+        "target_game": {"type": "string", "default": "WWE2K26"},
+        "style_goal": {"type": "string"}
+      }
+    },
+    "reference_quality": {
+      "type": "object",
+      "required": ["usable", "issues", "missing_views"],
+      "properties": {
+        "usable": {"type": "boolean"},
+        "issues": {"type": "array", "items": {"type": "string"}},
+        "missing_views": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "subject_cues": {
+      "type": "object",
+      "required": ["face", "skin", "body", "hair", "gear"],
+      "properties": {
+        "face": {"type": "array", "items": {"type": "string"}},
+        "skin": {"type": "array", "items": {"type": "string"}},
+        "body": {"type": "array", "items": {"type": "string"}},
+        "hair": {"type": "array", "items": {"type": "string"}},
+        "gear": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "texture_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["region_id", "filename", "source_type", "priority", "notes"],
+        "properties": {
+          "region_id": {"type": "string"},
+          "filename": {"type": "string"},
+          "source_type": {"type": "string", "enum": ["face", "skin", "body", "clothing", "transition", "utility"]},
+          "priority": {"type": "string", "enum": ["required", "recommended", "optional"]},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "prompts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["region_id", "filename", "positive_prompt"],
+        "properties": {
+          "region_id": {"type": "string"},
+          "filename": {"type": "string"},
+          "positive_prompt": {"type": "string"},
+          "comfy_workflow": {"type": "string", "enum": ["sdxl_img2img", "sdxl_txt2img"]},
+          "denoise": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "negative_prompt": {"type": "string"},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}
